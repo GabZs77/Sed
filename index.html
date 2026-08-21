@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Flash — Sala do Futuro</title>
+  <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #09090b;
+      --card: #121215;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --input-bg: #18181c;
+      --text: #ffffff;
+      --text-muted: #8e8e93;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --green: #22c55e;
+      --yellow: #eab308;
+      --red: #ef4444;
+      --radius: 14px;
+    }
+
+    html, body {
+      min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Floating Toast ── */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10000;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .toast-container.visible { display: flex; }
+    .toast-card {
+      background: #18181b;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      animation: slideInRight 0.3s ease;
+      min-width: 280px;
+    }
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .toast-spinner {
+      width: 22px;
+      height: 22px;
+      border: 2px solid rgba(255,255,255,0.15);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    .toast-title { font-size: 14px; font-weight: 700; color: #fff; }
+    .toast-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── Login Overlay ── */
+    .login-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .login-overlay.hidden { display: none; }
+
+    .login-card {
+      background: #111113;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 32px 28px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .login-header h1 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+    .login-header p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .form-group { margin-bottom: 16px; }
+    .form-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .ra-row { display: flex; gap: 8px; }
+    .input-field {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-field:focus { border-color: rgba(255,255,255,0.3); }
+
+    .input-field-mini {
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .senha-wrap { position: relative; }
+    .senha-wrap .input-field { padding-right: 40px; }
+    .toggle-pw {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+    }
+
+    .terms-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    .terms-row input {
+      margin-top: 2px;
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .terms-row a { color: #fff; text-decoration: underline; }
+
+    .btn-primary {
+      width: 100%;
+      padding: 13px;
+      background: #27272a;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-primary:hover { background: #3f3f46; }
+    .btn-primary:active { transform: scale(0.99); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-secondary {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      background: transparent;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      color: #a1a1aa;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.05); color: #fff; }
+
+    .login-error {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .login-error.visible { display: block; }
+
+    /* ── App Layout ── */
+    .app-layout {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+    }
+    .app-layout.visible { display: flex; }
+
+    .sidebar {
+      width: 240px;
+      background: #0d0d0f;
+      border-right: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      padding: 20px 16px;
+      flex-shrink: 0;
+    }
+
+    .brand-logo {
+      border: 2px solid #fff;
+      padding: 8px 16px;
+      display: inline-block;
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: 2px;
+      border-radius: 6px;
+      margin-bottom: 28px;
+      width: fit-content;
+    }
+
+    .nav-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #52525b;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin: 16px 0 8px 8px;
+    }
+
+    .scraped-table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #18181b; border-radius: 8px; font-size: 13px; }
+    .scraped-table th, .scraped-table td { border: 1px solid #27272a; padding: 6px 10px; text-align: left; color: #e4e4e7; }
+    .scraped-table th { background: #27272a; color: #fff; }
+    .scraped-card { background: #18181b; border: 1px solid #27272a; border-radius: 8px; padding: 10px 12px; margin-top: 8px; color: #e4e4e7; font-size: 13px; }
+    .robo-page { background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+    .robo-page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 600; color: #fff; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: #a1a1aa;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+      margin-bottom: 4px;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.04); color: #fff; }
+    .nav-item.active { background: #27272a; color: #fff; }
+    .nav-item svg { width: 18px; height: 18px; }
+
+    .sidebar-user {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #141417;
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #3f3f46;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .user-details { flex: 1; overflow: hidden; }
+    .user-name { font-size: 13px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .user-sub { font-size: 10px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .btn-logout-icon { background: none; border: none; color: #71717a; cursor: pointer; padding: 4px; display: flex; border-radius: 6px; transition: color 0.15s; }
+    .btn-logout-icon:hover { color: var(--red); }
+
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .notice-banner {
+      background: #141416;
+      border-bottom: 1px solid var(--card-border);
+      padding: 10px 24px;
+      font-size: 12px;
+      color: #a1a1aa;
+      line-height: 1.4;
+    }
+
+    .content-area {
+      padding: 24px;
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    /* Welcome & Stat Cards */
+    .welcome-card {
+      background: #141417;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+    .welcome-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #27272a;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 22px;
+    }
+    .welcome-title { font-size: 22px; font-weight: 800; }
+    .welcome-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; letter-spacing: 0.5px; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: #141417;
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+    .stat-card-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .stat-card-val { font-size: 14px; color: #fff; font-weight: 700; }
+
+    /* Tables */
+    .data-table-card {
+      background: #141417;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+    .data-table-title {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .table-custom {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+    .table-custom th {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .table-custom td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .table-custom tr:hover td {
+      background: rgba(255,255,255,0.02);
+    }
+
+    /* Tasks Blocks */
+    .task-block {
+      background: #141417;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+    .task-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .task-block-title { font-size: 16px; font-weight: 800; }
+    .task-block-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+
+    .task-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .time-filter {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #1c1c20;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .time-filter input {
+      width: 36px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      text-align: center;
+      font-weight: 700;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .btn-action-sm {
+      background: #27272a;
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-action-sm:hover { background: #3f3f46; }
+
+    .task-tabs {
+      display: flex;
+      gap: 8px;
+      margin: 16px 0;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 10px;
+    }
+    .task-tab {
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      background: transparent;
+      border: none;
+    }
+    .task-tab.active { background: #27272a; color: #fff; }
+
+    .task-item {
+      background: #1c1c20;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      gap: 12px;
+    }
+    .task-item-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .task-icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .task-item-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .task-item-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge-pendente {
+      background: rgba(234, 179, 8, 0.15);
+      color: var(--yellow);
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .badge-processing {
+      background: #27272a;
+      color: #a1a1aa;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .empty-state {
+      padding: 30px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .error-box {
+      background: rgba(255, 80, 80, 0.1);
+      border: 1px solid rgba(255, 80, 80, 0.35);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin: 10px 0;
+      color: #ff8a8a;
+      font-size: 12px;
+      word-break: break-word;
+    }
+
+    .raw-view {
+      margin-top: 14px;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .raw-view summary {
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    .raw-view pre {
+      margin: 10px 0 0;
+      max-height: 320px;
+      overflow: auto;
+      font-size: 11px;
+      color: #9ecbff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .scraped-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .scraped-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    @media (max-width: 768px) {
+      .app-layout { flex-direction: column; }
+      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--card-border); }
+      .stats-grid { grid-template-columns: 1fr; }
+      .task-item { flex-direction: column; align-items: flex-start; }
+      .task-item-actions { width: 100%; justify-content: flex-end; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Toast -->
+  <div class="toast-container" id="toastContainer">
+    <div class="toast-card">
+      <div class="toast-spinner"></div>
+      <div>
+        <div class="toast-title" id="toastTitle">Registrando sessão...</div>
+        <div class="toast-desc" id="toastDesc">Gerando token de acesso</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Overlay -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+      <div class="login-header">
+        <h1>Entrar na conta</h1>
+        <p>Use seu RA e senha da Sala do Futuro</p>
+      </div>
+
+      <div class="login-error" id="loginError"></div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <div class="form-label-row">
+            <span>RA</span>
+            <span>Dígito</span>
+            <span>UF</span>
+          </div>
+          <div class="ra-row">
+            <input class="input-field" type="text" id="raInput" style="flex: 1;" placeholder="Seu RA" required />
+            <input class="input-field input-field-mini" type="text" id="digitoInput" style="width: 54px;" placeholder="0" maxlength="2" />
+            <select class="input-field input-field-mini" style="width: 64px; padding: 12px 6px;">
+              <option value="SP">SP</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label-row">
+            <span>Senha</span>
+          </div>
+          <div class="senha-wrap">
+            <input class="input-field" type="password" id="senhaInput" placeholder="••••••••••" required />
+            <button type="button" class="toggle-pw" onclick="togglePassword()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Terms checkbox -->
+        <div class="terms-row">
+          <input type="checkbox" id="termsCheck" checked required />
+          <label for="termsCheck">Li e concordo com os <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a>.</label>
+        </div>
+
+        <button type="submit" class="btn-primary" id="btnEntrar">
+          <span>↳ Entrar</span>
+        </button>
+
+        <button type="button" class="btn-secondary" onclick="showSavedAccounts()">
+          <span>👥 Contas salvas</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main App Layout -->
+  <div class="app-layout" id="appLayout">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand-logo">FLASH</div>
+
+      <div class="nav-section-label">PRINCIPAL</div>
+      <a class="nav-item active" id="nav-inicio" onclick="switchTab('inicio')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Início
+      </a>
+      <a class="nav-item" id="nav-tarefas" onclick="switchTab('tarefas')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        TarefaSP
+      </a>
+      <a class="nav-item" id="nav-boletim" onclick="switchTab('boletim')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Boletim
+      </a>
+      <a class="nav-item" id="nav-frequencia" onclick="switchTab('frequencia')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Frequência
+      </a>
+      <a class="nav-item" id="nav-agenda" onclick="switchTab('agenda')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Agenda
+      </a>
+      <a class="nav-item" id="nav-materiais" onclick="switchTab('materiais')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        Materiais
+      </a>
+
+      <!-- Bottom User Pill -->
+      <div class="sidebar-user">
+        <div class="user-avatar" id="sidebarAvatar">A</div>
+        <div class="user-details">
+          <div class="user-name" id="sidebarName">Aluno</div>
+          <div class="user-sub" id="sidebarClass">Sua Turma</div>
+        </div>
+        <button class="btn-logout-icon" onclick="logout()" title="Sair">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <main class="main-wrapper">
+      <div class="notice-banner">
+        O site está sincronizado diretamente com a Sala do Futuro. Dados atualizados em tempo real.
+      </div>
+
+      <div class="content-area">
+        
+        <!-- PAGE: INÍCIO -->
+        <div id="page-inicio">
+          <div class="welcome-card">
+            <div class="welcome-avatar" id="welcomeAvatar">A</div>
+            <div>
+              <div class="welcome-title" id="welcomeTitle">Carregando...</div>
+              <div class="welcome-sub" id="welcomeSub">Sua escola e turma</div>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-card-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                PENDÊNCIAS
+              </div>
+              <div class="stat-card-val" id="valPendencias">Consultando SED...</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                FALTAS
+              </div>
+              <div class="stat-card-val" id="valFaltas">Consultando SED...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE: TAREFASP -->
+        <div id="page-tarefas" style="display: none;">
+          <div class="task-block">
+            <div class="task-block-header">
+              <div class="task-block-title">Tarefas sendo processadas</div>
+              <div style="background: #27272a; padding: 4px 10px; border-radius: 6px; font-size: 11px; color: #a1a1aa; font-weight: 600;" id="processingCountTag">0 em andamento</div>
+            </div>
+            <div class="task-block-sub">Pode fechar o site — o envio continua sozinho (aguarde de 10 a 15 minutos. Pode fechar o site!)</div>
+
+            <div id="processingList">
+              <div class="empty-state">Nenhuma tarefa sendo processada no momento.</div>
+            </div>
+          </div>
+
+          <div class="task-block">
+            <div class="task-block-header">
+              <div class="task-block-title">Tarefas pendentes</div>
+              
+              <div class="task-controls">
+                <span style="background: #27272a; padding: 4px 10px; border-radius: 6px; font-size: 12px; color: #a1a1aa;" id="pendingCountBadge">0 pendente(s)</span>
+                
+                <div class="time-filter">
+                  <span>De</span>
+                  <input type="text" id="timeMin" value="10" />
+                  <span>min até</span>
+                  <input type="text" id="timeMax" value="15" />
+                  <span>min</span>
+                </div>
+
+                <button class="btn-action-sm" onclick="solveAllTasks(true)">Todas (rascunho)</button>
+                <button class="btn-action-sm" onclick="solveAllTasks(false)">Todas (enviar)</button>
+              </div>
+            </div>
+
+            <div class="task-tabs">
+              <button class="task-tab active">Pendentes</button>
+            </div>
+
+            <div id="pendingList">
+              <div class="empty-state">Carregando tarefas reais da sua conta...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE: BOLETIM -->
+        <div id="page-boletim" style="display: none;">
+          <div class="data-table-card">
+            <div class="data-table-title">
+              <span>📊 Boletim Escolar</span>
+              <button class="btn-action-sm" onclick="loadBoletimData()">↻ Atualizar</button>
+            </div>
+            <div id="boletimContent">
+              <div class="empty-state">Consultando notas do SED...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE: FREQUÊNCIA -->
+        <div id="page-frequencia" style="display: none;">
+          <div class="data-table-card">
+            <div class="data-table-title">
+              <span>✅ Frequência por Disciplina</span>
+              <button class="btn-action-sm" onclick="loadFrequenciaData()">↻ Atualizar</button>
+            </div>
+            <div id="frequenciaContent">
+              <div class="empty-state">Consultando faltas e presenças...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE: AGENDA -->
+        <div id="page-agenda" style="display: none;">
+          <div class="data-table-card">
+            <div class="data-table-title">
+              <span>📅 Agenda e Compromissos</span>
+              <button class="btn-action-sm" onclick="loadAgendaData()">↻ Atualizar</button>
+            </div>
+            <div id="agendaContent">
+              <div class="empty-state">Consultando compromissos do SED...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE: MATERIAIS -->
+        <div id="page-materiais" style="display: none;">
+          <div class="data-table-card">
+            <div class="data-table-title">
+              <span>📚 Materiais e Conteúdo Digital</span>
+              <button class="btn-action-sm" onclick="loadMateriaisData()">↻ Atualizar</button>
+            </div>
+            <div id="materiaisContent">
+              <div class="empty-state">Consultando materiais didáticos...</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const API = "https://SEU-WORKER.workers.dev";
+    let sessionId = localStorage.getItem("flash_sid");
+    let currentRA = localStorage.getItem("flash_ra");
+    let userName = localStorage.getItem("flash_nome") || "Aluno";
+    let realTasks = [];
+    let processingTasks = [];
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (sessionId) {
+        showApp();
+      }
+    });
+
+    function togglePassword() {
+      const inp = document.getElementById("senhaInput");
+      inp.type = inp.type === "password" ? "text" : "password";
+    }
+
+    function showToast(title, desc) {
+      const tc = document.getElementById("toastContainer");
+      document.getElementById("toastTitle").textContent = title;
+      document.getElementById("toastDesc").textContent = desc;
+      tc.classList.add("visible");
+    }
+
+    function hideToast() {
+      document.getElementById("toastContainer").classList.remove("visible");
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const ra = document.getElementById("raInput").value.trim();
+      const digito = document.getElementById("digitoInput").value.trim();
+      const senha = document.getElementById("senhaInput").value;
+      const btn = document.getElementById("btnEntrar");
+      const errEl = document.getElementById("loginError");
+
+      errEl.classList.remove("visible");
+      btn.disabled = true;
+      btn.innerHTML = '<span>Entrando...</span>';
+
+      showToast("Registrando sessão...", "Gerando token de acesso");
+
+      try {
+        const fullRA = ra + digito + "SP";
+        const res = await fetch(`${API}/api/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ra: fullRA, senha }),
+        });
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+
+          const lines = buffer.split("\n");
+          buffer = lines.pop();
+
+          for (const line of lines) {
+            if (line.startsWith("data: ")) {
+              try {
+                const msg = JSON.parse(line.slice(6));
+                if (msg.msg) showToast("Registrando sessão...", msg.msg);
+
+                if (msg.step === "error") {
+                  errEl.textContent = msg.msg || "Erro ao conectar.";
+                  errEl.classList.add("visible");
+                  hideToast();
+                  btn.disabled = false;
+                  btn.innerHTML = '<span>↳ Entrar</span>';
+                  return;
+                }
+
+                if (msg.step === "done") {
+                  sessionId = msg.data.session_id;
+                  currentRA = msg.data.ra;
+                  userName = msg.data.nome || "Aluno";
+                  localStorage.setItem("flash_sid", sessionId);
+                  localStorage.setItem("flash_ra", currentRA);
+                  localStorage.setItem("flash_nome", userName);
+
+                  hideToast();
+                  showApp();
+                  return;
+                }
+              } catch {}
+            }
+          }
+        }
+      } catch (err) {
+        errEl.textContent = "Erro de conexão com o servidor.";
+        errEl.classList.add("visible");
+        hideToast();
+        btn.disabled = false;
+        btn.innerHTML = '<span>↳ Entrar</span>';
+      }
+    }
+
+    function showSavedAccounts() {
+      alert("Nenhuma outra conta salva no momento.");
+    }
+
+    function showApp() {
+      document.getElementById("loginOverlay").classList.add("hidden");
+      document.getElementById("appLayout").classList.add("visible");
+
+      const initial = (userName[0] || "A").toUpperCase();
+      document.getElementById("sidebarAvatar").textContent = initial;
+      document.getElementById("welcomeAvatar").textContent = initial;
+      document.getElementById("sidebarName").textContent = userName;
+      document.getElementById("sidebarClass").textContent = `RA: ${currentRA || ''}`;
+
+      const hour = new Date().getHours();
+      let saudacao = "Boa noite";
+      if (hour >= 5 && hour < 12) saudacao = "Bom dia";
+      else if (hour >= 12 && hour < 18) saudacao = "Boa tarde";
+
+      document.getElementById("welcomeTitle").textContent = `${saudacao}, ${userName}`;
+
+      loadRealAccountData();
+      loadBoletimData();
+      loadAgendaData();
+      loadMateriaisData();
+      loadAlunoInfo();
+      silentRobo();
+      roboTriggerNow();
+      setInterval(heartbeat, 30000);
+      heartbeat();
+    }
+
+    async function loadAlunoInfo() {
+      try {
+        const res = await fetch(`${API}/api/aluno-info`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ session_id: sessionId })
+        });
+        const data = await res.json();
+        if (data.ok && data.info) {
+          const info = data.info;
+          const escola = info.escola || "";
+          const serie = info.serie || "";
+          const turma = info.turma || "";
+          const ano = info.ano || "";
+          const parts = [escola, [serie, turma].filter(Boolean).join(" - "), ano ? `${ano}` : ""].filter(Boolean);
+          if (parts.length) {
+            const sub = document.getElementById("welcomeSub");
+            if (sub) sub.textContent = parts.join(" • ");
+            const cls = document.getElementById("sidebarClass");
+            if (cls) cls.textContent = parts.slice(0, 2).join(" • ");
+          }
+        }
+      } catch (e) {}
+    }
+
+    async function loadRealAccountData() {
+      loadTarefasData();
+      loadFrequenciaData();
+    }
+
+    async function loadTarefasData() {
+      const data = await fetchDataWithRetry("/api/tarefas");
+
+      if (data && data.ok && data.data) {
+        parseRealTasks(data.data);
+      } else {
+        renderTaskList([]);
+      }
+    }
+
+    function parseRealTasks(data) {
+      realTasks = [];
+      if (Array.isArray(data)) {
+        realTasks = data;
+      } else if (typeof data === "object") {
+        // 1) API real do TarefaSP (/tms/task/todo) — fonte mais confiavel
+        const todo = data.tarefasPendentes3
+          || data.tarefas || data.tarefasReal
+          || data.listaTarefas
+          || data.tarefasPendentes
+          || data.tarefasDoAluno
+          || data.tasks;
+        if (Array.isArray(todo)) {
+          realTasks = todo;
+        } else if (todo && typeof todo === "object" && Array.isArray(todo.results)) {
+          realTasks = todo.results;
+        } else if (todo && typeof todo === "object" && Array.isArray(todo.data)) {
+          realTasks = todo.data;
+        }
+        if (realTasks.length) { renderTaskList(realTasks); return; }
+
+        // 2) Respostas /tms capturadas do app real
+        if (data.captured && typeof data.captured === "object") {
+          const tmsKeys = Object.keys(data.captured).filter(k => k.includes("/tms/task/todo") || k.includes("/tms/task"));
+          tmsKeys.forEach(k => {
+            (data.captured[k] || []).forEach(item => {
+              if (Array.isArray(item)) realTasks.push(...item);
+              else if (item && Array.isArray(item.results)) realTasks.push(...item.results);
+              else if (item && Array.isArray(item.data)) realTasks.push(...item.data);
+              else if (item) realTasks.push(item);
+            });
+          });
+          if (realTasks.length) { renderTaskList(realTasks); return; }
+        }
+
+        // 3) Cards renderizados no gerenciador real (robozinho)
+        if (data.scraped && data.scraped.tasks && Array.isArray(data.scraped.tasks)) {
+          data.scraped.tasks.forEach((txt, i) => {
+            realTasks.push({ titulo: txt.split("\n")[0] || `Tarefa ${i + 1}`,
+                             descricao: txt, _scraped: true });
+          });
+          if (realTasks.length) { renderTaskList(realTasks); return; }
+        }
+        if (data.scraped && data.scraped.cards && Array.isArray(data.scraped.cards)) {
+          data.scraped.cards.forEach((txt, i) => {
+            realTasks.push({ titulo: txt.split("\n")[0] || `Tarefa ${i + 1}`,
+                             descricao: txt, _scraped: true });
+          });
+          if (realTasks.length) { renderTaskList(realTasks); return; }
+        }
+
+        // 4) Tentativa genérica: qualquer array de objetos com campos de tarefa
+        const genKeys = ["tarefas", "tasks", "lista", "itens"];
+        for (const key of genKeys) {
+          if (data[key] && Array.isArray(data[key])) {
+            // Verifica se o primeiro item tem aparência de tarefa
+            const first = data[key][0];
+            if (first && typeof first === "object" && (first.titulo || first.nome || first.descricao || first.nomeTarefa)) {
+              realTasks = data[key];
+              break;
+            }
+          }
+        }
+        if (realTasks.length) { renderTaskList(realTasks); return; }
+      }
+
+      const seen = new Set();
+      realTasks = realTasks.filter(t => {
+        const id = t.task?.id || t.id || t.taskId || t.tarefaId || t.cdTarefa || JSON.stringify(t);
+        if (seen.has(id)) return false;
+        seen.add(id);
+        return true;
+      });
+
+      renderTaskList(realTasks);
+    }
+
+    function renderTaskList(tasks) {
+      const pendingContainer = document.getElementById("pendingList");
+      const countBadge = document.getElementById("pendingCountBadge");
+      const valPendencias = document.getElementById("valPendencias");
+
+      if (!tasks || tasks.length === 0) {
+        countBadge.textContent = "0 pendente(s)";
+        valPendencias.textContent = "0 pendências";
+        pendingContainer.innerHTML = '<div class="empty-state">🎉 Nenhuma tarefa pendente no momento!</div>';
+        return;
+      }
+
+      countBadge.textContent = `${tasks.length} pendente(s)`;
+      valPendencias.textContent = `${tasks.length} pendente(s)`;
+
+      pendingContainer.innerHTML = tasks.map((t, idx) => {
+        const title = t.titulo || t.nomeTarefa || t.nome || t.descricao || t.task?.title || `Tarefa ${idx + 1}`;
+        const subject = t.disciplina || t.nomeDisciplina || t.category?.name || t.task?.category?.name || "Geral";
+        const date = t.dataFim || t.prazo || t.expire_at || t.task?.expire_at || "Sem prazo";
+        const taskId = t.id || t.tarefaId || t.idTarefa || t.taskId || t.cdTarefa || t.task?.id || idx;
+
+        return `
+          <div class="task-item" id="task-${idx}">
+            <div class="task-item-left">
+              <div class="task-icon-box">📋</div>
+              <div>
+                <div class="task-item-title">${escapeHtml(title)}</div>
+                <div class="task-item-meta">
+                  ${escapeHtml(subject)} • Prazo: ${escapeHtml(formatDate(date))}
+                  <span class="badge-pendente">PENDENTE</span>
+                </div>
+              </div>
+            </div>
+            <div class="task-item-actions">
+              <button class="btn-action-sm" onclick="processSingleTask(${idx}, true)">Rascunho</button>
+              <button class="btn-action-sm" onclick="processSingleTask(${idx}, false)">Enviar</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function formatDate(d) {
+      if (!d) return "Sem prazo";
+      if (typeof d === "number") {
+        try { return new Date(d * 1000).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }); } catch { return String(d); }
+      }
+      if (typeof d === "string" && /^\d+$/.test(d)) {
+        try { return new Date(Number(d) * 1000).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }); } catch { return d; }
+      }
+      return String(d);
+    }
+
+    async function processSingleTask(idx, isRascunho) {
+      const task = realTasks[idx];
+      if (!task) return;
+
+      const itemEl = document.getElementById(`task-${idx}`);
+      if (itemEl) {
+        itemEl.querySelector(".task-item-actions").innerHTML = `<span class="badge-processing">Processando...</span>`;
+      }
+
+      const taskId = task.id || task.tarefaId || task.idTarefa || task.taskId || task.cdTarefa || task.task?.id || idx;
+      processingTasks.push(task);
+      updateProcessingUI();
+
+      try {
+        const res = await fetch(`${API}/api/resolver-tarefa`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            session_id: sessionId,
+            tarefa_id: String(taskId),
+            rascunho: isRascunho
+          })
+        });
+        const data = await res.json();
+        if (!data.ok) {
+          const meta = itemEl ? itemEl.querySelector(".task-item-meta") : null;
+          if (meta) {
+            meta.innerHTML += ` <span style="color: var(--red); font-weight:600;">• ${escapeHtml(data.error || 'Falha ao processar')}</span>`;
+          }
+          if (itemEl) {
+            itemEl.querySelector(".task-item-actions").innerHTML =
+              `<button class="btn-action-sm" onclick="processSingleTask(${idx}, ${isRascunho})">Tentar novamente</button>`;
+          }
+          processingTasks = processingTasks.filter(t => t !== task);
+          updateProcessingUI();
+          return;
+        }
+      } catch {
+        if (itemEl) {
+          itemEl.querySelector(".task-item-actions").innerHTML =
+            `<button class="btn-action-sm" onclick="processSingleTask(${idx}, ${isRascunho})">Tentar novamente</button>`;
+        }
+        processingTasks = processingTasks.filter(t => t !== task);
+        updateProcessingUI();
+        return;
+      }
+
+      realTasks = realTasks.filter(t => t !== task);
+      processingTasks = processingTasks.filter(t => t !== task);
+      renderTaskList(realTasks);
+      updateProcessingUI();
+    }
+
+    function updateProcessingUI() {
+      const procContainer = document.getElementById("processingList");
+      const procTag = document.getElementById("processingCountTag");
+
+      procTag.textContent = `${processingTasks.length} em andamento`;
+
+      if (processingTasks.length === 0) {
+        procContainer.innerHTML = '<div class="empty-state">Nenhuma tarefa sendo processada no momento.</div>';
+        return;
+      }
+
+      procContainer.innerHTML = processingTasks.map(t => {
+        const title = t.titulo || t.nomeTarefa || t.descricao || "Tarefa em andamento";
+        return `
+          <div class="task-item">
+            <div class="task-item-left">
+              <div class="task-icon-box"><div class="spinner"></div></div>
+              <div>
+                <div class="task-item-title">${escapeHtml(title)}</div>
+                <div class="task-item-meta">Sendo processada na Sala do Futuro — aguarde...</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function solveAllTasks(isRascunho) {
+      if (realTasks.length === 0) return;
+      const copy = [...realTasks];
+      copy.forEach((task) => {
+        const idx = realTasks.indexOf(task);
+        if (idx !== -1) processSingleTask(idx, isRascunho);
+      });
+    }
+
+    // ── BOLETIM REAL ──
+    async function fetchDataWithRetry(endpoint, maxTries = 6, delay = 6000) {
+      // Tenta a API varias vezes ate vir dado de verdade (o app termina
+      // de capturar em segundo plano) — nunca desiste cedo demais.
+      for (let i = 0; i < maxTries; i++) {
+        try {
+          const res = await fetch(`${API}${endpoint}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ session_id: sessionId })
+          });
+          const data = await res.json();
+          const has = data && data.ok && data.data !== null && data.data !== undefined &&
+            (typeof data.data !== "object" || Object.keys(data.data).length > 0 ||
+             (Array.isArray(data.data) && data.data.length > 0));
+          if (has) return data;
+        } catch (e) {}
+        if (i < maxTries - 1) await new Promise(r => setTimeout(r, delay));
+      }
+      return null;
+    }
+
+    async function loadBoletimData() {
+      const container = document.getElementById("boletimContent");
+      container.innerHTML = '<div class="empty-state"><div class="spinner" style="margin: 0 auto 10px;"></div>Consultando notas reais no SED...</div>';
+
+      const data = await fetchDataWithRetry("/api/boletim");
+
+      if (data && data.ok && data.data) {
+        renderBoletimTable(data.data);
+      } else {
+        container.innerHTML = '<div class="empty-state">Boletim indisponível ou ainda não liberado para o bimestre atual.</div>';
+      }
+    }
+
+    function autoTable(title, obj) {
+      // Renderiza QUALQUER estrutura real do SED numa tabela automatica
+      const items = [];
+      const collect = (o) => {
+        if (Array.isArray(o)) o.forEach(collect);
+        else if (o && typeof o === "object") {
+          if (Object.values(o).some(v => v === null || typeof v !== "object")) items.push(o);
+          Object.values(o).forEach(v => { if (v && typeof v === "object") collect(v); });
+        }
+      };
+      if (obj && typeof obj === "object") collect(obj);
+      if (!items.length) return "";
+      const seen = new Set();
+      const rows = items.slice(0, 60);
+      const keys = [];
+      rows.forEach(r => Object.keys(r).forEach(k => {
+        const v = r[k];
+        if (v === null || typeof v === "object") return;
+        const cleaned = k.replace(/([A-Z])/g, " $1").replace(/[_\d]/g, "").trim() || k;
+        if (!seen.has(cleaned)) { seen.add(cleaned); keys.push({ raw: k, label: cleaned }); }
+      }));
+      const nice = (r, k) => {
+        const v = r[k];
+        if (v === null || v === undefined || v === "") return "—";
+        return escapeHtml(String(v));
+      };
+      return `<div class="robo-page"><div class="robo-page-header">${escapeHtml(title)}</div>
+        <table class="table-custom"><thead><tr>${keys.map(k => `<th>${escapeHtml(k.label)}</th>`).join("")}</tr></thead>
+        <tbody>${rows.map(r => `<tr>${keys.map(k => `<td>${nice(r, k.raw)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+    }
+
+    function renderBoletimTable(data) {
+      const container = document.getElementById("boletimContent");
+
+      // Formato do robozinho: tabelas renderizadas da pagina real
+      if (data && data.tables && Array.isArray(data.tables) && data.tables.length) {
+        container.innerHTML = renderScrapedTables(data) + rawView(data);
+        return;
+      }
+
+      let items = findDisciplinaItems(data);
+
+      if (items.length === 0) {
+        const auto = autoTable("Boletim Escolar (dados reais do SED)", data);
+        container.innerHTML = (auto ? auto : '<div class="empty-state">Nenhuma nota cadastrada até o momento.</div>') + rawView(data);
+        return;
+      }
+
+      const disc = item => item.descricaoAreaConhecimento || item.nomeComponenteCurricular ||
+        item.nomeUnidadeCurricular || item.nomeAprofundamento || item.disciplina ||
+        item.nomeDisciplina || item.materia || item.nome || item.disciplinaNome || item.nmDisciplina || "Geral";
+
+      let html = `
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th>Disciplina</th>
+              <th>1º Bim</th>
+              <th>2º Bim</th>
+              <th>3º Bim</th>
+              <th>4º Bim</th>
+              <th>Faltas</th>
+              <th>Situação</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      items.forEach(item => {
+        const disc = item.descricaoAreaConhecimento || item.nomeComponenteCurricular ||
+          item.nomeUnidadeCurricular || item.nomeAprofundamento || item.disciplina ||
+          item.nomeDisciplina || item.materia || item.nome || item.disciplinaNome || item.nmDisciplina || "Geral";
+        const n1 = item.nota1Bimestre || item.notaBimestre1 || item.n1 || item.nota1 ||
+          getNotaBimestre(item, 1);
+        const n2 = item.nota2Bimestre || item.notaBimestre2 || item.n2 || item.nota2 ||
+          getNotaBimestre(item, 2);
+        const n3 = item.nota3Bimestre || item.notaBimestre3 || item.n3 || item.nota3 ||
+          getNotaBimestre(item, 3);
+        const n4 = item.nota4Bimestre || item.notaBimestre4 || item.n4 || item.nota4 ||
+          getNotaBimestre(item, 4);
+        const faltas = item.totalFaltas || item.faltas || item.qtdFaltas || 0;
+        const status = item.situacao || item.status || "Em curso";
+
+        html += `
+          <tr>
+            <td><strong>${escapeHtml(disc)}</strong></td>
+            <td>${escapeHtml(n1)}</td>
+            <td>${escapeHtml(n2)}</td>
+            <td>${escapeHtml(n3)}</td>
+            <td>${escapeHtml(n4)}</td>
+            <td>${escapeHtml(faltas)}</td>
+            <td><span style="color: var(--green); font-weight:600;">${escapeHtml(status)}</span></td>
+          </tr>
+        `;
+      });
+
+      html += `</tbody></table>` + rawView(data);
+      container.innerHTML = html;
+    }
+
+    function renderScrapedTables(data) {
+      if (!data || !data.tables || !data.tables.length) return "";
+      let html = "";
+      data.tables.forEach(tbl => {
+        if (!tbl.rows || !tbl.rows.length) return;
+        const [head, ...rows] = tbl.rows;
+        html += `<table class="table-custom" style="margin-bottom:16px;"><thead><tr>`;
+        head.forEach(h => html += `<th>${escapeHtml(h)}</th>`);
+        html += `</tr></thead><tbody>`;
+        rows.forEach(r => {
+          html += `<tr>`;
+          r.forEach(c => html += `<td>${escapeHtml(c)}</td>`);
+          html += `</tr>`;
+        });
+        html += `</tbody></table>`;
+      });
+      if (data.cards && data.cards.length) {
+        html += `<div class="scraped-cards">`;
+        data.cards.forEach(c => html += `<div class="scraped-card">${escapeHtml(c)}</div>`);
+        html += `</div>`;
+      }
+      return html;
+    }
+
+    function getNotaBimestre(item, bim) {
+      if (Array.isArray(item.notas)) {
+        const n = item.notas.find(x => (x.bimestre || x.numeroBimestre || 0) == bim);
+        if (n) return n.nota || n.valorNota || n.media || "-";
+        return "-";
+      }
+      if (item.bimestres && Array.isArray(item.bimestres)) {
+        const n = item.bimestres.find(x => (x.bimestre || x.numeroBimestre || 0) == bim);
+        if (n) return n.nota || n.valorNota || n.media || "-";
+        return "-";
+      }
+      return "-";
+    }
+
+    function findDisciplinaItems(data) {
+      if (!data || typeof data !== "object") return [];
+      let out = [];
+      if (Array.isArray(data)) {
+        data.forEach(it => {
+          if (it && typeof it === "object" && (it.disciplina || it.nomeDisciplina || it.materia || it.nmDisciplina ||
+              it.descricaoAreaConhecimento || it.nomeComponenteCurricular || it.nomeUnidadeCurricular || it.nomeAprofundamento)) {
+            out.push(it);
+          } else if (it && typeof it === "object") {
+            out.push(...findDisciplinaItems(it));
+          }
+        });
+        return out;
+      }
+      for (const [k, v] of Object.entries(data)) {
+        if (typeof v === "object" && v !== null) out.push(...findDisciplinaItems(v));
+      }
+      return out;
+    }
+
+    function rawView(data) {
+      if (!data) return "";
+      return `<details class="raw-view"><summary>Ver dados brutos recebidos do SED</summary><pre>${escapeHtml(JSON.stringify(data, null, 2))}</pre></details>`;
+    }
+
+    // ── FREQUÊNCIA REAL ──
+    async function loadFrequenciaData() {
+      const container = document.getElementById("frequenciaContent");
+      container.innerHTML = '<div class="empty-state"><div class="spinner" style="margin: 0 auto 10px;"></div>Consultando faltas e presenças...</div>';
+
+      const data = await fetchDataWithRetry("/api/frequencia");
+
+      if (data && data.ok && data.data) {
+        renderFrequenciaTable(data.data);
+      } else {
+        container.innerHTML = '<div class="empty-state">Sem dados de frequência para o bimestre atual.</div>';
+      }
+    }
+
+    function renderFrequenciaTable(data) {
+      const container = document.getElementById("frequenciaContent");
+
+      if (data && data.tables && Array.isArray(data.tables) && data.tables.length) {
+        container.innerHTML = renderScrapedTables(data) + rawView(data);
+        return;
+      }
+
+      let items = findDisciplinaItems(data);
+
+      let totalFaltas = 0;
+      if (items.length > 0) {
+        items.forEach(i => totalFaltas += (i.qtdFaltas || i.faltas || i.totalFaltas || i.totalFaltasBimestre || 0));
+        document.getElementById("valFaltas").textContent = `${totalFaltas} falta(s) registrada(s)`;
+      }
+
+      if (items.length === 0) {
+        const auto = autoTable("Frequência Escolar (dados reais do SED)", data);
+        container.innerHTML = (auto ? auto : '<div class="empty-state">Nenhuma falta registrada no bimestre!</div>') + rawView(data);
+        return;
+      }
+
+      let html = `
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th>Disciplina</th>
+              <th>Aulas Dadas</th>
+              <th>Presenças</th>
+              <th>Faltas</th>
+              <th>Frequência (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      items.forEach(item => {
+        const disc = item.descricaoAreaConhecimento || item.nomeComponenteCurricular ||
+          item.nomeUnidadeCurricular || item.nomeAprofundamento || item.disciplina ||
+          item.nomeDisciplina || item.materia || item.nome || item.nmDisciplina ||
+          item.nomeDisciplinaAgenda || "Geral";
+        const aulas = item.qtdAulas || item.aulasDadas || item.totalAulas ||
+          item.totalAulasRealizadas || item.quantidadeAulas || 0;
+        const faltas = item.qtdFaltas || item.faltas || item.totalFaltas ||
+          item.totalFaltasBimestre || item.quantidadeFaltas || 0;
+        const pct = item.porcentagemFrequencia || (aulas > 0 ? ((Math.max(0, aulas - faltas) / aulas) * 100).toFixed(1) : "100%");
+
+        html += `
+          <tr>
+            <td><strong>${escapeHtml(disc)}</strong></td>
+            <td>${escapeHtml(aulas)}</td>
+            <td>${escapeHtml(presencas)}</td>
+            <td><span style="color: ${faltas > 0 ? 'var(--red)' : '#fff'}">${escapeHtml(faltas)}</span></td>
+            <td><strong style="color: var(--green);">${escapeHtml(pct)}</strong></td>
+          </tr>
+        `;
+      });
+
+      html += `</tbody></table>` + rawView(data);
+      container.innerHTML = html;
+    }
+
+    // ── AGENDA REAL ──
+    async function loadAgendaData() {
+      const container = document.getElementById("agendaContent");
+      container.innerHTML = '<div class="empty-state"><div class="spinner" style="margin: 0 auto 10px;"></div>Consultando agenda escolar...</div>';
+
+      const data = await fetchDataWithRetry("/api/agenda");
+
+      if (data && data.ok && data.data) {
+        if (data.data.tables && Array.isArray(data.data.tables) && data.data.tables.length) {
+          container.innerHTML = renderScrapedTables(data.data) + rawView(data.data);
+          return;
+        }
+        const items = Array.isArray(data.data) ? data.data : [data.data];
+        if (items.length > 0 && items[0] && typeof items[0] === "object" &&
+            (items[0].titulo || items[0].descricao || items[0].atividade || items[0].nome || items[0].nomeDisciplina)) {
+          container.innerHTML = items.map(item => `
+            <div class="task-item">
+              <div class="task-item-left">
+                <div class="task-icon-box">📅</div>
+                <div>
+                  <div class="task-item-title">${escapeHtml(item.titulo || item.descricao || item.atividade || item.nome || item.nomeDisciplina || 'Compromisso')}</div>
+                  <div class="task-item-meta">${escapeHtml(item.data || item.dataAgenda || item.dtAgenda || 'Hoje')} • ${escapeHtml(item.horario || item.horaInicio || '')}</div>
+              </div>
+            </div>
+          `).join("");
+          return;
+        }
+        const auto = autoTable("Agenda Escolar (dados reais do SED)", data.data);
+        if (auto) { container.innerHTML = auto + rawView(data.data); return; }
+      }
+      container.innerHTML = '<div class="empty-state">Nenhum evento registrado para esta data.</div>' + rawView(data && data.data);
+    }
+
+    // ── MATERIAIS REAL ──
+    async function loadMateriaisData() {
+      const container = document.getElementById("materiaisContent");
+      container.innerHTML = '<div class="empty-state"><div class="spinner" style="margin: 0 auto 10px;"></div>Consultando materiais didáticos...</div>';
+
+      const data = await fetchDataWithRetry("/api/materiais", 4, 6000);
+
+      if (data && data.ok && data.data && Array.isArray(data.data) && data.data.length > 0) {
+        container.innerHTML = data.data.map(item => `
+          <div class="task-item">
+            <div class="task-item-left">
+              <div class="task-icon-box">📚</div>
+              <div>
+                <div class="task-item-title">${escapeHtml(item.nome || item.titulo || 'Material Didático')}</div>
+                <div class="task-item-meta">${escapeHtml(item.subcategoria || item.descricao || 'Conteúdo digital')}</div>
+              </div>
+            </div>
+            <a href="${item.url || '#'}" target="_blank" class="btn-action-sm" style="text-decoration:none;">Acessar</a>
+          </div>
+        `).join("");
+      } else if (data && data.repositorio_url) {
+        container.innerHTML = `
+          <div class="task-item">
+            <div class="task-item-left">
+              <div class="task-icon-box">📚</div>
+              <div>
+                <div class="task-item-title">Materiais Digitais (Repositório)</div>
+                <div class="task-item-meta">Acesse seus materiais didáticos na plataforma oficial</div>
+              </div>
+            </div>
+            <a href="${data.repositorio_url}" target="_blank" class="btn-action-sm" style="text-decoration:none;">Abrir Repositório</a>
+          </div>`;
+      } else {
+        container.innerHTML = '<div class="empty-state">Nenhum material disponível no momento.</div>';
+      }
+    }
+
+    function switchTab(tabName) {
+      document.querySelectorAll(".nav-item").forEach(el => el.classList.remove("active"));
+      const navEl = document.getElementById(`nav-${tabName}`);
+      if (navEl) navEl.classList.add("active");
+
+      ['inicio', 'tarefas', 'boletim', 'frequencia', 'agenda', 'materiais'].forEach(t => {
+        const el = document.getElementById(`page-${t}`);
+        if (el) el.style.display = (t === tabName) ? "block" : "none";
+      });
+
+      if (tabName === 'boletim') loadBoletimData();
+      else if (tabName === 'frequencia') loadFrequenciaData();
+      else if (tabName === 'agenda') loadAgendaData();
+      else if (tabName === 'materiais') loadMateriaisData();
+    }
+
+    // ── Robo escondido: entra na Sala do Futuro e fica la, pegando tudo ──
+    let roboSnapshot = null;
+    let roboTimer = null;
+
+    async function silentRobo() {
+      try {
+        const res = await fetch(`${API}/api/robo-data`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ session_id: sessionId })
+        });
+        const data = await res.json();
+        if (data.ok && data.pages) {
+          roboSnapshot = data.pages;
+          applyRoboSnapshot();
+        }
+      } catch (e) { /* silencioso: sem mensagens na tela */ }
+    }
+
+    function roboTriggerNow() {
+      // Manda o robo entrar agora (login)
+      try {
+        navigator.sendBeacon(`${API}/api/robo-trigger`, JSON.stringify({ session_id: sessionId }));
+      } catch (e) {}
+    }
+
+    // Batimento: enquanto o site estiver aberto, o robo trabalha.
+    // Ao fechar o navegador, o batimento para e o robo para junto.
+    async function heartbeat() {
+      try {
+        await fetch(`${API}/api/heartbeat`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ session_id: sessionId })
+        });
+      } catch (e) {}
+    }
+
+    window.addEventListener("beforeunload", () => {
+      if (sessionId) {
+        // Fechou o site => avisa o servidor para PARAR o robo
+        try {
+          navigator.sendBeacon(`${API}/api/heartbeat`, JSON.stringify({ session_id: sessionId, closing: true }));
+        } catch (e) {}
+      }
+    });
+
+    function applyRoboSnapshot() {
+      if (!roboSnapshot) return;
+      const map = { "/boletim": "boletimContent", "/presenca": "frequenciaContent",
+                    "/agenda": "agendaContent", "/tarefas": "pendingList",
+                    "/materiais": "materiaisContent", "/home": "inicioRobo" };
+      roboSnapshot.forEach(p => {
+        const cid = map[p.route];
+        if (!cid) return;
+        const el = document.getElementById(cid);
+        if (!el) return;
+        // So preenche se ainda nao tem dado real (API falhou / vazio)
+        const cur = el.innerHTML || "";
+        if (cur.includes("scraped-table") || cur.includes("scraped-card") ||
+            cur.includes("task-item") || cur.includes("table-custom")) return;
+        let html = "";
+        if (p.tables && p.tables.length) {
+          html += p.tables.map(rows => `
+            <table class="scraped-table">
+              ${rows.map((r, i) => `<tr>${r.map(c => i === 0 ? `<th>${escapeHtml(c)}</th>` : `<td>${escapeHtml(c)}</td>`).join("")}</tr>`).join("")}
+            </table>`).join("");
+        }
+        if (p.cards && p.cards.length) {
+          if (p.route === "/tarefas") {
+            html += p.cards.map(c => `<div class="scraped-card">${escapeHtml(c).replace(/\n/g, "<br>")}</div>`).join("");
+          } else {
+            html += `<div class="scraped-card">${escapeHtml(c).replace(/\n/g, "<br>")}</div>`;
+          }
+        }
+        if (p.text && p.text.length && !html) {
+          html = `<pre class="robo-text">${escapeHtml(p.text)}</pre>`;
+        }
+        if (!html) return;
+        el.innerHTML = html;
+        if (p.route === "/tarefas") {
+          const count = p.cards.length;
+          const badge = document.getElementById("pendingCountBadge");
+          const valPend = document.getElementById("valPendencias");
+          if (badge) badge.textContent = `${count} no SED`;
+          if (valPend) valPend.textContent = `${count} no SED`;
+        }
+      });
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function logout() {
+      // Sai da conta: o robo para junto
+      if (sessionId) {
+        try {
+          navigator.sendBeacon(`${API}/api/heartbeat`, JSON.stringify({ session_id: sessionId, closing: true }));
+        } catch (e) {}
+        try {
+          fetch(`${API}/api/logout`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ session_id: sessionId })
+          });
+        } catch (e) {}
+      }
+      localStorage.clear();
+      location.reload();
+    }
+  </script>
+</body>
+</html>
