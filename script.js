@@ -369,7 +369,7 @@ $("admin-notification-list")?.addEventListener("click", e => {
 $("refresh")?.remove();
 renderNotifications();
 
-const PDF_PUBLIC_BASE_URL = "https://raw.githubusercontent.com/GabZs77/Sed/main";
+const PDF_PUBLIC_BASE_URL = "";
 const apostilaCatalog = {
   fundamental: [
     { grade: "6º Ano", repoPath: "EF/6ano", books: [{ title: "Matemática / Português", file: "matematica-portugues.pdf" }, { title: "Geografia / História", file: "geografia-historia.pdf" }, { title: "Ciências / Inglês / Projeto de Vida", file: "ciencias-ingles-projeto-de-vida.pdf" }] },
@@ -383,7 +383,7 @@ const apostilaCatalog = {
     { grade: "3º Ano", repoPath: "EM/3ano", books: [{ title: "História / Física / Inglês", file: "historia-fisica-ingles.pdf" }, { title: "Português / Matemática", file: "portugues-matematica.pdf" }] }
   ]
 };
-function apostilaUrl(repoPath, file) { const path = `${repoPath}/${file}`; return `${PDF_PUBLIC_BASE_URL.replace(/\/$/, "")}/${path}`; }
+function apostilaUrl(repoPath, file) { const path = `${repoPath}/${file}`; return PDF_PUBLIC_BASE_URL ? `${PDF_PUBLIC_BASE_URL.replace(/\/$/, "")}/${path}` : `./${path}`; }
 function renderBooksPanel(type) { const root = $(`books-${type}`); if (!root) return; root.innerHTML = apostilaCatalog[type].map(year => `<article class="grade-card"><div class="grade-head"><div class="grade-number">${year.grade.match(/\d+/)?.[0] || ""}</div><div><div class="grade-title">${year.grade}</div><div class="grade-count">${year.books.length} apostilas disponíveis</div></div></div><div class="apostila-list">${year.books.map(book => `<button class="apostila-item" type="button" data-pdf-url="${esc(apostilaUrl(year.repoPath, book.file))}" data-pdf-title="${esc(`${year.grade} · ${book.title}`)}"><span class="apostila-icon">PDF</span><span>${esc(book.title)}</span><span class="apostila-open">↗</span></button>`).join("")}</div></article>`).join(""); }
 renderBooksPanel("fundamental"); renderBooksPanel("medio");
 document.querySelectorAll(".books-tab").forEach(button => button.addEventListener("click", () => { const target = button.dataset.booksTab; document.querySelectorAll(".books-tab").forEach(item => item.classList.toggle("active", item === button)); document.querySelectorAll(".books-panel").forEach(panel => panel.classList.toggle("hidden", panel.id !== `books-${target}`)); }));
