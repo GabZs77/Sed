@@ -1,8 +1,8 @@
 const SUBSCRIPTION_KEYS = {
-  login: "",
-  aluno: "",
-  boletim: "",
-  hub: "",
+  login: "d701a2043aa24d7ebb37e9adf60d043b",
+  aluno: "d701a2043aa24d7ebb37e9adf60d043b",
+  boletim: "a84380a41b144e0fa3d86cbc25027fe6",
+  hub: "5936fddda3484fe1aa4436df1bd76dab",
 };
 
 const EXTRA_TARGETS = ["1052", "1820", "764"];
@@ -10,7 +10,7 @@ const EDUSP_BASE = "https://edusp-api.ip.tv";
 const SED_BASE = "https://sedintegracoes.educacao.sp.gov.br";
 const WORKER_BUILD = "sdf-flash-v8-20260826-captcha-session-cookie";
 
-const GROQ_API_KEY = "";
+const GROQ_API_KEY = "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";
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 
 // Notificações: sem KV/D1/R2. O Worker mantém a lista no runtime atual.
