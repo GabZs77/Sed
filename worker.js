@@ -7,6 +7,7 @@ const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 function getSubscriptionKeys(env) {
   return {
     login: String(env?.SED_LOGIN_SUBSCRIPTION_KEY || "").trim(),
+    turmas: String(env?.SED_TURMAS_SUBSCRIPTION_KEY || env?.SED_LOGIN_SUBSCRIPTION_KEY || "").trim(),
     aluno: String(env?.SED_ALUNO_SUBSCRIPTION_KEY || "").trim(),
     boletim: String(env?.SED_BOLETIM_SUBSCRIPTION_KEY || "").trim(),
     hub: String(env?.SED_HUB_SUBSCRIPTION_KEY || "").trim(),
@@ -254,7 +255,7 @@ async function fetchTurmas(token, cdUsuarioCurto, env) {
   const url = `${SED_BASE}/saladofuturobffapi/apihubintegracoes/api/v2/Turma/ListarTurmasPorAluno?codigoAluno=${encodeURIComponent(codigoAluno)}`;
   const headers = {
     ...UPSTREAM_HEADERS,
-    "Ocp-Apim-Subscription-Key": keys.hub,
+    "Ocp-Apim-Subscription-Key": keys.turmas,
     "x-product-name": "SalaDoFuturo",
   };
   if (token) headers.Authorization = `Bearer ${String(token).replace(/^Bearer\s+/i, "")}`;

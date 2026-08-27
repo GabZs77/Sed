@@ -12,7 +12,7 @@ Versão estática do painel acadêmico SED Aluno, com agenda, presença, boletim
 
 ## Configuração do Worker
 
-As chaves de upstream e do provedor de IA não são incluídas neste repositório público. Configure os seguintes secrets no Cloudflare Worker antes de publicar o `worker.js`: `SED_LOGIN_SUBSCRIPTION_KEY`, `SED_ALUNO_SUBSCRIPTION_KEY`, `SED_BOLETIM_SUBSCRIPTION_KEY`, `SED_HUB_SUBSCRIPTION_KEY` e `GROQ_API_KEY`. Nunca coloque tokens, senhas, cookies ou arquivos `.env` no GitHub. O arquivo de captura de rede mantido no repositório contém apenas valores sensíveis redigidos.
+As chaves de upstream e do provedor de IA não são incluídas neste repositório público. Configure os seguintes secrets no Cloudflare Worker antes de publicar o `worker.js`: `SED_LOGIN_SUBSCRIPTION_KEY`, `SED_TURMAS_SUBSCRIPTION_KEY` (ou a de login), `SED_ALUNO_SUBSCRIPTION_KEY`, `SED_BOLETIM_SUBSCRIPTION_KEY`, `SED_HUB_SUBSCRIPTION_KEY` e `GROQ_API_KEY`. Nunca coloque tokens, senhas, cookies ou arquivos `.env` no GitHub. O arquivo de captura de rede mantido no repositório contém apenas valores sensíveis redigidos.
 
 ## Correção da obtenção da sala do aluno
 
