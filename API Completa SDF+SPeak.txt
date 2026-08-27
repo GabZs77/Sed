@@ -1,0 +1,2631 @@
+--===== Listar Turmas Por Aluno =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/apihubintegracoes/api/v2/Turma/ListarTurmasPorAluno?codigoAluno=30195374
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:20:43 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+authorization
+Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJMT0dJTiI6IjAwMDAxMTI3MjQxNjA2U1AiLCJOSUNLTkFNRSI6ImdhYnJpZWxoZW5yMTI3MjQxNjA2IiwiQ0RfVVNVQVJJTyI6IjMwMTk1Mzc0NiIsIk5BTUUiOiJHQUJSSUVMIEhFTlJJUVVFIERFIE9MSVZFSVJBIiwiTUVUT0RPTE9HSU4iOiJTRUQiLCJDUEYiOiI1NTcxNTI2MTgxMyIsInVuaXF1ZV9uYW1lIjoiUEVSRklTIiwiUEVSRklTIjoiW3tcIkNEX1BFUkZJTFwiOlwiNlwiLFwiTk1fUEVSRklMXCI6XCJBbHVub1wiLFwiTlJfQ09NUE9SVEFNRU5UT1wiOlwiNlwiLFwiQ09NUE9SVEFNRU5UT1wiOlwiQWx1bm9cIn1dIiwiRU1BSUwiOiJKT1NJTUFHQU1FQEdNQUlMLkNPTSIsIm5iZiI6MTc4NzYwMjg0MSwiZXhwIjoxNzg3Njg5MjQxLCJpYXQiOjE3ODc2MDI4NDEsImlzcyI6Imh0dHBzOi8vc2VlLXAtY3JlZGVuY2lhaXMuYXp1cmV3ZWJzaXRlcy5uZXQiLCJhdWQiOiJTRUQifQ.Dert4hgWEzZrAqrcBiQON_ow5nnuh7yqs4y5SeyLO6ziDl2w5KIq2UmIDaz_ANSq04dz1mZCx97A8fZZf2LWAweQMk8Lze60mZAY0okG87FW_0tKYCp1UIP-ClidH1CiTTNl9hN-oO3S2CMHodvTIY65wU_rvXvyIQhoznyJ81mu2-GHgvZ3Ou8mtEOzfCbW8sD2vqniGBy0nDTBU2n_LvMCUlH4hptII1rV0onf-oGOm3vBTtvs6UuLrStQR7YAyVaaVUDGn5cLT9j48NTjK7DHRJCEedr3uzAuupPCmsH7C45NVNOrcqzmfzAcC4qkoslydNmkChL1mXSbrGznNw
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|e9a4fff8eefb4458b74a27b11f76d662.11fc39bfe8284d7d
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+traceparent
+00-e9a4fff8eefb4458b74a27b11f76d662-11fc39bfe8284d7d-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Listar Bimestre =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/apihubintegracoes/api/v2/Bimestre/ListarBimestres?escolaId=15052
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:20:45 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+authorization
+Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJMT0dJTiI6IjAwMDAxMTI3MjQxNjA2U1AiLCJOSUNLTkFNRSI6ImdhYnJpZWxoZW5yMTI3MjQxNjA2IiwiQ0RfVVNVQVJJTyI6IjMwMTk1Mzc0NiIsIk5BTUUiOiJHQUJSSUVMIEhFTlJJUVVFIERFIE9MSVZFSVJBIiwiTUVUT0RPTE9HSU4iOiJTRUQiLCJDUEYiOiI1NTcxNTI2MTgxMyIsInVuaXF1ZV9uYW1lIjoiUEVSRklTIiwiUEVSRklTIjoiW3tcIkNEX1BFUkZJTFwiOlwiNlwiLFwiTk1fUEVSRklMXCI6XCJBbHVub1wiLFwiTlJfQ09NUE9SVEFNRU5UT1wiOlwiNlwiLFwiQ09NUE9SVEFNRU5UT1wiOlwiQWx1bm9cIn1dIiwiRU1BSUwiOiJKT1NJTUFHQU1FQEdNQUlMLkNPTSIsIm5iZiI6MTc4NzYwMjg0MSwiZXhwIjoxNzg3Njg5MjQxLCJpYXQiOjE3ODc2MDI4NDEsImlzcyI6Imh0dHBzOi8vc2VlLXAtY3JlZGVuY2lhaXMuYXp1cmV3ZWJzaXRlcy5uZXQiLCJhdWQiOiJTRUQifQ.Dert4hgWEzZrAqrcBiQON_ow5nnuh7yqs4y5SeyLO6ziDl2w5KIq2UmIDaz_ANSq04dz1mZCx97A8fZZf2LWAweQMk8Lze60mZAY0okG87FW_0tKYCp1UIP-ClidH1CiTTNl9hN-oO3S2CMHodvTIY65wU_rvXvyIQhoznyJ81mu2-GHgvZ3Ou8mtEOzfCbW8sD2vqniGBy0nDTBU2n_LvMCUlH4hptII1rV0onf-oGOm3vBTtvs6UuLrStQR7YAyVaaVUDGn5cLT9j48NTjK7DHRJCEedr3uzAuupPCmsH7C45NVNOrcqzmfzAcC4qkoslydNmkChL1mXSbrGznNw
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; dtSad991g0ha=-; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; _clsk=1g2uq7b%5E1787602801053%5E3%5E0%5Et.clarity.ms%2Fcollect; _ga_EBFJLFC85E=GS2.1.s1787602794$o1$g1$t1787602833$j21$l0$h1467942305; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; rxvt=1787604644030|1787602781421; dtPC=-26679$202781410_741h50vRJNCWMDCPOPIDOGBSNEAOFMTMHEAFPSP-0e0
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|e9a4fff8eefb4458b74a27b11f76d662.060db2ba097e4c87
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-e9a4fff8eefb4458b74a27b11f76d662-060db2ba097e4c87-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Obter Aluno Por Código =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/api/Aluno/ObterAlunoPorCodigo?codigoAluno=30195374
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:20:51 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+authorization
+Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJMT0dJTiI6IjAwMDAxMTI3MjQxNjA2U1AiLCJOSUNLTkFNRSI6ImdhYnJpZWxoZW5yMTI3MjQxNjA2IiwiQ0RfVVNVQVJJTyI6IjMwMTk1Mzc0NiIsIk5BTUUiOiJHQUJSSUVMIEhFTlJJUVVFIERFIE9MSVZFSVJBIiwiTUVUT0RPTE9HSU4iOiJTRUQiLCJDUEYiOiI1NTcxNTI2MTgxMyIsInVuaXF1ZV9uYW1lIjoiUEVSRklTIiwiUEVSRklTIjoiW3tcIkNEX1BFUkZJTFwiOlwiNlwiLFwiTk1fUEVSRklMXCI6XCJBbHVub1wiLFwiTlJfQ09NUE9SVEFNRU5UT1wiOlwiNlwiLFwiQ09NUE9SVEFNRU5UT1wiOlwiQWx1bm9cIn1dIiwiRU1BSUwiOiJKT1NJTUFHQU1FQEdNQUlMLkNPTSIsIm5iZiI6MTc4NzYwMjg0MSwiZXhwIjoxNzg3Njg5MjQxLCJpYXQiOjE3ODc2MDI4NDEsImlzcyI6Imh0dHBzOi8vc2VlLXAtY3JlZGVuY2lhaXMuYXp1cmV3ZWJzaXRlcy5uZXQiLCJhdWQiOiJTRUQifQ.Dert4hgWEzZrAqrcBiQON_ow5nnuh7yqs4y5SeyLO6ziDl2w5KIq2UmIDaz_ANSq04dz1mZCx97A8fZZf2LWAweQMk8Lze60mZAY0okG87FW_0tKYCp1UIP-ClidH1CiTTNl9hN-oO3S2CMHodvTIY65wU_rvXvyIQhoznyJ81mu2-GHgvZ3Ou8mtEOzfCbW8sD2vqniGBy0nDTBU2n_LvMCUlH4hptII1rV0onf-oGOm3vBTtvs6UuLrStQR7YAyVaaVUDGn5cLT9j48NTjK7DHRJCEedr3uzAuupPCmsH7C45NVNOrcqzmfzAcC4qkoslydNmkChL1mXSbrGznNw
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; dtSad991g0ha=-; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; _clsk=1g2uq7b%5E1787602801053%5E3%5E0%5Et.clarity.ms%2Fcollect; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; rxvt=1787604650037|1787602781421; dtPC=-26679$202781410_741h58vRJNCWMDCPOPIDOGBSNEAOFMTMHEAFPSP-0e0; _ga_EBFJLFC85E=GS2.1.s1787602794$o1$g1$t1787602850$j4$l1$h1467942305
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|ad1a35d53ab74484b1b4cc4f9f806bce.22a63886e73c4521
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-ad1a35d53ab74484b1b4cc4f9f806bce-22a63886e73c4521-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Listar Perfis =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/muralavisosapi/api/mural-avisos/listar-perfis
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:20:52 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; dtSad991g0ha=-; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; _clsk=1g2uq7b%5E1787602801053%5E3%5E0%5Et.clarity.ms%2Fcollect; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; _ga_EBFJLFC85E=GS2.1.s1787602794$o1$g1$t1787602850$j4$l1$h1467942305; rxvt=1787604651265|1787602781421; dtPC=-26679$202781410_741h63vRJNCWMDCPOPIDOGBSNEAOFMTMHEAFPSP-0e0
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|ad1a35d53ab74484b1b4cc4f9f806bce.2fcee18e5cd9456a
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-ad1a35d53ab74484b1b4cc4f9f806bce-2fcee18e5cd9456a-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Tarefas Publicadas =====--
+Request URL
+https://edusp-api.ip.tv/survey/todo/count?&publication_target=r08f015078bd2141c1-l&publication_target=r799cd3344cdf9ca80-l&publication_target=r7f4d52c5663e5d500-l&publication_target=r08f015078bd2141c1-l%3Agabrielhenr127241606-sp&publication_target=r799cd3344cdf9ca80-l%3Agabrielhenr127241606-sp&publication_target=r7f4d52c5663e5d500-l%3Agabrielhenr127241606-sp&publication_target=2087&publication_target=1930&publication_target=1049&publication_target=1864&publication_target=1820&publication_target=764&filter_expired=true&with_answer=true&answer_statuses=draft
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+172.66.163.225:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-origin
+*
+access-control-expose-headers
+X-Server-Time
+cf-cache-status
+DYNAMIC
+cf-ray
+a3050f72b8aa7be8-GRU
+content-length
+30
+content-security-policy
+default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+content-type
+application/json; charset=utf-8
+cross-origin-opener-policy
+same-origin
+cross-origin-resource-policy
+same-origin
+date
+Mon, 24 Aug 2026 20:20:54 GMT
+etag
+W/"1e-T20kvyvwmed8bLpIMiuRARKCfRY"
+origin-agent-cluster
+?1
+referrer-policy
+no-referrer
+server
+cloudflare
+strict-transport-security
+max-age=15724800; includeSubDomains
+x-content-type-options
+nosniff
+x-dns-prefetch-control
+off
+x-download-options
+noopen
+x-frame-options
+SAMEORIGIN
+x-permitted-cross-domain-policies
+none
+x-xss-protection
+0
+:authority
+edusp-api.ip.tv
+:method
+GET
+:path
+/survey/todo/count?&publication_target=r08f015078bd2141c1-l&publication_target=r799cd3344cdf9ca80-l&publication_target=r7f4d52c5663e5d500-l&publication_target=r08f015078bd2141c1-l%3Agabrielhenr127241606-sp&publication_target=r799cd3344cdf9ca80-l%3Agabrielhenr127241606-sp&publication_target=r7f4d52c5663e5d500-l%3Agabrielhenr127241606-sp&publication_target=2087&publication_target=1930&publication_target=1049&publication_target=1864&publication_target=1820&publication_target=764&filter_expired=true&with_answer=true&answer_statuses=draft
+:scheme
+https
+accept
+application/json
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+content-type
+application/json
+origin
+https://saladofuturo.educacao.sp.gov.br
+priority
+u=1, i
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|ad1a35d53ab74484b1b4cc4f9f806bce.8aca4fecfa1b4743
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+cross-site
+traceparent
+00-ad1a35d53ab74484b1b4cc4f9f806bce-8aca4fecfa1b4743-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-api-key
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYXNfaWQiOiI2NDFjYWUzOTg5NjI2YjRiMjM0Yzc0ZTUiLCJ1c2VyX2lkIjoiNjQxY2FlMzk4OTYyNmI0YjIzNGM3NGU1IiwiZXh0ZXJuYWxfaWQiOiIzMDE5NTM3NDYiLCJza2V5IjoiYXV0aF90b2tlbjplZHVzcDpnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsIm5pY2siOiJnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsInJlYWxtIjoiZWR1c3AiLCJyb2xlIjoiMDAwNiIsImlhdCI6MTc4NzYwMjg0OCwiZXhwIjoxNzg3Njg5MjQ4LCJhdWQiOiJ3ZWJjbGllbnQifQ.T9e5ObDaKcRljmEtx0NP6WGd70HGETxLfIyf2RRutUo
+
+--===== Listar Avisos por Turma =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/muralavisosapi/api/mural-avisos/listar-avisos-turma?CodigoUsuario=301953746&PerfilAviso=1&Turmas=41139058
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:20:54 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; dtSad991g0ha=-; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; _clsk=1g2uq7b%5E1787602801053%5E3%5E0%5Et.clarity.ms%2Fcollect; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; _ga_EBFJLFC85E=GS2.1.s1787602794$o1$g1$t1787602850$j4$l1$h1467942305; rxvt=1787604654207|1787602781421; dtPC=-26679$202781410_741h69vRJNCWMDCPOPIDOGBSNEAOFMTMHEAFPSP-0e0
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|ad1a35d53ab74484b1b4cc4f9f806bce.b8c6e3d7aced41a7
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-ad1a35d53ab74484b1b4cc4f9f806bce-b8c6e3d7aced41a7-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Api Room User =====--
+Request URL
+https://edusp-api.ip.tv/room/user?list_all=true&with_cards=true
+Request Method
+GET
+Status Code
+304 Not Modified
+Remote Address
+172.66.163.225:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-origin
+*
+access-control-expose-headers
+X-Server-Time
+cf-cache-status
+DYNAMIC
+cf-ray
+a3052be44fecf521-GRU
+content-security-policy
+default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+cross-origin-opener-policy
+same-origin
+cross-origin-resource-policy
+same-origin
+date
+Mon, 24 Aug 2026 20:40:19 GMT
+etag
+W/"32c9-TRo+3HiIDbLE08EaYbQPK4q/aP0"
+origin-agent-cluster
+?1
+referrer-policy
+no-referrer
+server
+cloudflare
+strict-transport-security
+max-age=15724800; includeSubDomains
+x-content-type-options
+nosniff
+x-dns-prefetch-control
+off
+x-download-options
+noopen
+x-frame-options
+SAMEORIGIN
+x-permitted-cross-domain-policies
+none
+x-xss-protection
+0
+:authority
+edusp-api.ip.tv
+:method
+GET
+:path
+/room/user?list_all=true&with_cards=true
+:scheme
+https
+accept
+application/json
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+content-type
+application/json
+if-none-match
+W/"32c9-TRo+3HiIDbLE08EaYbQPK4q/aP0"
+origin
+https://saladofuturo.educacao.sp.gov.br
+priority
+u=1, i
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|36c3cd0fb87f4522b1ea323143ecf0e3.d885f51e4e264b19
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+cross-site
+traceparent
+00-36c3cd0fb87f4522b1ea323143ecf0e3-d885f51e4e264b19-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-api-key
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYXNfaWQiOiI2NDFjYWUzOTg5NjI2YjRiMjM0Yzc0ZTUiLCJ1c2VyX2lkIjoiNjQxY2FlMzk4OTYyNmI0YjIzNGM3NGU1IiwiZXh0ZXJuYWxfaWQiOiIzMDE5NTM3NDYiLCJza2V5IjoiYXV0aF90b2tlbjplZHVzcDpnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsIm5pY2siOiJnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsInJlYWxtIjoiZWR1c3AiLCJyb2xlIjoiMDAwNiIsImlhdCI6MTc4NzYwMjg0OCwiZXhwIjoxNzg3Njg5MjQ4LCJhdWQiOiJ3ZWJjbGllbnQifQ.T9e5ObDaKcRljmEtx0NP6WGd70HGETxLfIyf2RRutUo
+
+
+
+--===== Consultar Notificação =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/cmspwebservice/api/sala-do-futuro-alunos/consulta-notificacao-cmsp?userId=301953746
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:20:54 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; dtSad991g0ha=-; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; _clsk=1g2uq7b%5E1787602801053%5E3%5E0%5Et.clarity.ms%2Fcollect; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; _ga_EBFJLFC85E=GS2.1.s1787602794$o1$g1$t1787602850$j4$l1$h1467942305; rxvt=1787604654207|1787602781421; dtPC=-26679$202781410_741h69vRJNCWMDCPOPIDOGBSNEAOFMTMHEAFPSP-0e0
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|ad1a35d53ab74484b1b4cc4f9f806bce.a7ec5bf2ae714e7d
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-ad1a35d53ab74484b1b4cc4f9f806bce-a7ec5bf2ae714e7d-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Tarefas 2 =====--
+Request URL
+https://edusp-api.ip.tv/tms/task/todo/count?&publication_target=r08f015078bd2141c1-l&publication_target=r799cd3344cdf9ca80-l&publication_target=r7f4d52c5663e5d500-l&publication_target=2087&publication_target=1930&publication_target=1049&publication_target=1864&publication_target=1820&publication_target=764&publication_target=r08f015078bd2141c1-l:gabrielhenr127241606-sp&publication_target=r799cd3344cdf9ca80-l:gabrielhenr127241606-sp&publication_target=r7f4d52c5663e5d500-l:gabrielhenr127241606-sp&filter_expired=true&with_answer=true&answer_statuses=draft&answer_statuses=pending
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+172.66.163.225:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-origin
+*
+access-control-expose-headers
+X-Server-Time
+cf-cache-status
+DYNAMIC
+cf-ray
+a3050fc41ab67be8-GRU
+content-encoding
+br
+content-security-policy
+default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+content-type
+application/json; charset=utf-8
+cross-origin-opener-policy
+same-origin
+cross-origin-resource-policy
+same-origin
+date
+Mon, 24 Aug 2026 20:21:07 GMT
+etag
+W/"5a-8Vr+wF7LmDnVjIQHLUbqBWc/yQ0"
+origin-agent-cluster
+?1
+referrer-policy
+no-referrer
+server
+cloudflare
+strict-transport-security
+max-age=15724800; includeSubDomains
+x-content-type-options
+nosniff
+x-dns-prefetch-control
+off
+x-download-options
+noopen
+x-frame-options
+SAMEORIGIN
+x-permitted-cross-domain-policies
+none
+x-server-time
+2026-08-24T20:21:07.875Z
+x-xss-protection
+0
+:authority
+edusp-api.ip.tv
+:method
+GET
+:path
+/tms/task/todo/count?&publication_target=r08f015078bd2141c1-l&publication_target=r799cd3344cdf9ca80-l&publication_target=r7f4d52c5663e5d500-l&publication_target=2087&publication_target=1930&publication_target=1049&publication_target=1864&publication_target=1820&publication_target=764&publication_target=r08f015078bd2141c1-l:gabrielhenr127241606-sp&publication_target=r799cd3344cdf9ca80-l:gabrielhenr127241606-sp&publication_target=r7f4d52c5663e5d500-l:gabrielhenr127241606-sp&filter_expired=true&with_answer=true&answer_statuses=draft&answer_statuses=pending
+:scheme
+https
+accept
+application/json
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+content-type
+application/json
+origin
+https://saladofuturo.educacao.sp.gov.br
+priority
+u=1, i
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|ad1a35d53ab74484b1b4cc4f9f806bce.4a4f21bddec74218
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+cross-site
+traceparent
+00-ad1a35d53ab74484b1b4cc4f9f806bce-4a4f21bddec74218-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-api-key
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYXNfaWQiOiI2NDFjYWUzOTg5NjI2YjRiMjM0Yzc0ZTUiLCJ1c2VyX2lkIjoiNjQxY2FlMzk4OTYyNmI0YjIzNGM3NGU1IiwiZXh0ZXJuYWxfaWQiOiIzMDE5NTM3NDYiLCJza2V5IjoiYXV0aF90b2tlbjplZHVzcDpnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsIm5pY2siOiJnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsInJlYWxtIjoiZWR1c3AiLCJyb2xlIjoiMDAwNiIsImlhdCI6MTc4NzYwMjg0OCwiZXhwIjoxNzg3Njg5MjQ4LCJhdWQiOiJ3ZWJjbGllbnQifQ.T9e5ObDaKcRljmEtx0NP6WGd70HGETxLfIyf2RRutUo
+
+--===== Api Faltas do Bimestre =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/apiboletim/api/Frequencia/GetFaltasBimestreAtual?codigoAluno=30195374
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:21:10 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; dtSad991g0ha=-; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; _ga_EBFJLFC85E=GS2.1.s1787602794$o1$g1$t1787602850$j4$l1$h1467942305; _clsk=1g2uq7b%5E1787602858244%5E4%5E0%5Et.clarity.ms%2Fcollect; rxvt=1787604666116|1787602781421; dtPC=-26679$202781410_741h78vRJNCWMDCPOPIDOGBSNEAOFMTMHEAFPSP-0e0
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|ad1a35d53ab74484b1b4cc4f9f806bce.b16360698de44806
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-ad1a35d53ab74484b1b4cc4f9f806bce-b16360698de44806-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo 
+
+--===== Api Agenda Escolar =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/apiboletim/api/Agenda/GetAgendaPeriodoEscola?codigoAluno=30195374&anoLetivo=2026&dataInicio=2026-08-24&dataFim=2026-09-23
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:21:10 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; dtSad991g0ha=-; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; _ga_EBFJLFC85E=GS2.1.s1787602794$o1$g1$t1787602850$j4$l1$h1467942305; _clsk=1g2uq7b%5E1787602858244%5E4%5E0%5Et.clarity.ms%2Fcollect; rxvt=1787604666116|1787602781421; dtPC=-26679$202781410_741h78vRJNCWMDCPOPIDOGBSNEAOFMTMHEAFPSP-0e0
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|ad1a35d53ab74484b1b4cc4f9f806bce.db95369742194bbc
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-ad1a35d53ab74484b1b4cc4f9f806bce-db95369742194bbc-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Listar Disciplina Por Aluno =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/apiboletim/api/Agenda/GetAgendaPeriodoEscola?codigoAluno=30195374&anoLetivo=2026&dataInicio=2026-08-24&dataFim=2026-09-23
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:21:10 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; dtSad991g0ha=-; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; _ga_EBFJLFC85E=GS2.1.s1787602794$o1$g1$t1787602850$j4$l1$h1467942305; _clsk=1g2uq7b%5E1787602858244%5E4%5E0%5Et.clarity.ms%2Fcollect; rxvt=1787604666116|1787602781421; dtPC=-26679$202781410_741h78vRJNCWMDCPOPIDOGBSNEAOFMTMHEAFPSP-0e0
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|ad1a35d53ab74484b1b4cc4f9f806bce.db95369742194bbc
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-ad1a35d53ab74484b1b4cc4f9f806bce-db95369742194bbc-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Api Resposta das Atividades =====--
+Request URL
+https://edusp-api.ip.tv/tms/answer?nick=gabrielhenr127241606-sp&limit=20&offset=0&task_is_exam=false&task_is_essay=false&publication_target=r08f015078bd2141c1-l&publication_target=r799cd3344cdf9ca80-l&publication_target=r7f4d52c5663e5d500-l&publication_target=r08f015078bd2141c1-l:gabrielhenr127241606-sp&publication_target=r799cd3344cdf9ca80-l:gabrielhenr127241606-sp&publication_target=r7f4d52c5663e5d500-l:gabrielhenr127241606-sp&publication_target=2087&publication_target=1930&publication_target=1049&publication_target=1864&publication_target=1820&publication_target=764&fields=id&fields=obs&fields=nick&fields=status&fields=task_id&fields=revised&fields=answers&fields=duration&fields=created_at&fields=updated_at&fields=deleted_at&fields=accessed_on&fields=executed_on&fields=result_score&fields=delivered_at&fields=invalidated_at&fields=publication_target&fields=task.title&fields=task.style&fields=task.author&fields=task.is_exam&fields=task.shuffle&fields=task.is_essay&fields=task.expire_at&fields=task.is_public&fields=task.publish_at&fields=task.created_at&fields=task.updated_at&fields=task.description&fields=task.enable_token&fields=task.is_objective&fields=task.published_by&fields=task.category_ids&fields=task.enable_captcha&fields=task.question_count&fields=task.is_security_task&fields=task.display_answer_at&fields=task.publication_target&fields=task.max_execution_time&fields=task.allow_check_answer&fields=task.question_invalid_ids&fields=pending_agreement&status=pending&order=asc&order_by=task_id&with_apply_moment=true
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+172.66.163.225:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-origin
+*
+access-control-expose-headers
+X-Server-Time
+cf-cache-status
+DYNAMIC
+cf-ray
+a30529ebafd4f521-GRU
+content-length
+2
+content-security-policy
+default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+content-type
+application/json; charset=utf-8
+cross-origin-opener-policy
+same-origin
+cross-origin-resource-policy
+same-origin
+date
+Mon, 24 Aug 2026 20:38:59 GMT
+etag
+W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"
+origin-agent-cluster
+?1
+referrer-policy
+no-referrer
+server
+cloudflare
+strict-transport-security
+max-age=15724800; includeSubDomains
+x-content-type-options
+nosniff
+x-dns-prefetch-control
+off
+x-download-options
+noopen
+x-frame-options
+SAMEORIGIN
+x-permitted-cross-domain-policies
+none
+x-server-time
+2026-08-24T20:38:59.159Z
+x-xss-protection
+0
+:authority
+edusp-api.ip.tv
+:method
+GET
+:path
+/tms/answer?nick=gabrielhenr127241606-sp&limit=20&offset=0&task_is_exam=false&task_is_essay=false&publication_target=r08f015078bd2141c1-l&publication_target=r799cd3344cdf9ca80-l&publication_target=r7f4d52c5663e5d500-l&publication_target=r08f015078bd2141c1-l:gabrielhenr127241606-sp&publication_target=r799cd3344cdf9ca80-l:gabrielhenr127241606-sp&publication_target=r7f4d52c5663e5d500-l:gabrielhenr127241606-sp&publication_target=2087&publication_target=1930&publication_target=1049&publication_target=1864&publication_target=1820&publication_target=764&fields=id&fields=obs&fields=nick&fields=status&fields=task_id&fields=revised&fields=answers&fields=duration&fields=created_at&fields=updated_at&fields=deleted_at&fields=accessed_on&fields=executed_on&fields=result_score&fields=delivered_at&fields=invalidated_at&fields=publication_target&fields=task.title&fields=task.style&fields=task.author&fields=task.is_exam&fields=task.shuffle&fields=task.is_essay&fields=task.expire_at&fields=task.is_public&fields=task.publish_at&fields=task.created_at&fields=task.updated_at&fields=task.description&fields=task.enable_token&fields=task.is_objective&fields=task.published_by&fields=task.category_ids&fields=task.enable_captcha&fields=task.question_count&fields=task.is_security_task&fields=task.display_answer_at&fields=task.publication_target&fields=task.max_execution_time&fields=task.allow_check_answer&fields=task.question_invalid_ids&fields=pending_agreement&status=pending&order=asc&order_by=task_id&with_apply_moment=true
+:scheme
+https
+accept
+application/json
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+content-type
+application/json
+origin
+https://saladofuturo.educacao.sp.gov.br
+priority
+u=1, i
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|12fda0afa8b540338771a9d634663fcb.d9790207c9a44535
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+cross-site
+traceparent
+00-12fda0afa8b540338771a9d634663fcb-d9790207c9a44535-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-api-key
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYXNfaWQiOiI2NDFjYWUzOTg5NjI2YjRiMjM0Yzc0ZTUiLCJ1c2VyX2lkIjoiNjQxY2FlMzk4OTYyNmI0YjIzNGM3NGU1IiwiZXh0ZXJuYWxfaWQiOiIzMDE5NTM3NDYiLCJza2V5IjoiYXV0aF90b2tlbjplZHVzcDpnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsIm5pY2siOiJnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsInJlYWxtIjoiZWR1c3AiLCJyb2xlIjoiMDAwNiIsImlhdCI6MTc4NzYwMjg0OCwiZXhwIjoxNzg3Njg5MjQ4LCJhdWQiOiJ3ZWJjbGllbnQifQ.T9e5ObDaKcRljmEtx0NP6WGd70HGETxLfIyf2RRutUo
+
+--===== Token Plataforma SPeak =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/integracoes/Token?plataforma=SPeak
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:45:11 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; dtSad991g0ha=-; _clsk=1g2uq7b%5E1787604020989%5E9%5E0%5Et.clarity.ms%2Fcollect; _ga_EBFJLFC85E=GS2.1.s1787602794$o1$g1$t1787604040$j24$l1$h1467942305; rxvt=1787606111055|1787602781421; dtPC=-26679$203928118_72h63vRJNCWMDCPOPIDOGBSNEAOFMTMHEAFPSP-0e0
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|36c3cd0fb87f4522b1ea323143ecf0e3.515e650b6a724186
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-36c3cd0fb87f4522b1ea323143ecf0e3-515e650b6a724186-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Categorias Tarefas =====--
+Request URL
+https://edusp-api.ip.tv/tms/task/targets/categories?expired_only=false&filter_expired=false&publication_target=r08f015078bd2141c1-l&publication_target=r799cd3344cdf9ca80-l&publication_target=r7f4d52c5663e5d500-l&publication_target=r08f015078bd2141c1-l:gabrielhenr127241606-sp&publication_target=r799cd3344cdf9ca80-l:gabrielhenr127241606-sp&publication_target=r7f4d52c5663e5d500-l:gabrielhenr127241606-sp&publication_target=2087&publication_target=1930&publication_target=1049&publication_target=1864&publication_target=1820&publication_target=764&category_parent_id=19&is_essay=true&is_exam=false
+Request Method
+GET
+Status Code
+304 Not Modified
+Remote Address
+172.66.163.225:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-origin
+*
+access-control-expose-headers
+X-Server-Time
+cf-cache-status
+DYNAMIC
+cf-ray
+a30567749d4a0114-GRU
+content-security-policy
+default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+cross-origin-opener-policy
+same-origin
+cross-origin-resource-policy
+same-origin
+date
+Mon, 24 Aug 2026 21:20:59 GMT
+etag
+W/"55-tiYs6Jg6esSOyRzPq2dg7BmpEPk"
+origin-agent-cluster
+?1
+referrer-policy
+no-referrer
+server
+cloudflare
+strict-transport-security
+max-age=15724800; includeSubDomains
+x-content-type-options
+nosniff
+x-dns-prefetch-control
+off
+x-download-options
+noopen
+x-frame-options
+SAMEORIGIN
+x-permitted-cross-domain-policies
+none
+x-server-time
+2026-08-24T21:20:59.623Z
+x-xss-protection
+0
+:authority
+edusp-api.ip.tv
+:method
+GET
+:path
+/tms/task/targets/categories?expired_only=false&filter_expired=false&publication_target=r08f015078bd2141c1-l&publication_target=r799cd3344cdf9ca80-l&publication_target=r7f4d52c5663e5d500-l&publication_target=r08f015078bd2141c1-l:gabrielhenr127241606-sp&publication_target=r799cd3344cdf9ca80-l:gabrielhenr127241606-sp&publication_target=r7f4d52c5663e5d500-l:gabrielhenr127241606-sp&publication_target=2087&publication_target=1930&publication_target=1049&publication_target=1864&publication_target=1820&publication_target=764&category_parent_id=19&is_essay=true&is_exam=false
+:scheme
+https
+accept
+application/json
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+content-type
+application/json
+if-none-match
+W/"55-tiYs6Jg6esSOyRzPq2dg7BmpEPk"
+origin
+https://saladofuturo.educacao.sp.gov.br
+priority
+u=1, i
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|3037ff617e334849b5ae54dd229d08c4.e54a885918744dc4
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+cross-site
+traceparent
+00-3037ff617e334849b5ae54dd229d08c4-e54a885918744dc4-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-api-key
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYXNfaWQiOiI2NDFjYWUzOTg5NjI2YjRiMjM0Yzc0ZTUiLCJ1c2VyX2lkIjoiNjQxY2FlMzk4OTYyNmI0YjIzNGM3NGU1IiwiZXh0ZXJuYWxfaWQiOiIzMDE5NTM3NDYiLCJza2V5IjoiYXV0aF90b2tlbjplZHVzcDpnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsIm5pY2siOiJnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsInJlYWxtIjoiZWR1c3AiLCJyb2xlIjoiMDAwNiIsImlhdCI6MTc4NzYwMjg0OCwiZXhwIjoxNzg3Njg5MjQ4LCJhdWQiOiJ3ZWJjbGllbnQifQ.T9e5ObDaKcRljmEtx0NP6WGd70HGETxLfIyf2RRutUo
+
+--===== Api Redação =====--
+Request URL
+https://edusp-api.ip.tv/tms/task/todo?expired_only=false&limit=100&offset=0&filter_expired=true&is_exam=false&with_answer=true&is_essay=true&publication_target=r08f015078bd2141c1-l&publication_target=r799cd3344cdf9ca80-l&publication_target=r7f4d52c5663e5d500-l&publication_target=r08f015078bd2141c1-l:gabrielhenr127241606-sp&publication_target=r799cd3344cdf9ca80-l:gabrielhenr127241606-sp&publication_target=r7f4d52c5663e5d500-l:gabrielhenr127241606-sp&publication_target=2087&publication_target=1930&publication_target=1049&publication_target=1864&publication_target=1820&publication_target=764&answer_statuses=draft&answer_statuses=pending&with_apply_moment=true&exclude_category_id=748331
+Request Method
+GET
+Status Code
+304 Not Modified
+Remote Address
+172.66.163.225:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-origin
+*
+access-control-expose-headers
+X-Server-Time
+cf-cache-status
+DYNAMIC
+cf-ray
+a305678bca250114-GRU
+content-security-policy
+default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+cross-origin-opener-policy
+same-origin
+cross-origin-resource-policy
+same-origin
+date
+Mon, 24 Aug 2026 21:21:03 GMT
+etag
+W/"721-I0n+aEWEHhWRjLDJ/xBM5s8YbOM"
+origin-agent-cluster
+?1
+referrer-policy
+no-referrer
+server
+cloudflare
+strict-transport-security
+max-age=15724800; includeSubDomains
+x-content-type-options
+nosniff
+x-dns-prefetch-control
+off
+x-download-options
+noopen
+x-frame-options
+SAMEORIGIN
+x-permitted-cross-domain-policies
+none
+x-server-time
+2026-08-24T21:21:03.342Z
+x-xss-protection
+0
+:authority
+edusp-api.ip.tv
+:method
+GET
+:path
+/tms/task/todo?expired_only=false&limit=100&offset=0&filter_expired=true&is_exam=false&with_answer=true&is_essay=true&publication_target=r08f015078bd2141c1-l&publication_target=r799cd3344cdf9ca80-l&publication_target=r7f4d52c5663e5d500-l&publication_target=r08f015078bd2141c1-l:gabrielhenr127241606-sp&publication_target=r799cd3344cdf9ca80-l:gabrielhenr127241606-sp&publication_target=r7f4d52c5663e5d500-l:gabrielhenr127241606-sp&publication_target=2087&publication_target=1930&publication_target=1049&publication_target=1864&publication_target=1820&publication_target=764&answer_statuses=draft&answer_statuses=pending&with_apply_moment=true&exclude_category_id=748331
+:scheme
+https
+accept
+application/json
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+content-type
+application/json
+if-none-match
+W/"721-I0n+aEWEHhWRjLDJ/xBM5s8YbOM"
+origin
+https://saladofuturo.educacao.sp.gov.br
+priority
+u=1, i
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|3037ff617e334849b5ae54dd229d08c4.85c0f30807ca4f2d
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+cross-site
+traceparent
+00-3037ff617e334849b5ae54dd229d08c4-85c0f30807ca4f2d-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-api-key
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYXNfaWQiOiI2NDFjYWUzOTg5NjI2YjRiMjM0Yzc0ZTUiLCJ1c2VyX2lkIjoiNjQxY2FlMzk4OTYyNmI0YjIzNGM3NGU1IiwiZXh0ZXJuYWxfaWQiOiIzMDE5NTM3NDYiLCJza2V5IjoiYXV0aF90b2tlbjplZHVzcDpnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsIm5pY2siOiJnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsInJlYWxtIjoiZWR1c3AiLCJyb2xlIjoiMDAwNiIsImlhdCI6MTc4NzYwMjg0OCwiZXhwIjoxNzg3Njg5MjQ4LCJhdWQiOiJ3ZWJjbGllbnQifQ.T9e5ObDaKcRljmEtx0NP6WGd70HGETxLfIyf2RRutUo
+
+--===== Api SPeak (Enter) =====--
+Request URL
+https://catalyst-enter-api.better.efekta.com/v1/catalyst/enter
+Request Method
+POST
+Status Code
+200 OK
+Remote Address
+172.64.155.141:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://catalyst-enter.better.efekta.com
+cf-cache-status
+DYNAMIC
+cf-ray
+a3053497db334fb4-GRU
+content-encoding
+gzip
+content-length
+861
+content-type
+application/json
+date
+Mon, 24 Aug 2026 20:46:16 GMT
+server
+cloudflare
+vary
+accept-encoding
+x-amz-apigw-id
+CoAP4HLbDoEEV2g=
+x-amzn-requestid
+edb5c506-42d8-445e-b334-1756883e7c8f
+x-amzn-trace-id
+Root=1-6a8cad98-7a7f224958e1cdd246e4ab58;Sampled=1;Lineage=1:e826365f:0
+:authority
+catalyst-enter-api.better.efekta.com
+:method
+POST
+:path
+/v1/catalyst/enter
+:scheme
+https
+accept
+*/*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+authorization
+Bearer eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQwMzE1LCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDQzMTV9.P3eLGasGT4trL12zBUZt8SHln2pdy5xvtEBFSD5F8z5lffk6TyCht5rYix32mxLSKbhN6O3Y_S2GHE6onTMNA1OaXi6yEmU-pnwTV6eR4FoCetRkErPipv72GVK4l_SeF95Awkt8SsiEM6tPOqrlgE95bnDjgjHC_AeiuRS-o8fjADDiMv7vZu8oFr2gMKu939Y_bLO1qebn5DT817bKQNyBcc1wIdl_e8OCNpaVtW7jFkuJC2CqNb3r83410rfBJ42kukCdxISYCLbfvrhgFtBsdQ_nKcF3ml-zSO1WqJ3yPubNWmAestksPJaHJE8PgyBP8xRI4bZuyOXhhMMqZw
+content-length
+1072
+content-type
+application/json
+cookie
+__cf_bm=07O_wRbYiB8jcMOZOUBn_oIk5_ULD2d.ByI.5EvVYkM-1787604312.0722198-1.0.1.1-AE36uMoM.L28qmgaOW8Dd6q2q4aecw_6kX9bbOGWkau3mRnqhJY21jCbuCHfOcP.HnpGZSNwzb.MjLuSUJ02WuVqfwyWOxgW4rb5eDgV6UaH.btft_WdWahyG3h0yrgm; catalyst_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhdGFseXN0LTIwMjUwOTExIn0.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsInNpZCI6IjY4MWZiNTBlZmIwNmE2NjBkYzdhYWVjZmMzYjM0YjBiMmVmMDU5M2FkZmIwMDI2Y2Q4YjMwYWVjY2YzZGNiMTYiLCJjbGllbnRJcCI6IjIwMS41NS40Ni44MyIsImJvdFNjb3JlIjo5NCwiamEzIjoiZDk1M2NiZGQwZjdlYzkyZGI4YmI3ZmM3OGQzYmExOGUiLCJqYTQiOiJ0MTNkMTUxNmgyXzhkYWFmNjE1Mjc3MV84MDZhOGMyMmZkZWEiLCJhc24iOjI4NjM3LCJzdXMiOjAuOTksImNvdW50cnkiOiJCUiIsImNpdHkiOiJT77-D776jbyBQYXVsbyIsInBvc3RhbENvZGUiOiIwMTAwMC0wMDAiLCJjb3VudHJ5UmVnaW9uIjoiU1AiLCJsYXRpdHVkZSI6Ii0yMy41NDc1MCIsImxvbmdpdHVkZSI6Ii00Ni42MzYxMSIsImlhdCI6MTc4NzYwNDM1MCwibmJmIjoxNzg3NjA0MzUwLCJleHAiOjE3ODgyMDkxNTAsImF1ZCI6ImNhdGFseXN0Iiwic3ViIjoiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIn0.M8meGLbMmRmlC9vf4WBv8DrnQGa3Cwc9mVnh0zXw7zM8Hmoft6JIUOfAsXSdbnz76pdnX955RulTrHr8ikzdeJH3wY09X5Lp71g1YeMhbQ4oumcljEc-cCBGrQyVpNyPVoYtF0Wq1Mek8Lxq4BptW11E6fibw-lhMMj10nH8JUAtBw25_BOmnS2gxxp9rbGuepY3sZvJ1Km73LkvHAhiQiVdJfHzQQRybEtnAs0wUX9Uwm4BuVp_yjkc2ykokkzo8zRlQXyrOQZozDGY8zkdkxr-uikNcuN4-uIekCbyg5OXc0oQ0DPbcNx0RP61adcbUWoINbpT48ovR_jQweVb86ayIZw3CTN6OCy2_KxDQchLLOBr8rgB0LqmHzDNUf5hyiOTk7_ckvSb-0B7_fRgN1aIe-80W573BjyhfUKRptwc-aDGsJzNhCYwLL2vAa6sl4uX2SxGntLGYpDXUu3JlpucYx2oEY_u-fPY6VnJ3NmG4zBTpxqWgbrKQuhjkz1UjDDoNCQT-LYRfF6H-4ODeE20-Qr1qXXmFWcYf7JRqiSF9ejr4C0DzzTjOOEwV48z2XhdHD1p4BFK2PFN5Ng3f9AD61XuM-Fb2zB2uTA3hJPKXoLMWkmXE3sa6EkVLkB450gQQ5Q4fY9AIPsD926JoEa_BmtfYOSWzid8qvD0Qxw; AMP_289c743076=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjJmMTRlYzk0Mi0wYmEzLTQ1YWItYWI3Ni1jNjE1Njk1NjkyZjglMjIlMkMlMjJ1c2VySWQlMjIlM0ElMjJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWElMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNzg3NjA0MzUzMTkxJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTc4NzYwNDM1NjIxOCUyQyUyMmxhc3RFdmVudElkJTIyJTNBNSUyQyUyMnBhZ2VDb3VudGVyJTIyJTNBMCU3RA==
+origin
+https://catalyst-enter.better.efekta.com
+priority
+u=1, i
+referer
+https://catalyst-enter.better.efekta.com/
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+
+--===== Api SPeak 2 =====--
+Request URL
+https://catalyst-enter-api.better.efekta.com/v1/catalyst/33cca60f4770d0995c9028c28cb3a87b
+Request Method
+POST
+Status Code
+201 Created
+Remote Address
+172.64.155.141:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://catalyst-enter.better.efekta.com
+cf-cache-status
+DYNAMIC
+cf-ray
+a305349dc9b94fb4-GRU
+content-length
+45
+content-type
+application/json
+date
+Mon, 24 Aug 2026 20:46:17 GMT
+server
+cloudflare
+x-amz-apigw-id
+CoAQCEOEDoEEROg=
+x-amzn-requestid
+b93bf072-24a3-4d62-bb64-47d01ee1198b
+x-amzn-trace-id
+Root=1-6a8cad99-8a48337d214da51c64bd7139;Sampled=1;Lineage=1:4a7852d2:0
+:authority
+catalyst-enter-api.better.efekta.com
+:method
+POST
+:path
+/v1/catalyst/33cca60f4770d0995c9028c28cb3a87b
+:scheme
+https
+accept
+*/*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+authorization
+Bearer eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQwMzE1LCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDQzMTV9.P3eLGasGT4trL12zBUZt8SHln2pdy5xvtEBFSD5F8z5lffk6TyCht5rYix32mxLSKbhN6O3Y_S2GHE6onTMNA1OaXi6yEmU-pnwTV6eR4FoCetRkErPipv72GVK4l_SeF95Awkt8SsiEM6tPOqrlgE95bnDjgjHC_AeiuRS-o8fjADDiMv7vZu8oFr2gMKu939Y_bLO1qebn5DT817bKQNyBcc1wIdl_e8OCNpaVtW7jFkuJC2CqNb3r83410rfBJ42kukCdxISYCLbfvrhgFtBsdQ_nKcF3ml-zSO1WqJ3yPubNWmAestksPJaHJE8PgyBP8xRI4bZuyOXhhMMqZw
+content-length
+43
+content-type
+application/json
+cookie
+__cf_bm=07O_wRbYiB8jcMOZOUBn_oIk5_ULD2d.ByI.5EvVYkM-1787604312.0722198-1.0.1.1-AE36uMoM.L28qmgaOW8Dd6q2q4aecw_6kX9bbOGWkau3mRnqhJY21jCbuCHfOcP.HnpGZSNwzb.MjLuSUJ02WuVqfwyWOxgW4rb5eDgV6UaH.btft_WdWahyG3h0yrgm; catalyst_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhdGFseXN0LTIwMjUwOTExIn0.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsInNpZCI6IjY4MWZiNTBlZmIwNmE2NjBkYzdhYWVjZmMzYjM0YjBiMmVmMDU5M2FkZmIwMDI2Y2Q4YjMwYWVjY2YzZGNiMTYiLCJjbGllbnRJcCI6IjIwMS41NS40Ni44MyIsImJvdFNjb3JlIjo5NCwiamEzIjoiZDk1M2NiZGQwZjdlYzkyZGI4YmI3ZmM3OGQzYmExOGUiLCJqYTQiOiJ0MTNkMTUxNmgyXzhkYWFmNjE1Mjc3MV84MDZhOGMyMmZkZWEiLCJhc24iOjI4NjM3LCJzdXMiOjAuOTksImNvdW50cnkiOiJCUiIsImNpdHkiOiJT77-D776jbyBQYXVsbyIsInBvc3RhbENvZGUiOiIwMTAwMC0wMDAiLCJjb3VudHJ5UmVnaW9uIjoiU1AiLCJsYXRpdHVkZSI6Ii0yMy41NDc1MCIsImxvbmdpdHVkZSI6Ii00Ni42MzYxMSIsImlhdCI6MTc4NzYwNDM1MCwibmJmIjoxNzg3NjA0MzUwLCJleHAiOjE3ODgyMDkxNTAsImF1ZCI6ImNhdGFseXN0Iiwic3ViIjoiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIn0.M8meGLbMmRmlC9vf4WBv8DrnQGa3Cwc9mVnh0zXw7zM8Hmoft6JIUOfAsXSdbnz76pdnX955RulTrHr8ikzdeJH3wY09X5Lp71g1YeMhbQ4oumcljEc-cCBGrQyVpNyPVoYtF0Wq1Mek8Lxq4BptW11E6fibw-lhMMj10nH8JUAtBw25_BOmnS2gxxp9rbGuepY3sZvJ1Km73LkvHAhiQiVdJfHzQQRybEtnAs0wUX9Uwm4BuVp_yjkc2ykokkzo8zRlQXyrOQZozDGY8zkdkxr-uikNcuN4-uIekCbyg5OXc0oQ0DPbcNx0RP61adcbUWoINbpT48ovR_jQweVb86ayIZw3CTN6OCy2_KxDQchLLOBr8rgB0LqmHzDNUf5hyiOTk7_ckvSb-0B7_fRgN1aIe-80W573BjyhfUKRptwc-aDGsJzNhCYwLL2vAa6sl4uX2SxGntLGYpDXUu3JlpucYx2oEY_u-fPY6VnJ3NmG4zBTpxqWgbrKQuhjkz1UjDDoNCQT-LYRfF6H-4ODeE20-Qr1qXXmFWcYf7JRqiSF9ejr4C0DzzTjOOEwV48z2XhdHD1p4BFK2PFN5Ng3f9AD61XuM-Fb2zB2uTA3hJPKXoLMWkmXE3sa6EkVLkB450gQQ5Q4fY9AIPsD926JoEa_BmtfYOSWzid8qvD0Qxw; AMP_289c743076=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjJmMTRlYzk0Mi0wYmEzLTQ1YWItYWI3Ni1jNjE1Njk1NjkyZjglMjIlMkMlMjJ1c2VySWQlMjIlM0ElMjJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWElMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNzg3NjA0MzUzMTkxJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTc4NzYwNDM1NjIxOCUyQyUyMmxhc3RFdmVudElkJTIyJTNBNSUyQyUyMnBhZ2VDb3VudGVyJTIyJTNBMCU3RA==
+origin
+https://catalyst-enter.better.efekta.com
+priority
+u=1, i
+referer
+https://catalyst-enter.better.efekta.com/
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+
+--===== Api Auth Platform SPeak =====--
+Request URL
+https://learn.better.efekta.com/gap/ui/platformAuthConfigB2B.json
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+104.18.32.115:443
+Referrer Policy
+strict-origin-when-cross-origin
+cache-control
+public, max-age=0
+cf-cache-status
+DYNAMIC
+cf-ray
+a30547d44b9f1472-GIG
+content-encoding
+br
+content-security-policy
+base-uri 'none'; connect-src 'self' *.better.efekta.com *.storyblok.com *.amplitude.com *.my.site.com *.my.salesforce-scrt.com *.browser-intake-datadoghq.eu *.efset.org *.ef.com; default-src 'self' *.better.efekta.com *.ef.com *.ef.studio *.efekta.io *.ef-cdn.com *.storyblok.com data: blob: *.typekit.net *.efset.org efekta-content-storage-prod.s3.amazonaws.com; frame-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.efset.org; object-src 'none'; script-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.amplitude.com *.storyblok.com *.efset.org; style-src 'self' 'unsafe-inline' *.better.efekta.com *.ef.com *.my.site.com; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=3Kd.1K_g4GGpM1cvN0ZPjd98IFC5ARKMtOPnEe25kSc-1787605164.2134528-1.0.1.1-rZ8Y882YwGckZe0OvxWS96XdXSuKi4vDofHV9Hmt3IlQUJrNzB3MhvWLWygxOh_XCWc.uAPlwUZdS1kzgLvPXoQrQ238m8OFVZNgM6Sei_bZY0GdXyiMEQ_QMAajLe1dHk.TZO4morvNUF5uYMISAz8sIpUi5xJTImy9R8jqT_yxT8Hh46ntJjoOx1rUH21wDahu0DtwKascFjpbIB7_ag; report-to cf-yspdfipzjheayamd
+content-type
+application/json; charset=UTF-8
+date
+Mon, 24 Aug 2026 20:59:24 GMT
+etag
+W/"1fd-1a0274da915"
+last-modified
+Sat, 22 Aug 2026 02:29:56 GMT
+report-to
+{"group":"cf-yspdfipzjheayamd","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=3Kd.1K_g4GGpM1cvN0ZPjd98IFC5ARKMtOPnEe25kSc-1787605164.2134528-1.0.1.1-rZ8Y882YwGckZe0OvxWS96XdXSuKi4vDofHV9Hmt3IlQUJrNzB3MhvWLWygxOh_XCWc.uAPlwUZdS1kzgLvPXoQrQ238m8OFVZNgM6Sei_bZY0GdXyiMEQ_QMAajLe1dHk.TZO4morvNUF5uYMISAz8sIpUi5xJTImy9R8jqT_yxT8Hh46ntJjoOx1rUH21wDahu0DtwKascFjpbIB7_ag"}]}
+reporting-endpoints
+cf-yspdfipzjheayamd="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=3Kd.1K_g4GGpM1cvN0ZPjd98IFC5ARKMtOPnEe25kSc-1787605164.2134528-1.0.1.1-rZ8Y882YwGckZe0OvxWS96XdXSuKi4vDofHV9Hmt3IlQUJrNzB3MhvWLWygxOh_XCWc.uAPlwUZdS1kzgLvPXoQrQ238m8OFVZNgM6Sei_bZY0GdXyiMEQ_QMAajLe1dHk.TZO4morvNUF5uYMISAz8sIpUi5xJTImy9R8jqT_yxT8Hh46ntJjoOx1rUH21wDahu0DtwKascFjpbIB7_ag"
+server
+cloudflare
+vary
+Accept-Encoding
+:authority
+learn.better.efekta.com
+:method
+GET
+:path
+/gap/ui/platformAuthConfigB2B.json
+:scheme
+https
+accept
+*/*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+cookie
+__cf_bm=07O_wRbYiB8jcMOZOUBn_oIk5_ULD2d.ByI.5EvVYkM-1787604312.0722198-1.0.1.1-AE36uMoM.L28qmgaOW8Dd6q2q4aecw_6kX9bbOGWkau3mRnqhJY21jCbuCHfOcP.HnpGZSNwzb.MjLuSUJ02WuVqfwyWOxgW4rb5eDgV6UaH.btft_WdWahyG3h0yrgm; lng=pt-BR; azid_token=%22eyJhbGciOiJSUzI1NiIsImtpZCI6ImpoY3FhTEV1ZUt1c0lsVXRNR1BPY3dndjVPOGJINmt6bHdOenhRVFZJZTAiLCJ0eXAiOiJKV1QifQ.eyJleHAiOjE3ODc2MDc5MTUsIm5iZiI6MTc4NzYwNDMxNSwidmVyIjoiMS4wIiwiaXNzIjoiaHR0cHM6Ly9nbG9iYWwuYWNjb3VudHMuYmV0dGVyLmVmZWt0YS5jb20vMzkyYmQwZDItODA5My00MTYxLTljMDUtZWU5OWQ3MGEyZGM4L3YyLjAvIiwic3ViIjoiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYXVkIjoiZGM4ODA4NTktMThkZi00ZmZiLWFmODktZDBiODc5NTUwNDE1IiwiYWNyIjoiYjJjXzFhX3NpZ25pbl9iMnNfZ2xvYmFsIiwiaWF0IjoxNzg3NjA0MzE1LCJhdXRoX3RpbWUiOjE3ODc2MDQzMTQsImlzX3Bhc3N3b3JkbGVzcyI6ZmFsc2UsImRvbWFpbl9oaW50Ijoic2FvcGF1bG8iLCJqaXRfcGFydG5lcl9jb2RlIjoiU0FOUC1KMDROU01QOSIsInVpX2xvY2FsZXMiOiJwdC1CUiIsImdpdmVuX25hbWUiOiJHQUJSSUVMIiwiZmFtaWx5X25hbWUiOiJPTElWRUlSQSIsIm5hbWUiOiJHQUJSSUVMIE9MSVZFSVJBIiwiZW1haWwiOiIwMDAwMTEyNzI0MTYwNlNQQGFsLmVkdWNhY2FvLnNwLmdvdi5iciIsImxhbmciOiJwdC1CUiIsImNvdW50cnlDb2RlIjoiYnIiLCJleHRlbnNpb25fQWdyZWVkVG9UZXJtc09mU2VydmljZSI6InYxNiIsInJlZ2lvbiI6ImJyLTEiLCJ0aWQiOiIzOTJiZDBkMi04MDkzLTQxNjEtOWMwNS1lZTk5ZDcwYTJkYzgifQ.diI1AUpQqmPCIThYSpd2AL8cncVS8PELMXM-V80hS_C5qu80cn_-ySpjE8DunZ5jHETXyDATRCeZIZKAw3-SUsMViaPVRNO5RYGfYPK6xXMoF0eu2bKs-73SGuRoLVU8S-bwxQrQa-CSiqzFCTZolsmSOH8i7tRH7h75UB6vOLYiX_fN4YBCH2xS1t_w0DaWIlxmcyHL9w_lymwie6YnJtEvcyEQOIXJC-wijDmgv_Xvkh4gevbuAMJSrcjQusd5zqOoy3xtyrdHV24yRZZ76r96ZFuBzOmGXZiziw2vo25ULmmnA5bJR5_Mx0_RhV2tdT-ACMZD0x1sPYht8nSpTg%22; catalyst_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhdGFseXN0LTIwMjUwOTExIn0.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsInNpZCI6IjY4MWZiNTBlZmIwNmE2NjBkYzdhYWVjZmMzYjM0YjBiMmVmMDU5M2FkZmIwMDI2Y2Q4YjMwYWVjY2YzZGNiMTYiLCJjbGllbnRJcCI6IjIwMS41NS40Ni44MyIsImJvdFNjb3JlIjo5OSwiamEzIjoiNjc1NTllMmU3NWZkNDZhZjg3YjI1Y2Y2YTEzMjRhM2EiLCJqYTQiOiJ0MTNkMTUxNmgyXzhkYWFmNjE1Mjc3MV84MDZhOGMyMmZkZWEiLCJhc24iOjI4NjM3LCJzdXMiOjAuOTksImNvdW50cnkiOiJCUiIsImNpdHkiOiJT77-D776jbyBQYXVsbyIsInBvc3RhbENvZGUiOiIwMTAwMC0wMDAiLCJjb3VudHJ5UmVnaW9uIjoiU1AiLCJsYXRpdHVkZSI6Ii0yMy41NDc1MCIsImxvbmdpdHVkZSI6Ii00Ni42MzYxMSIsImlhdCI6MTc4NzYwNTE2MSwibmJmIjoxNzg3NjA1MTYxLCJleHAiOjE3ODgyMDk5NjEsImF1ZCI6ImNhdGFseXN0Iiwic3ViIjoiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIn0.l8FASeKHIDAk_b3Vnp68cjosm2hyE4kWkPej3zQcpFuKuRBYkkOnM7tseW1fatApZUebiEkRh0DtoDrn2Xh6HFhEvgvpGDqMTXXDl9N08A7ZOfgBeOKrtwM2_jyz35DwhHMrHfmh4qJof0BoaoPjKciD3n9AMKtv1wXU4qceNB4H6pKtBbQuFicuhhGXKQ06GGHZUaUh7RDhmbr0CbPwVE0P3KQLhKAiR6QuQiHXz6x_oJfpHHrVWfKRVWVe4pX8dRV2ReV0uZ7hMFdH7g3_ZlNVVidd6XULPZnh3ankR7U77JPKmyq8mO4zYPDHgQ5aTtkE8aOBOHScRx-Wmm8_GLbz0w3K2fU9sZ9Uhzn3qWPKdWP13JK5KWA_a93r7EuOgG3B-Q9FItQzgyoWaWvQok0-TOv_QOHOzxq5XPUua1SFPG45gjd6W3S9Nx2sXKYTAPbGbQ3_I0TztEmpKWjJgWIMJOUdfDWuxxevSf_u9F1hmbCermA6jabTk8F-oP_Ou6kwUwUWgMxV70vOhnvy08xh8TCEGaduMPvsngKth9YbF-vIPCK_0QnYHYK3P40lK9Ws6XeNVWkKLKOXFYuAWvbD8XNuaqlgG49tiEI0Swf-KKHFJkwvmXkcdKM_lw8QDDMxIutuyrdExwM0weMLn-l82qJHv6Mo-zB7Cz5zyLo; efid_tokens={%22access%22:%22681fb50efb06a660dc7aaecfc3b34b0b2ef0593adfb0026cd8b30aeccf3dcb16%22%2C%22account%22:%22eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g%22}; AMP_289c743076=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjJmMTRlYzk0Mi0wYmEzLTQ1YWItYWI3Ni1jNjE1Njk1NjkyZjglMjIlMkMlMjJ1c2VySWQlMjIlM0ElMjJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWElMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNzg3NjA0MzUzMTkxJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTc4NzYwNTE2MzQ3NyUyQyUyMmxhc3RFdmVudElkJTIyJTNBMjMlMkMlMjJwYWdlQ291bnRlciUyMiUzQTAlN0Q=
+if-modified-since
+Fri, 21 Aug 2026 10:22:50 GMT
+if-none-match
+W/"1fd-1a023d84243"
+priority
+u=1, i
+referer
+https://learn.better.efekta.com/gap/ui/home
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-origin
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+
+--===== Student Profile =====--
+Request URL
+https://learn.better.efekta.com/gap/bff/api/v1/common/student-profile
+Request Method
+GET
+Status Code
+304 Not Modified
+Remote Address
+172.64.155.141:443
+Referrer Policy
+strict-origin-when-cross-origin
+cf-cache-status
+DYNAMIC
+cf-ray
+a30547da3a811472-GIG
+content-security-policy
+base-uri 'none'; connect-src 'self' *.better.efekta.com *.storyblok.com *.amplitude.com *.my.site.com *.my.salesforce-scrt.com *.browser-intake-datadoghq.eu *.efset.org *.ef.com; default-src 'self' *.better.efekta.com *.ef.com *.ef.studio *.efekta.io *.ef-cdn.com *.storyblok.com data: blob: *.typekit.net *.efset.org efekta-content-storage-prod.s3.amazonaws.com; frame-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.efset.org; object-src 'none'; script-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.amplitude.com *.storyblok.com *.efset.org; style-src 'self' 'unsafe-inline' *.better.efekta.com *.ef.com *.my.site.com; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=KKDoDyGNuqyuN0jzUr5_RdoR9FG3r4eIdO0b7qVuwIg-1787605165.1556015-1.0.1.1-N8mQthxJAtw.dMwhizEvfeanruVaDInOLgdQAUtIo1LiMtj9rmo0iJXeAp50U8xau_2U1I201S7V74As7RLNjYMfARmgZPgvQhM_Kpza43ThdjO8NmbZwuhtJDs.vVKQN_nTSJ_udhGKkQiAaIIwVHUOXFRdygziqmuJaDrWZ4.WLePAYSfSKOnU6n1WRdi5d_0AaFlu.MdC1oQQwPMk4w; report-to cf-iwjsdbyqlkwxcyih
+date
+Mon, 24 Aug 2026 20:59:25 GMT
+etag
+W/"113-hKI/fAx5tGuTYPB9nV7yBWceAN0"
+report-to
+{"group":"cf-iwjsdbyqlkwxcyih","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=KKDoDyGNuqyuN0jzUr5_RdoR9FG3r4eIdO0b7qVuwIg-1787605165.1556015-1.0.1.1-N8mQthxJAtw.dMwhizEvfeanruVaDInOLgdQAUtIo1LiMtj9rmo0iJXeAp50U8xau_2U1I201S7V74As7RLNjYMfARmgZPgvQhM_Kpza43ThdjO8NmbZwuhtJDs.vVKQN_nTSJ_udhGKkQiAaIIwVHUOXFRdygziqmuJaDrWZ4.WLePAYSfSKOnU6n1WRdi5d_0AaFlu.MdC1oQQwPMk4w"}]}
+reporting-endpoints
+cf-iwjsdbyqlkwxcyih="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=KKDoDyGNuqyuN0jzUr5_RdoR9FG3r4eIdO0b7qVuwIg-1787605165.1556015-1.0.1.1-N8mQthxJAtw.dMwhizEvfeanruVaDInOLgdQAUtIo1LiMtj9rmo0iJXeAp50U8xau_2U1I201S7V74As7RLNjYMfARmgZPgvQhM_Kpza43ThdjO8NmbZwuhtJDs.vVKQN_nTSJ_udhGKkQiAaIIwVHUOXFRdygziqmuJaDrWZ4.WLePAYSfSKOnU6n1WRdi5d_0AaFlu.MdC1oQQwPMk4w"
+server
+cloudflare
+x-powered-by
+Express
+:authority
+learn.better.efekta.com
+:method
+GET
+:path
+/gap/bff/api/v1/common/student-profile
+:scheme
+https
+accept
+application/json
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+authorization
+Bearer 681fb50efb06a660dc7aaecfc3b34b0b2ef0593adfb0026cd8b30aeccf3dcb16
+cookie
+__cf_bm=07O_wRbYiB8jcMOZOUBn_oIk5_ULD2d.ByI.5EvVYkM-1787604312.0722198-1.0.1.1-AE36uMoM.L28qmgaOW8Dd6q2q4aecw_6kX9bbOGWkau3mRnqhJY21jCbuCHfOcP.HnpGZSNwzb.MjLuSUJ02WuVqfwyWOxgW4rb5eDgV6UaH.btft_WdWahyG3h0yrgm; lng=pt-BR; azid_token=%22eyJhbGciOiJSUzI1NiIsImtpZCI6ImpoY3FhTEV1ZUt1c0lsVXRNR1BPY3dndjVPOGJINmt6bHdOenhRVFZJZTAiLCJ0eXAiOiJKV1QifQ.eyJleHAiOjE3ODc2MDc5MTUsIm5iZiI6MTc4NzYwNDMxNSwidmVyIjoiMS4wIiwiaXNzIjoiaHR0cHM6Ly9nbG9iYWwuYWNjb3VudHMuYmV0dGVyLmVmZWt0YS5jb20vMzkyYmQwZDItODA5My00MTYxLTljMDUtZWU5OWQ3MGEyZGM4L3YyLjAvIiwic3ViIjoiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYXVkIjoiZGM4ODA4NTktMThkZi00ZmZiLWFmODktZDBiODc5NTUwNDE1IiwiYWNyIjoiYjJjXzFhX3NpZ25pbl9iMnNfZ2xvYmFsIiwiaWF0IjoxNzg3NjA0MzE1LCJhdXRoX3RpbWUiOjE3ODc2MDQzMTQsImlzX3Bhc3N3b3JkbGVzcyI6ZmFsc2UsImRvbWFpbl9oaW50Ijoic2FvcGF1bG8iLCJqaXRfcGFydG5lcl9jb2RlIjoiU0FOUC1KMDROU01QOSIsInVpX2xvY2FsZXMiOiJwdC1CUiIsImdpdmVuX25hbWUiOiJHQUJSSUVMIiwiZmFtaWx5X25hbWUiOiJPTElWRUlSQSIsIm5hbWUiOiJHQUJSSUVMIE9MSVZFSVJBIiwiZW1haWwiOiIwMDAwMTEyNzI0MTYwNlNQQGFsLmVkdWNhY2FvLnNwLmdvdi5iciIsImxhbmciOiJwdC1CUiIsImNvdW50cnlDb2RlIjoiYnIiLCJleHRlbnNpb25fQWdyZWVkVG9UZXJtc09mU2VydmljZSI6InYxNiIsInJlZ2lvbiI6ImJyLTEiLCJ0aWQiOiIzOTJiZDBkMi04MDkzLTQxNjEtOWMwNS1lZTk5ZDcwYTJkYzgifQ.diI1AUpQqmPCIThYSpd2AL8cncVS8PELMXM-V80hS_C5qu80cn_-ySpjE8DunZ5jHETXyDATRCeZIZKAw3-SUsMViaPVRNO5RYGfYPK6xXMoF0eu2bKs-73SGuRoLVU8S-bwxQrQa-CSiqzFCTZolsmSOH8i7tRH7h75UB6vOLYiX_fN4YBCH2xS1t_w0DaWIlxmcyHL9w_lymwie6YnJtEvcyEQOIXJC-wijDmgv_Xvkh4gevbuAMJSrcjQusd5zqOoy3xtyrdHV24yRZZ76r96ZFuBzOmGXZiziw2vo25ULmmnA5bJR5_Mx0_RhV2tdT-ACMZD0x1sPYht8nSpTg%22; catalyst_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhdGFseXN0LTIwMjUwOTExIn0.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsInNpZCI6IjY4MWZiNTBlZmIwNmE2NjBkYzdhYWVjZmMzYjM0YjBiMmVmMDU5M2FkZmIwMDI2Y2Q4YjMwYWVjY2YzZGNiMTYiLCJjbGllbnRJcCI6IjIwMS41NS40Ni44MyIsImJvdFNjb3JlIjo5OSwiamEzIjoiNjc1NTllMmU3NWZkNDZhZjg3YjI1Y2Y2YTEzMjRhM2EiLCJqYTQiOiJ0MTNkMTUxNmgyXzhkYWFmNjE1Mjc3MV84MDZhOGMyMmZkZWEiLCJhc24iOjI4NjM3LCJzdXMiOjAuOTksImNvdW50cnkiOiJCUiIsImNpdHkiOiJT77-D776jbyBQYXVsbyIsInBvc3RhbENvZGUiOiIwMTAwMC0wMDAiLCJjb3VudHJ5UmVnaW9uIjoiU1AiLCJsYXRpdHVkZSI6Ii0yMy41NDc1MCIsImxvbmdpdHVkZSI6Ii00Ni42MzYxMSIsImlhdCI6MTc4NzYwNTE2MSwibmJmIjoxNzg3NjA1MTYxLCJleHAiOjE3ODgyMDk5NjEsImF1ZCI6ImNhdGFseXN0Iiwic3ViIjoiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIn0.l8FASeKHIDAk_b3Vnp68cjosm2hyE4kWkPej3zQcpFuKuRBYkkOnM7tseW1fatApZUebiEkRh0DtoDrn2Xh6HFhEvgvpGDqMTXXDl9N08A7ZOfgBeOKrtwM2_jyz35DwhHMrHfmh4qJof0BoaoPjKciD3n9AMKtv1wXU4qceNB4H6pKtBbQuFicuhhGXKQ06GGHZUaUh7RDhmbr0CbPwVE0P3KQLhKAiR6QuQiHXz6x_oJfpHHrVWfKRVWVe4pX8dRV2ReV0uZ7hMFdH7g3_ZlNVVidd6XULPZnh3ankR7U77JPKmyq8mO4zYPDHgQ5aTtkE8aOBOHScRx-Wmm8_GLbz0w3K2fU9sZ9Uhzn3qWPKdWP13JK5KWA_a93r7EuOgG3B-Q9FItQzgyoWaWvQok0-TOv_QOHOzxq5XPUua1SFPG45gjd6W3S9Nx2sXKYTAPbGbQ3_I0TztEmpKWjJgWIMJOUdfDWuxxevSf_u9F1hmbCermA6jabTk8F-oP_Ou6kwUwUWgMxV70vOhnvy08xh8TCEGaduMPvsngKth9YbF-vIPCK_0QnYHYK3P40lK9Ws6XeNVWkKLKOXFYuAWvbD8XNuaqlgG49tiEI0Swf-KKHFJkwvmXkcdKM_lw8QDDMxIutuyrdExwM0weMLn-l82qJHv6Mo-zB7Cz5zyLo; efid_tokens={%22access%22:%22681fb50efb06a660dc7aaecfc3b34b0b2ef0593adfb0026cd8b30aeccf3dcb16%22%2C%22account%22:%22eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g%22}; AMP_289c743076=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjJmMTRlYzk0Mi0wYmEzLTQ1YWItYWI3Ni1jNjE1Njk1NjkyZjglMjIlMkMlMjJ1c2VySWQlMjIlM0ElMjJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWElMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNzg3NjA0MzUzMTkxJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTc4NzYwNTE2MzQ3NyUyQyUyMmxhc3RFdmVudElkJTIyJTNBMjMlMkMlMjJwYWdlQ291bnRlciUyMiUzQTAlN0Q=
+if-none-match
+W/"113-hKI/fAx5tGuTYPB9nV7yBWceAN0"
+priority
+u=1, i
+referer
+https://learn.better.efekta.com/gap/ui/home
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-origin
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-ef-access
+eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g
+x-ef-correlation-id
+qyVeZYfFes_PBpQAYvtoX
+
+--===== Tasks Api =====--
+Request URL
+https://learn.better.efekta.com/gap/bff/api/v1/home/todo-tasks?locale=pt-BR
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+104.18.32.115:443
+Referrer Policy
+strict-origin-when-cross-origin
+cf-cache-status
+DYNAMIC
+cf-ray
+a30547defd861472-GIG
+content-length
+2
+content-security-policy
+base-uri 'none'; connect-src 'self' *.better.efekta.com *.storyblok.com *.amplitude.com *.my.site.com *.my.salesforce-scrt.com *.browser-intake-datadoghq.eu *.efset.org *.ef.com; default-src 'self' *.better.efekta.com *.ef.com *.ef.studio *.efekta.io *.ef-cdn.com *.storyblok.com data: blob: *.typekit.net *.efset.org efekta-content-storage-prod.s3.amazonaws.com; frame-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.efset.org; object-src 'none'; script-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.amplitude.com *.storyblok.com *.efset.org; style-src 'self' 'unsafe-inline' *.better.efekta.com *.ef.com *.my.site.com; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=9SG.2.TgCKnbjFLxCrVUCGVbZ2bIv.cjjnvfcyMfoqs-1787605165.9187608-1.0.1.1-21hbH8SO30XBjVcJ05UHL5KO8ROgtjw04OF5gk2HvJQDXc2jBVGp8HSrS_5qfVNL6R0nNBVgDkJzNCIlGOYxQfJbgRu5NgXreRZCVFWygZQGG1MNEzd7PXQXZmZWvwj2IKL0k6osBL5ForD2._xoPJoirv83QVJCZ2iEf3MTo.fpzC2WnL8P2kHG7ewSRkIUNrzg34jfzYfTEprvtM9hZQ; report-to cf-yjjshaxeuxkjbulh
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:59:26 GMT
+etag
+W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"
+report-to
+{"group":"cf-yjjshaxeuxkjbulh","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=9SG.2.TgCKnbjFLxCrVUCGVbZ2bIv.cjjnvfcyMfoqs-1787605165.9187608-1.0.1.1-21hbH8SO30XBjVcJ05UHL5KO8ROgtjw04OF5gk2HvJQDXc2jBVGp8HSrS_5qfVNL6R0nNBVgDkJzNCIlGOYxQfJbgRu5NgXreRZCVFWygZQGG1MNEzd7PXQXZmZWvwj2IKL0k6osBL5ForD2._xoPJoirv83QVJCZ2iEf3MTo.fpzC2WnL8P2kHG7ewSRkIUNrzg34jfzYfTEprvtM9hZQ"}]}
+reporting-endpoints
+cf-yjjshaxeuxkjbulh="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=9SG.2.TgCKnbjFLxCrVUCGVbZ2bIv.cjjnvfcyMfoqs-1787605165.9187608-1.0.1.1-21hbH8SO30XBjVcJ05UHL5KO8ROgtjw04OF5gk2HvJQDXc2jBVGp8HSrS_5qfVNL6R0nNBVgDkJzNCIlGOYxQfJbgRu5NgXreRZCVFWygZQGG1MNEzd7PXQXZmZWvwj2IKL0k6osBL5ForD2._xoPJoirv83QVJCZ2iEf3MTo.fpzC2WnL8P2kHG7ewSRkIUNrzg34jfzYfTEprvtM9hZQ"
+server
+cloudflare
+x-powered-by
+Express
+:authority
+learn.better.efekta.com
+:method
+GET
+:path
+/gap/bff/api/v1/home/todo-tasks?locale=pt-BR
+:scheme
+https
+accept
+application/json
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+authorization
+Bearer 681fb50efb06a660dc7aaecfc3b34b0b2ef0593adfb0026cd8b30aeccf3dcb16
+cookie
+__cf_bm=07O_wRbYiB8jcMOZOUBn_oIk5_ULD2d.ByI.5EvVYkM-1787604312.0722198-1.0.1.1-AE36uMoM.L28qmgaOW8Dd6q2q4aecw_6kX9bbOGWkau3mRnqhJY21jCbuCHfOcP.HnpGZSNwzb.MjLuSUJ02WuVqfwyWOxgW4rb5eDgV6UaH.btft_WdWahyG3h0yrgm; lng=pt-BR; azid_token=%22eyJhbGciOiJSUzI1NiIsImtpZCI6ImpoY3FhTEV1ZUt1c0lsVXRNR1BPY3dndjVPOGJINmt6bHdOenhRVFZJZTAiLCJ0eXAiOiJKV1QifQ.eyJleHAiOjE3ODc2MDc5MTUsIm5iZiI6MTc4NzYwNDMxNSwidmVyIjoiMS4wIiwiaXNzIjoiaHR0cHM6Ly9nbG9iYWwuYWNjb3VudHMuYmV0dGVyLmVmZWt0YS5jb20vMzkyYmQwZDItODA5My00MTYxLTljMDUtZWU5OWQ3MGEyZGM4L3YyLjAvIiwic3ViIjoiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYXVkIjoiZGM4ODA4NTktMThkZi00ZmZiLWFmODktZDBiODc5NTUwNDE1IiwiYWNyIjoiYjJjXzFhX3NpZ25pbl9iMnNfZ2xvYmFsIiwiaWF0IjoxNzg3NjA0MzE1LCJhdXRoX3RpbWUiOjE3ODc2MDQzMTQsImlzX3Bhc3N3b3JkbGVzcyI6ZmFsc2UsImRvbWFpbl9oaW50Ijoic2FvcGF1bG8iLCJqaXRfcGFydG5lcl9jb2RlIjoiU0FOUC1KMDROU01QOSIsInVpX2xvY2FsZXMiOiJwdC1CUiIsImdpdmVuX25hbWUiOiJHQUJSSUVMIiwiZmFtaWx5X25hbWUiOiJPTElWRUlSQSIsIm5hbWUiOiJHQUJSSUVMIE9MSVZFSVJBIiwiZW1haWwiOiIwMDAwMTEyNzI0MTYwNlNQQGFsLmVkdWNhY2FvLnNwLmdvdi5iciIsImxhbmciOiJwdC1CUiIsImNvdW50cnlDb2RlIjoiYnIiLCJleHRlbnNpb25fQWdyZWVkVG9UZXJtc09mU2VydmljZSI6InYxNiIsInJlZ2lvbiI6ImJyLTEiLCJ0aWQiOiIzOTJiZDBkMi04MDkzLTQxNjEtOWMwNS1lZTk5ZDcwYTJkYzgifQ.diI1AUpQqmPCIThYSpd2AL8cncVS8PELMXM-V80hS_C5qu80cn_-ySpjE8DunZ5jHETXyDATRCeZIZKAw3-SUsMViaPVRNO5RYGfYPK6xXMoF0eu2bKs-73SGuRoLVU8S-bwxQrQa-CSiqzFCTZolsmSOH8i7tRH7h75UB6vOLYiX_fN4YBCH2xS1t_w0DaWIlxmcyHL9w_lymwie6YnJtEvcyEQOIXJC-wijDmgv_Xvkh4gevbuAMJSrcjQusd5zqOoy3xtyrdHV24yRZZ76r96ZFuBzOmGXZiziw2vo25ULmmnA5bJR5_Mx0_RhV2tdT-ACMZD0x1sPYht8nSpTg%22; catalyst_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhdGFseXN0LTIwMjUwOTExIn0.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsInNpZCI6IjY4MWZiNTBlZmIwNmE2NjBkYzdhYWVjZmMzYjM0YjBiMmVmMDU5M2FkZmIwMDI2Y2Q4YjMwYWVjY2YzZGNiMTYiLCJjbGllbnRJcCI6IjIwMS41NS40Ni44MyIsImJvdFNjb3JlIjo5OSwiamEzIjoiNjc1NTllMmU3NWZkNDZhZjg3YjI1Y2Y2YTEzMjRhM2EiLCJqYTQiOiJ0MTNkMTUxNmgyXzhkYWFmNjE1Mjc3MV84MDZhOGMyMmZkZWEiLCJhc24iOjI4NjM3LCJzdXMiOjAuOTksImNvdW50cnkiOiJCUiIsImNpdHkiOiJT77-D776jbyBQYXVsbyIsInBvc3RhbENvZGUiOiIwMTAwMC0wMDAiLCJjb3VudHJ5UmVnaW9uIjoiU1AiLCJsYXRpdHVkZSI6Ii0yMy41NDc1MCIsImxvbmdpdHVkZSI6Ii00Ni42MzYxMSIsImlhdCI6MTc4NzYwNTE2MSwibmJmIjoxNzg3NjA1MTYxLCJleHAiOjE3ODgyMDk5NjEsImF1ZCI6ImNhdGFseXN0Iiwic3ViIjoiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIn0.l8FASeKHIDAk_b3Vnp68cjosm2hyE4kWkPej3zQcpFuKuRBYkkOnM7tseW1fatApZUebiEkRh0DtoDrn2Xh6HFhEvgvpGDqMTXXDl9N08A7ZOfgBeOKrtwM2_jyz35DwhHMrHfmh4qJof0BoaoPjKciD3n9AMKtv1wXU4qceNB4H6pKtBbQuFicuhhGXKQ06GGHZUaUh7RDhmbr0CbPwVE0P3KQLhKAiR6QuQiHXz6x_oJfpHHrVWfKRVWVe4pX8dRV2ReV0uZ7hMFdH7g3_ZlNVVidd6XULPZnh3ankR7U77JPKmyq8mO4zYPDHgQ5aTtkE8aOBOHScRx-Wmm8_GLbz0w3K2fU9sZ9Uhzn3qWPKdWP13JK5KWA_a93r7EuOgG3B-Q9FItQzgyoWaWvQok0-TOv_QOHOzxq5XPUua1SFPG45gjd6W3S9Nx2sXKYTAPbGbQ3_I0TztEmpKWjJgWIMJOUdfDWuxxevSf_u9F1hmbCermA6jabTk8F-oP_Ou6kwUwUWgMxV70vOhnvy08xh8TCEGaduMPvsngKth9YbF-vIPCK_0QnYHYK3P40lK9Ws6XeNVWkKLKOXFYuAWvbD8XNuaqlgG49tiEI0Swf-KKHFJkwvmXkcdKM_lw8QDDMxIutuyrdExwM0weMLn-l82qJHv6Mo-zB7Cz5zyLo; efid_tokens={%22access%22:%22681fb50efb06a660dc7aaecfc3b34b0b2ef0593adfb0026cd8b30aeccf3dcb16%22%2C%22account%22:%22eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g%22}; AMP_289c743076=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjJmMTRlYzk0Mi0wYmEzLTQ1YWItYWI3Ni1jNjE1Njk1NjkyZjglMjIlMkMlMjJ1c2VySWQlMjIlM0ElMjJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWElMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNzg3NjA0MzUzMTkxJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTc4NzYwNTE2NTU3MyUyQyUyMmxhc3RFdmVudElkJTIyJTNBMjUlMkMlMjJwYWdlQ291bnRlciUyMiUzQTAlN0Q=
+priority
+u=1, i
+referer
+https://learn.better.efekta.com/gap/ui/home
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-origin
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-ef-access
+eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g
+x-ef-correlation-id
+zqEKj9MDm7QR5bv9PeD3c
+
+--===== Current Lesson =====--
+Request URL
+https://learn.better.efekta.com/gap/bff/api/v1/home/current-lesson?locale=pt-BR
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+104.18.32.115:443
+Referrer Policy
+strict-origin-when-cross-origin
+cf-cache-status
+DYNAMIC
+cf-ray
+a30547defd891472-GIG
+content-encoding
+br
+content-security-policy
+base-uri 'none'; connect-src 'self' *.better.efekta.com *.storyblok.com *.amplitude.com *.my.site.com *.my.salesforce-scrt.com *.browser-intake-datadoghq.eu *.efset.org *.ef.com; default-src 'self' *.better.efekta.com *.ef.com *.ef.studio *.efekta.io *.ef-cdn.com *.storyblok.com data: blob: *.typekit.net *.efset.org efekta-content-storage-prod.s3.amazonaws.com; frame-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.efset.org; object-src 'none'; script-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.amplitude.com *.storyblok.com *.efset.org; style-src 'self' 'unsafe-inline' *.better.efekta.com *.ef.com *.my.site.com; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=.gy2Mpghf22coh2h_lMuvLsMtLBzkSzlPuSkx_Xe4g4-1787605165.9194782-1.0.1.1-lStztRmmJAwFp4outhsgL3HM8DNSKh0uSz1Ft_ewHOB8c7IrfyDDMSoL_LPFMKyVqDnPNFY9hiIp89NYs0Y55rPllolj6kzs_K1Javf_58PJvGfQrAvp0c89B8r8P_.gEU_K_0BcxX2WB2LvnoqCjmKvtnQ7v.d3lBhZluuNeLHVda_aick.XqBLkJWhCusCw2r19B5tmoUH0S0rmSGK6g; report-to cf-tribppopsklqwarl
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:59:26 GMT
+etag
+W/"184-ouhGyDr0cBzYQTB0lmJuHxkPvw8"
+report-to
+{"group":"cf-tribppopsklqwarl","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=.gy2Mpghf22coh2h_lMuvLsMtLBzkSzlPuSkx_Xe4g4-1787605165.9194782-1.0.1.1-lStztRmmJAwFp4outhsgL3HM8DNSKh0uSz1Ft_ewHOB8c7IrfyDDMSoL_LPFMKyVqDnPNFY9hiIp89NYs0Y55rPllolj6kzs_K1Javf_58PJvGfQrAvp0c89B8r8P_.gEU_K_0BcxX2WB2LvnoqCjmKvtnQ7v.d3lBhZluuNeLHVda_aick.XqBLkJWhCusCw2r19B5tmoUH0S0rmSGK6g"}]}
+reporting-endpoints
+cf-tribppopsklqwarl="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=.gy2Mpghf22coh2h_lMuvLsMtLBzkSzlPuSkx_Xe4g4-1787605165.9194782-1.0.1.1-lStztRmmJAwFp4outhsgL3HM8DNSKh0uSz1Ft_ewHOB8c7IrfyDDMSoL_LPFMKyVqDnPNFY9hiIp89NYs0Y55rPllolj6kzs_K1Javf_58PJvGfQrAvp0c89B8r8P_.gEU_K_0BcxX2WB2LvnoqCjmKvtnQ7v.d3lBhZluuNeLHVda_aick.XqBLkJWhCusCw2r19B5tmoUH0S0rmSGK6g"
+server
+cloudflare
+x-powered-by
+Express
+:authority
+learn.better.efekta.com
+:method
+GET
+:path
+/gap/bff/api/v1/home/current-lesson?locale=pt-BR
+:scheme
+https
+accept
+application/json
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+authorization
+Bearer 681fb50efb06a660dc7aaecfc3b34b0b2ef0593adfb0026cd8b30aeccf3dcb16
+cookie
+__cf_bm=07O_wRbYiB8jcMOZOUBn_oIk5_ULD2d.ByI.5EvVYkM-1787604312.0722198-1.0.1.1-AE36uMoM.L28qmgaOW8Dd6q2q4aecw_6kX9bbOGWkau3mRnqhJY21jCbuCHfOcP.HnpGZSNwzb.MjLuSUJ02WuVqfwyWOxgW4rb5eDgV6UaH.btft_WdWahyG3h0yrgm; lng=pt-BR; azid_token=%22eyJhbGciOiJSUzI1NiIsImtpZCI6ImpoY3FhTEV1ZUt1c0lsVXRNR1BPY3dndjVPOGJINmt6bHdOenhRVFZJZTAiLCJ0eXAiOiJKV1QifQ.eyJleHAiOjE3ODc2MDc5MTUsIm5iZiI6MTc4NzYwNDMxNSwidmVyIjoiMS4wIiwiaXNzIjoiaHR0cHM6Ly9nbG9iYWwuYWNjb3VudHMuYmV0dGVyLmVmZWt0YS5jb20vMzkyYmQwZDItODA5My00MTYxLTljMDUtZWU5OWQ3MGEyZGM4L3YyLjAvIiwic3ViIjoiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYXVkIjoiZGM4ODA4NTktMThkZi00ZmZiLWFmODktZDBiODc5NTUwNDE1IiwiYWNyIjoiYjJjXzFhX3NpZ25pbl9iMnNfZ2xvYmFsIiwiaWF0IjoxNzg3NjA0MzE1LCJhdXRoX3RpbWUiOjE3ODc2MDQzMTQsImlzX3Bhc3N3b3JkbGVzcyI6ZmFsc2UsImRvbWFpbl9oaW50Ijoic2FvcGF1bG8iLCJqaXRfcGFydG5lcl9jb2RlIjoiU0FOUC1KMDROU01QOSIsInVpX2xvY2FsZXMiOiJwdC1CUiIsImdpdmVuX25hbWUiOiJHQUJSSUVMIiwiZmFtaWx5X25hbWUiOiJPTElWRUlSQSIsIm5hbWUiOiJHQUJSSUVMIE9MSVZFSVJBIiwiZW1haWwiOiIwMDAwMTEyNzI0MTYwNlNQQGFsLmVkdWNhY2FvLnNwLmdvdi5iciIsImxhbmciOiJwdC1CUiIsImNvdW50cnlDb2RlIjoiYnIiLCJleHRlbnNpb25fQWdyZWVkVG9UZXJtc09mU2VydmljZSI6InYxNiIsInJlZ2lvbiI6ImJyLTEiLCJ0aWQiOiIzOTJiZDBkMi04MDkzLTQxNjEtOWMwNS1lZTk5ZDcwYTJkYzgifQ.diI1AUpQqmPCIThYSpd2AL8cncVS8PELMXM-V80hS_C5qu80cn_-ySpjE8DunZ5jHETXyDATRCeZIZKAw3-SUsMViaPVRNO5RYGfYPK6xXMoF0eu2bKs-73SGuRoLVU8S-bwxQrQa-CSiqzFCTZolsmSOH8i7tRH7h75UB6vOLYiX_fN4YBCH2xS1t_w0DaWIlxmcyHL9w_lymwie6YnJtEvcyEQOIXJC-wijDmgv_Xvkh4gevbuAMJSrcjQusd5zqOoy3xtyrdHV24yRZZ76r96ZFuBzOmGXZiziw2vo25ULmmnA5bJR5_Mx0_RhV2tdT-ACMZD0x1sPYht8nSpTg%22; catalyst_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhdGFseXN0LTIwMjUwOTExIn0.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsInNpZCI6IjY4MWZiNTBlZmIwNmE2NjBkYzdhYWVjZmMzYjM0YjBiMmVmMDU5M2FkZmIwMDI2Y2Q4YjMwYWVjY2YzZGNiMTYiLCJjbGllbnRJcCI6IjIwMS41NS40Ni44MyIsImJvdFNjb3JlIjo5OSwiamEzIjoiNjc1NTllMmU3NWZkNDZhZjg3YjI1Y2Y2YTEzMjRhM2EiLCJqYTQiOiJ0MTNkMTUxNmgyXzhkYWFmNjE1Mjc3MV84MDZhOGMyMmZkZWEiLCJhc24iOjI4NjM3LCJzdXMiOjAuOTksImNvdW50cnkiOiJCUiIsImNpdHkiOiJT77-D776jbyBQYXVsbyIsInBvc3RhbENvZGUiOiIwMTAwMC0wMDAiLCJjb3VudHJ5UmVnaW9uIjoiU1AiLCJsYXRpdHVkZSI6Ii0yMy41NDc1MCIsImxvbmdpdHVkZSI6Ii00Ni42MzYxMSIsImlhdCI6MTc4NzYwNTE2MSwibmJmIjoxNzg3NjA1MTYxLCJleHAiOjE3ODgyMDk5NjEsImF1ZCI6ImNhdGFseXN0Iiwic3ViIjoiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIn0.l8FASeKHIDAk_b3Vnp68cjosm2hyE4kWkPej3zQcpFuKuRBYkkOnM7tseW1fatApZUebiEkRh0DtoDrn2Xh6HFhEvgvpGDqMTXXDl9N08A7ZOfgBeOKrtwM2_jyz35DwhHMrHfmh4qJof0BoaoPjKciD3n9AMKtv1wXU4qceNB4H6pKtBbQuFicuhhGXKQ06GGHZUaUh7RDhmbr0CbPwVE0P3KQLhKAiR6QuQiHXz6x_oJfpHHrVWfKRVWVe4pX8dRV2ReV0uZ7hMFdH7g3_ZlNVVidd6XULPZnh3ankR7U77JPKmyq8mO4zYPDHgQ5aTtkE8aOBOHScRx-Wmm8_GLbz0w3K2fU9sZ9Uhzn3qWPKdWP13JK5KWA_a93r7EuOgG3B-Q9FItQzgyoWaWvQok0-TOv_QOHOzxq5XPUua1SFPG45gjd6W3S9Nx2sXKYTAPbGbQ3_I0TztEmpKWjJgWIMJOUdfDWuxxevSf_u9F1hmbCermA6jabTk8F-oP_Ou6kwUwUWgMxV70vOhnvy08xh8TCEGaduMPvsngKth9YbF-vIPCK_0QnYHYK3P40lK9Ws6XeNVWkKLKOXFYuAWvbD8XNuaqlgG49tiEI0Swf-KKHFJkwvmXkcdKM_lw8QDDMxIutuyrdExwM0weMLn-l82qJHv6Mo-zB7Cz5zyLo; efid_tokens={%22access%22:%22681fb50efb06a660dc7aaecfc3b34b0b2ef0593adfb0026cd8b30aeccf3dcb16%22%2C%22account%22:%22eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g%22}; AMP_289c743076=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjJmMTRlYzk0Mi0wYmEzLTQ1YWItYWI3Ni1jNjE1Njk1NjkyZjglMjIlMkMlMjJ1c2VySWQlMjIlM0ElMjJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWElMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNzg3NjA0MzUzMTkxJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTc4NzYwNTE2NTU3MyUyQyUyMmxhc3RFdmVudElkJTIyJTNBMjUlMkMlMjJwYWdlQ291bnRlciUyMiUzQTAlN0Q=
+priority
+u=1, i
+referer
+https://learn.better.efekta.com/gap/ui/home
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-origin
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-ef-access
+eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g
+x-ef-correlation-id
+SAtRYiOGVoE4oNK1diGJn
+
+--===== Lesson Quantities =====--
+Request URL
+https://learn.better.efekta.com/gap/bff/api/v1/home/lesson-quantities
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+104.18.32.115:443
+Referrer Policy
+strict-origin-when-cross-origin
+cf-cache-status
+DYNAMIC
+cf-ray
+a30547defd8c1472-GIG
+content-length
+2
+content-security-policy
+base-uri 'none'; connect-src 'self' *.better.efekta.com *.storyblok.com *.amplitude.com *.my.site.com *.my.salesforce-scrt.com *.browser-intake-datadoghq.eu *.efset.org *.ef.com; default-src 'self' *.better.efekta.com *.ef.com *.ef.studio *.efekta.io *.ef-cdn.com *.storyblok.com data: blob: *.typekit.net *.efset.org efekta-content-storage-prod.s3.amazonaws.com; frame-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.efset.org; object-src 'none'; script-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.amplitude.com *.storyblok.com *.efset.org; style-src 'self' 'unsafe-inline' *.better.efekta.com *.ef.com *.my.site.com; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=5SsKc.DpF0yfVlMCIo7NMhj0ETfPD4J1O5lPAOoq7xs-1787605165.9198885-1.0.1.1-g8lekwclUXuSbkzACmNaHBweW_yxjENYjbRHGbXQe2Wj0UzN2TM_m.CIcm6C4Pi5fh2uhfzl37fYGFYmHRMUjMmfJXMBatyCN78hbk9XIxxGOnLALwCvpadd2D32bqt.kuhVv5a17NLBKoGXK3FmYLNCbOXBdHiBFV8DXMU.O5N1SV1SqlkI_8GWwDPb8yOMsBMykudH1K89fQvPF7FPpg; report-to cf-zxtunmgfokgdrius
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:59:26 GMT
+etag
+W/"2-vyGp6PvFo4RvsFtPoIWeCReyIC8"
+report-to
+{"group":"cf-zxtunmgfokgdrius","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=5SsKc.DpF0yfVlMCIo7NMhj0ETfPD4J1O5lPAOoq7xs-1787605165.9198885-1.0.1.1-g8lekwclUXuSbkzACmNaHBweW_yxjENYjbRHGbXQe2Wj0UzN2TM_m.CIcm6C4Pi5fh2uhfzl37fYGFYmHRMUjMmfJXMBatyCN78hbk9XIxxGOnLALwCvpadd2D32bqt.kuhVv5a17NLBKoGXK3FmYLNCbOXBdHiBFV8DXMU.O5N1SV1SqlkI_8GWwDPb8yOMsBMykudH1K89fQvPF7FPpg"}]}
+reporting-endpoints
+cf-zxtunmgfokgdrius="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=5SsKc.DpF0yfVlMCIo7NMhj0ETfPD4J1O5lPAOoq7xs-1787605165.9198885-1.0.1.1-g8lekwclUXuSbkzACmNaHBweW_yxjENYjbRHGbXQe2Wj0UzN2TM_m.CIcm6C4Pi5fh2uhfzl37fYGFYmHRMUjMmfJXMBatyCN78hbk9XIxxGOnLALwCvpadd2D32bqt.kuhVv5a17NLBKoGXK3FmYLNCbOXBdHiBFV8DXMU.O5N1SV1SqlkI_8GWwDPb8yOMsBMykudH1K89fQvPF7FPpg"
+server
+cloudflare
+x-powered-by
+Express
+:authority
+learn.better.efekta.com
+:method
+GET
+:path
+/gap/bff/api/v1/home/lesson-quantities
+:scheme
+https
+accept
+application/json
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+authorization
+Bearer 681fb50efb06a660dc7aaecfc3b34b0b2ef0593adfb0026cd8b30aeccf3dcb16
+cookie
+__cf_bm=07O_wRbYiB8jcMOZOUBn_oIk5_ULD2d.ByI.5EvVYkM-1787604312.0722198-1.0.1.1-AE36uMoM.L28qmgaOW8Dd6q2q4aecw_6kX9bbOGWkau3mRnqhJY21jCbuCHfOcP.HnpGZSNwzb.MjLuSUJ02WuVqfwyWOxgW4rb5eDgV6UaH.btft_WdWahyG3h0yrgm; lng=pt-BR; azid_token=%22eyJhbGciOiJSUzI1NiIsImtpZCI6ImpoY3FhTEV1ZUt1c0lsVXRNR1BPY3dndjVPOGJINmt6bHdOenhRVFZJZTAiLCJ0eXAiOiJKV1QifQ.eyJleHAiOjE3ODc2MDc5MTUsIm5iZiI6MTc4NzYwNDMxNSwidmVyIjoiMS4wIiwiaXNzIjoiaHR0cHM6Ly9nbG9iYWwuYWNjb3VudHMuYmV0dGVyLmVmZWt0YS5jb20vMzkyYmQwZDItODA5My00MTYxLTljMDUtZWU5OWQ3MGEyZGM4L3YyLjAvIiwic3ViIjoiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYXVkIjoiZGM4ODA4NTktMThkZi00ZmZiLWFmODktZDBiODc5NTUwNDE1IiwiYWNyIjoiYjJjXzFhX3NpZ25pbl9iMnNfZ2xvYmFsIiwiaWF0IjoxNzg3NjA0MzE1LCJhdXRoX3RpbWUiOjE3ODc2MDQzMTQsImlzX3Bhc3N3b3JkbGVzcyI6ZmFsc2UsImRvbWFpbl9oaW50Ijoic2FvcGF1bG8iLCJqaXRfcGFydG5lcl9jb2RlIjoiU0FOUC1KMDROU01QOSIsInVpX2xvY2FsZXMiOiJwdC1CUiIsImdpdmVuX25hbWUiOiJHQUJSSUVMIiwiZmFtaWx5X25hbWUiOiJPTElWRUlSQSIsIm5hbWUiOiJHQUJSSUVMIE9MSVZFSVJBIiwiZW1haWwiOiIwMDAwMTEyNzI0MTYwNlNQQGFsLmVkdWNhY2FvLnNwLmdvdi5iciIsImxhbmciOiJwdC1CUiIsImNvdW50cnlDb2RlIjoiYnIiLCJleHRlbnNpb25fQWdyZWVkVG9UZXJtc09mU2VydmljZSI6InYxNiIsInJlZ2lvbiI6ImJyLTEiLCJ0aWQiOiIzOTJiZDBkMi04MDkzLTQxNjEtOWMwNS1lZTk5ZDcwYTJkYzgifQ.diI1AUpQqmPCIThYSpd2AL8cncVS8PELMXM-V80hS_C5qu80cn_-ySpjE8DunZ5jHETXyDATRCeZIZKAw3-SUsMViaPVRNO5RYGfYPK6xXMoF0eu2bKs-73SGuRoLVU8S-bwxQrQa-CSiqzFCTZolsmSOH8i7tRH7h75UB6vOLYiX_fN4YBCH2xS1t_w0DaWIlxmcyHL9w_lymwie6YnJtEvcyEQOIXJC-wijDmgv_Xvkh4gevbuAMJSrcjQusd5zqOoy3xtyrdHV24yRZZ76r96ZFuBzOmGXZiziw2vo25ULmmnA5bJR5_Mx0_RhV2tdT-ACMZD0x1sPYht8nSpTg%22; catalyst_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhdGFseXN0LTIwMjUwOTExIn0.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsInNpZCI6IjY4MWZiNTBlZmIwNmE2NjBkYzdhYWVjZmMzYjM0YjBiMmVmMDU5M2FkZmIwMDI2Y2Q4YjMwYWVjY2YzZGNiMTYiLCJjbGllbnRJcCI6IjIwMS41NS40Ni44MyIsImJvdFNjb3JlIjo5OSwiamEzIjoiNjc1NTllMmU3NWZkNDZhZjg3YjI1Y2Y2YTEzMjRhM2EiLCJqYTQiOiJ0MTNkMTUxNmgyXzhkYWFmNjE1Mjc3MV84MDZhOGMyMmZkZWEiLCJhc24iOjI4NjM3LCJzdXMiOjAuOTksImNvdW50cnkiOiJCUiIsImNpdHkiOiJT77-D776jbyBQYXVsbyIsInBvc3RhbENvZGUiOiIwMTAwMC0wMDAiLCJjb3VudHJ5UmVnaW9uIjoiU1AiLCJsYXRpdHVkZSI6Ii0yMy41NDc1MCIsImxvbmdpdHVkZSI6Ii00Ni42MzYxMSIsImlhdCI6MTc4NzYwNTE2MSwibmJmIjoxNzg3NjA1MTYxLCJleHAiOjE3ODgyMDk5NjEsImF1ZCI6ImNhdGFseXN0Iiwic3ViIjoiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIn0.l8FASeKHIDAk_b3Vnp68cjosm2hyE4kWkPej3zQcpFuKuRBYkkOnM7tseW1fatApZUebiEkRh0DtoDrn2Xh6HFhEvgvpGDqMTXXDl9N08A7ZOfgBeOKrtwM2_jyz35DwhHMrHfmh4qJof0BoaoPjKciD3n9AMKtv1wXU4qceNB4H6pKtBbQuFicuhhGXKQ06GGHZUaUh7RDhmbr0CbPwVE0P3KQLhKAiR6QuQiHXz6x_oJfpHHrVWfKRVWVe4pX8dRV2ReV0uZ7hMFdH7g3_ZlNVVidd6XULPZnh3ankR7U77JPKmyq8mO4zYPDHgQ5aTtkE8aOBOHScRx-Wmm8_GLbz0w3K2fU9sZ9Uhzn3qWPKdWP13JK5KWA_a93r7EuOgG3B-Q9FItQzgyoWaWvQok0-TOv_QOHOzxq5XPUua1SFPG45gjd6W3S9Nx2sXKYTAPbGbQ3_I0TztEmpKWjJgWIMJOUdfDWuxxevSf_u9F1hmbCermA6jabTk8F-oP_Ou6kwUwUWgMxV70vOhnvy08xh8TCEGaduMPvsngKth9YbF-vIPCK_0QnYHYK3P40lK9Ws6XeNVWkKLKOXFYuAWvbD8XNuaqlgG49tiEI0Swf-KKHFJkwvmXkcdKM_lw8QDDMxIutuyrdExwM0weMLn-l82qJHv6Mo-zB7Cz5zyLo; efid_tokens={%22access%22:%22681fb50efb06a660dc7aaecfc3b34b0b2ef0593adfb0026cd8b30aeccf3dcb16%22%2C%22account%22:%22eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g%22}; AMP_289c743076=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjJmMTRlYzk0Mi0wYmEzLTQ1YWItYWI3Ni1jNjE1Njk1NjkyZjglMjIlMkMlMjJ1c2VySWQlMjIlM0ElMjJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWElMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNzg3NjA0MzUzMTkxJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTc4NzYwNTE2NTU3MyUyQyUyMmxhc3RFdmVudElkJTIyJTNBMjUlMkMlMjJwYWdlQ291bnRlciUyMiUzQTAlN0Q=
+priority
+u=1, i
+referer
+https://learn.better.efekta.com/gap/ui/home
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-origin
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-ef-access
+eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g
+x-ef-correlation-id
+1affFQAlMJ9RGnbu9KwFE
+
+--===== Time =====--
+Request URL
+https://learn.better.efekta.com/gap/bff/api/v1/common/time
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+104.18.32.115:443
+Referrer Policy
+strict-origin-when-cross-origin
+cf-cache-status
+DYNAMIC
+cf-ray
+a30547df1dce1472-GIG
+content-length
+35
+content-security-policy
+base-uri 'none'; connect-src 'self' *.better.efekta.com *.storyblok.com *.amplitude.com *.my.site.com *.my.salesforce-scrt.com *.browser-intake-datadoghq.eu *.efset.org *.ef.com; default-src 'self' *.better.efekta.com *.ef.com *.ef.studio *.efekta.io *.ef-cdn.com *.storyblok.com data: blob: *.typekit.net *.efset.org efekta-content-storage-prod.s3.amazonaws.com; frame-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.efset.org; object-src 'none'; script-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.amplitude.com *.storyblok.com *.efset.org; style-src 'self' 'unsafe-inline' *.better.efekta.com *.ef.com *.my.site.com; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=eedIKIl5.TqklDSowbf7d4n7NAqKJ826hWrwqT54qkk-1787605165.9319944-1.0.1.1-tQmD4qtSLyltBQ_rX0d7lo7GkE6LHUGxo063.A00z.tBQFMQS74J6_hiJp2rgX1_xOsq6CKlDwJjfKJXp.UflR_JlyMUe0FuB4yWodwitp2I46ppHqSA20xevaMc8XeILLE3R_jQC10vN8lb.Zsq0G1tiidVOr7lzHiQHp6x6X9CKN17HC0FmVpbot_ra2v1PQacSsqKX5yzyS0bDDFkiA; report-to cf-sfomkcoahnrltdel
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 20:59:26 GMT
+etag
+W/"23-1ffVYBm9sZ3cWxA1TfN2tpFD+zk"
+report-to
+{"group":"cf-sfomkcoahnrltdel","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=eedIKIl5.TqklDSowbf7d4n7NAqKJ826hWrwqT54qkk-1787605165.9319944-1.0.1.1-tQmD4qtSLyltBQ_rX0d7lo7GkE6LHUGxo063.A00z.tBQFMQS74J6_hiJp2rgX1_xOsq6CKlDwJjfKJXp.UflR_JlyMUe0FuB4yWodwitp2I46ppHqSA20xevaMc8XeILLE3R_jQC10vN8lb.Zsq0G1tiidVOr7lzHiQHp6x6X9CKN17HC0FmVpbot_ra2v1PQacSsqKX5yzyS0bDDFkiA"}]}
+reporting-endpoints
+cf-sfomkcoahnrltdel="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=eedIKIl5.TqklDSowbf7d4n7NAqKJ826hWrwqT54qkk-1787605165.9319944-1.0.1.1-tQmD4qtSLyltBQ_rX0d7lo7GkE6LHUGxo063.A00z.tBQFMQS74J6_hiJp2rgX1_xOsq6CKlDwJjfKJXp.UflR_JlyMUe0FuB4yWodwitp2I46ppHqSA20xevaMc8XeILLE3R_jQC10vN8lb.Zsq0G1tiidVOr7lzHiQHp6x6X9CKN17HC0FmVpbot_ra2v1PQacSsqKX5yzyS0bDDFkiA"
+server
+cloudflare
+x-powered-by
+Express
+:authority
+learn.better.efekta.com
+:method
+GET
+:path
+/gap/bff/api/v1/common/time
+:scheme
+https
+accept
+application/json
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+cookie
+__cf_bm=07O_wRbYiB8jcMOZOUBn_oIk5_ULD2d.ByI.5EvVYkM-1787604312.0722198-1.0.1.1-AE36uMoM.L28qmgaOW8Dd6q2q4aecw_6kX9bbOGWkau3mRnqhJY21jCbuCHfOcP.HnpGZSNwzb.MjLuSUJ02WuVqfwyWOxgW4rb5eDgV6UaH.btft_WdWahyG3h0yrgm; lng=pt-BR; azid_token=%22eyJhbGciOiJSUzI1NiIsImtpZCI6ImpoY3FhTEV1ZUt1c0lsVXRNR1BPY3dndjVPOGJINmt6bHdOenhRVFZJZTAiLCJ0eXAiOiJKV1QifQ.eyJleHAiOjE3ODc2MDc5MTUsIm5iZiI6MTc4NzYwNDMxNSwidmVyIjoiMS4wIiwiaXNzIjoiaHR0cHM6Ly9nbG9iYWwuYWNjb3VudHMuYmV0dGVyLmVmZWt0YS5jb20vMzkyYmQwZDItODA5My00MTYxLTljMDUtZWU5OWQ3MGEyZGM4L3YyLjAvIiwic3ViIjoiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYXVkIjoiZGM4ODA4NTktMThkZi00ZmZiLWFmODktZDBiODc5NTUwNDE1IiwiYWNyIjoiYjJjXzFhX3NpZ25pbl9iMnNfZ2xvYmFsIiwiaWF0IjoxNzg3NjA0MzE1LCJhdXRoX3RpbWUiOjE3ODc2MDQzMTQsImlzX3Bhc3N3b3JkbGVzcyI6ZmFsc2UsImRvbWFpbl9oaW50Ijoic2FvcGF1bG8iLCJqaXRfcGFydG5lcl9jb2RlIjoiU0FOUC1KMDROU01QOSIsInVpX2xvY2FsZXMiOiJwdC1CUiIsImdpdmVuX25hbWUiOiJHQUJSSUVMIiwiZmFtaWx5X25hbWUiOiJPTElWRUlSQSIsIm5hbWUiOiJHQUJSSUVMIE9MSVZFSVJBIiwiZW1haWwiOiIwMDAwMTEyNzI0MTYwNlNQQGFsLmVkdWNhY2FvLnNwLmdvdi5iciIsImxhbmciOiJwdC1CUiIsImNvdW50cnlDb2RlIjoiYnIiLCJleHRlbnNpb25fQWdyZWVkVG9UZXJtc09mU2VydmljZSI6InYxNiIsInJlZ2lvbiI6ImJyLTEiLCJ0aWQiOiIzOTJiZDBkMi04MDkzLTQxNjEtOWMwNS1lZTk5ZDcwYTJkYzgifQ.diI1AUpQqmPCIThYSpd2AL8cncVS8PELMXM-V80hS_C5qu80cn_-ySpjE8DunZ5jHETXyDATRCeZIZKAw3-SUsMViaPVRNO5RYGfYPK6xXMoF0eu2bKs-73SGuRoLVU8S-bwxQrQa-CSiqzFCTZolsmSOH8i7tRH7h75UB6vOLYiX_fN4YBCH2xS1t_w0DaWIlxmcyHL9w_lymwie6YnJtEvcyEQOIXJC-wijDmgv_Xvkh4gevbuAMJSrcjQusd5zqOoy3xtyrdHV24yRZZ76r96ZFuBzOmGXZiziw2vo25ULmmnA5bJR5_Mx0_RhV2tdT-ACMZD0x1sPYht8nSpTg%22; catalyst_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhdGFseXN0LTIwMjUwOTExIn0.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsInNpZCI6IjY4MWZiNTBlZmIwNmE2NjBkYzdhYWVjZmMzYjM0YjBiMmVmMDU5M2FkZmIwMDI2Y2Q4YjMwYWVjY2YzZGNiMTYiLCJjbGllbnRJcCI6IjIwMS41NS40Ni44MyIsImJvdFNjb3JlIjo5OSwiamEzIjoiNjc1NTllMmU3NWZkNDZhZjg3YjI1Y2Y2YTEzMjRhM2EiLCJqYTQiOiJ0MTNkMTUxNmgyXzhkYWFmNjE1Mjc3MV84MDZhOGMyMmZkZWEiLCJhc24iOjI4NjM3LCJzdXMiOjAuOTksImNvdW50cnkiOiJCUiIsImNpdHkiOiJT77-D776jbyBQYXVsbyIsInBvc3RhbENvZGUiOiIwMTAwMC0wMDAiLCJjb3VudHJ5UmVnaW9uIjoiU1AiLCJsYXRpdHVkZSI6Ii0yMy41NDc1MCIsImxvbmdpdHVkZSI6Ii00Ni42MzYxMSIsImlhdCI6MTc4NzYwNTE2MSwibmJmIjoxNzg3NjA1MTYxLCJleHAiOjE3ODgyMDk5NjEsImF1ZCI6ImNhdGFseXN0Iiwic3ViIjoiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIn0.l8FASeKHIDAk_b3Vnp68cjosm2hyE4kWkPej3zQcpFuKuRBYkkOnM7tseW1fatApZUebiEkRh0DtoDrn2Xh6HFhEvgvpGDqMTXXDl9N08A7ZOfgBeOKrtwM2_jyz35DwhHMrHfmh4qJof0BoaoPjKciD3n9AMKtv1wXU4qceNB4H6pKtBbQuFicuhhGXKQ06GGHZUaUh7RDhmbr0CbPwVE0P3KQLhKAiR6QuQiHXz6x_oJfpHHrVWfKRVWVe4pX8dRV2ReV0uZ7hMFdH7g3_ZlNVVidd6XULPZnh3ankR7U77JPKmyq8mO4zYPDHgQ5aTtkE8aOBOHScRx-Wmm8_GLbz0w3K2fU9sZ9Uhzn3qWPKdWP13JK5KWA_a93r7EuOgG3B-Q9FItQzgyoWaWvQok0-TOv_QOHOzxq5XPUua1SFPG45gjd6W3S9Nx2sXKYTAPbGbQ3_I0TztEmpKWjJgWIMJOUdfDWuxxevSf_u9F1hmbCermA6jabTk8F-oP_Ou6kwUwUWgMxV70vOhnvy08xh8TCEGaduMPvsngKth9YbF-vIPCK_0QnYHYK3P40lK9Ws6XeNVWkKLKOXFYuAWvbD8XNuaqlgG49tiEI0Swf-KKHFJkwvmXkcdKM_lw8QDDMxIutuyrdExwM0weMLn-l82qJHv6Mo-zB7Cz5zyLo; efid_tokens={%22access%22:%22681fb50efb06a660dc7aaecfc3b34b0b2ef0593adfb0026cd8b30aeccf3dcb16%22%2C%22account%22:%22eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g%22}; AMP_289c743076=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjJmMTRlYzk0Mi0wYmEzLTQ1YWItYWI3Ni1jNjE1Njk1NjkyZjglMjIlMkMlMjJ1c2VySWQlMjIlM0ElMjJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWElMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNzg3NjA0MzUzMTkxJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTc4NzYwNTE2NTU3MyUyQyUyMmxhc3RFdmVudElkJTIyJTNBMjUlMkMlMjJwYWdlQ291bnRlciUyMiUzQTAlN0Q=
+priority
+u=1, i
+referer
+https://learn.better.efekta.com/gap/ui/home
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-origin
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-ef-correlation-id
+5jvH_-I3Lpyezy9LBQkDM
+
+--===== Level Details =====--
+Request URL
+https://learn.better.efekta.com/gap/bff/api/v1/self-study/level-details?locale=pt-BR
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+104.18.32.115:443
+Referrer Policy
+strict-origin-when-cross-origin
+cf-cache-status
+DYNAMIC
+cf-ray
+a3054d900acacb1a-GIG
+content-encoding
+br
+content-security-policy
+base-uri 'none'; connect-src 'self' *.better.efekta.com *.storyblok.com *.amplitude.com *.my.site.com *.my.salesforce-scrt.com *.browser-intake-datadoghq.eu *.efset.org *.ef.com; default-src 'self' *.better.efekta.com *.ef.com *.ef.studio *.efekta.io *.ef-cdn.com *.storyblok.com data: blob: *.typekit.net *.efset.org efekta-content-storage-prod.s3.amazonaws.com; frame-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.efset.org; object-src 'none'; script-src 'self' *.better.efekta.com *.ef.com *.my.site.com *.amplitude.com *.storyblok.com *.efset.org; style-src 'self' 'unsafe-inline' *.better.efekta.com *.ef.com *.my.site.com; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=F4clOZPfDJNu4X0xRWNE7aiS5Vsvnvc74ek7F7Jfu08-1787605399.044739-1.0.1.1-NWoiMvAlhVKMVhmDcyj6UNqW4lH4zKFKbqhH8g6aKzIf93xDsFJLvd0bm_jVPeb73lh2.lJxhubwA73SHtD3ugrzl4TDyKAjauoAgTazhD2FM69WuhgK9bbd1KhrOmbBR6Z7QS5ISrssIBaWDeEYxbAOp.6WPuh6fOAnIFttVjIxU7hvUGnA6JNCIlObl.uy429sRporjCmK66f5jnqphA; report-to cf-jrvimvvowinmuphe
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 21:03:19 GMT
+etag
+W/"1adf-1Pw84ZqWwX2HgIM0SPMPbsEZ380"
+report-to
+{"group":"cf-jrvimvvowinmuphe","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=F4clOZPfDJNu4X0xRWNE7aiS5Vsvnvc74ek7F7Jfu08-1787605399.044739-1.0.1.1-NWoiMvAlhVKMVhmDcyj6UNqW4lH4zKFKbqhH8g6aKzIf93xDsFJLvd0bm_jVPeb73lh2.lJxhubwA73SHtD3ugrzl4TDyKAjauoAgTazhD2FM69WuhgK9bbd1KhrOmbBR6Z7QS5ISrssIBaWDeEYxbAOp.6WPuh6fOAnIFttVjIxU7hvUGnA6JNCIlObl.uy429sRporjCmK66f5jnqphA"}]}
+reporting-endpoints
+cf-jrvimvvowinmuphe="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=F4clOZPfDJNu4X0xRWNE7aiS5Vsvnvc74ek7F7Jfu08-1787605399.044739-1.0.1.1-NWoiMvAlhVKMVhmDcyj6UNqW4lH4zKFKbqhH8g6aKzIf93xDsFJLvd0bm_jVPeb73lh2.lJxhubwA73SHtD3ugrzl4TDyKAjauoAgTazhD2FM69WuhgK9bbd1KhrOmbBR6Z7QS5ISrssIBaWDeEYxbAOp.6WPuh6fOAnIFttVjIxU7hvUGnA6JNCIlObl.uy429sRporjCmK66f5jnqphA"
+server
+cloudflare
+x-powered-by
+Express
+:authority
+learn.better.efekta.com
+:method
+GET
+:path
+/gap/bff/api/v1/self-study/level-details?locale=pt-BR
+:scheme
+https
+accept
+application/json
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+authorization
+Bearer 681fb50efb06a660dc7aaecfc3b34b0b2ef0593adfb0026cd8b30aeccf3dcb16
+cookie
+lng=pt-BR; azid_token=%22eyJhbGciOiJSUzI1NiIsImtpZCI6ImpoY3FhTEV1ZUt1c0lsVXRNR1BPY3dndjVPOGJINmt6bHdOenhRVFZJZTAiLCJ0eXAiOiJKV1QifQ.eyJleHAiOjE3ODc2MDc5MTUsIm5iZiI6MTc4NzYwNDMxNSwidmVyIjoiMS4wIiwiaXNzIjoiaHR0cHM6Ly9nbG9iYWwuYWNjb3VudHMuYmV0dGVyLmVmZWt0YS5jb20vMzkyYmQwZDItODA5My00MTYxLTljMDUtZWU5OWQ3MGEyZGM4L3YyLjAvIiwic3ViIjoiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYXVkIjoiZGM4ODA4NTktMThkZi00ZmZiLWFmODktZDBiODc5NTUwNDE1IiwiYWNyIjoiYjJjXzFhX3NpZ25pbl9iMnNfZ2xvYmFsIiwiaWF0IjoxNzg3NjA0MzE1LCJhdXRoX3RpbWUiOjE3ODc2MDQzMTQsImlzX3Bhc3N3b3JkbGVzcyI6ZmFsc2UsImRvbWFpbl9oaW50Ijoic2FvcGF1bG8iLCJqaXRfcGFydG5lcl9jb2RlIjoiU0FOUC1KMDROU01QOSIsInVpX2xvY2FsZXMiOiJwdC1CUiIsImdpdmVuX25hbWUiOiJHQUJSSUVMIiwiZmFtaWx5X25hbWUiOiJPTElWRUlSQSIsIm5hbWUiOiJHQUJSSUVMIE9MSVZFSVJBIiwiZW1haWwiOiIwMDAwMTEyNzI0MTYwNlNQQGFsLmVkdWNhY2FvLnNwLmdvdi5iciIsImxhbmciOiJwdC1CUiIsImNvdW50cnlDb2RlIjoiYnIiLCJleHRlbnNpb25fQWdyZWVkVG9UZXJtc09mU2VydmljZSI6InYxNiIsInJlZ2lvbiI6ImJyLTEiLCJ0aWQiOiIzOTJiZDBkMi04MDkzLTQxNjEtOWMwNS1lZTk5ZDcwYTJkYzgifQ.diI1AUpQqmPCIThYSpd2AL8cncVS8PELMXM-V80hS_C5qu80cn_-ySpjE8DunZ5jHETXyDATRCeZIZKAw3-SUsMViaPVRNO5RYGfYPK6xXMoF0eu2bKs-73SGuRoLVU8S-bwxQrQa-CSiqzFCTZolsmSOH8i7tRH7h75UB6vOLYiX_fN4YBCH2xS1t_w0DaWIlxmcyHL9w_lymwie6YnJtEvcyEQOIXJC-wijDmgv_Xvkh4gevbuAMJSrcjQusd5zqOoy3xtyrdHV24yRZZ76r96ZFuBzOmGXZiziw2vo25ULmmnA5bJR5_Mx0_RhV2tdT-ACMZD0x1sPYht8nSpTg%22; catalyst_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhdGFseXN0LTIwMjUwOTExIn0.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsInNpZCI6IjY4MWZiNTBlZmIwNmE2NjBkYzdhYWVjZmMzYjM0YjBiMmVmMDU5M2FkZmIwMDI2Y2Q4YjMwYWVjY2YzZGNiMTYiLCJjbGllbnRJcCI6IjIwMS41NS40Ni44MyIsImJvdFNjb3JlIjo5OSwiamEzIjoiNjc1NTllMmU3NWZkNDZhZjg3YjI1Y2Y2YTEzMjRhM2EiLCJqYTQiOiJ0MTNkMTUxNmgyXzhkYWFmNjE1Mjc3MV84MDZhOGMyMmZkZWEiLCJhc24iOjI4NjM3LCJzdXMiOjAuOTksImNvdW50cnkiOiJCUiIsImNpdHkiOiJT77-D776jbyBQYXVsbyIsInBvc3RhbENvZGUiOiIwMTAwMC0wMDAiLCJjb3VudHJ5UmVnaW9uIjoiU1AiLCJsYXRpdHVkZSI6Ii0yMy41NDc1MCIsImxvbmdpdHVkZSI6Ii00Ni42MzYxMSIsImlhdCI6MTc4NzYwNTE2MSwibmJmIjoxNzg3NjA1MTYxLCJleHAiOjE3ODgyMDk5NjEsImF1ZCI6ImNhdGFseXN0Iiwic3ViIjoiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIn0.l8FASeKHIDAk_b3Vnp68cjosm2hyE4kWkPej3zQcpFuKuRBYkkOnM7tseW1fatApZUebiEkRh0DtoDrn2Xh6HFhEvgvpGDqMTXXDl9N08A7ZOfgBeOKrtwM2_jyz35DwhHMrHfmh4qJof0BoaoPjKciD3n9AMKtv1wXU4qceNB4H6pKtBbQuFicuhhGXKQ06GGHZUaUh7RDhmbr0CbPwVE0P3KQLhKAiR6QuQiHXz6x_oJfpHHrVWfKRVWVe4pX8dRV2ReV0uZ7hMFdH7g3_ZlNVVidd6XULPZnh3ankR7U77JPKmyq8mO4zYPDHgQ5aTtkE8aOBOHScRx-Wmm8_GLbz0w3K2fU9sZ9Uhzn3qWPKdWP13JK5KWA_a93r7EuOgG3B-Q9FItQzgyoWaWvQok0-TOv_QOHOzxq5XPUua1SFPG45gjd6W3S9Nx2sXKYTAPbGbQ3_I0TztEmpKWjJgWIMJOUdfDWuxxevSf_u9F1hmbCermA6jabTk8F-oP_Ou6kwUwUWgMxV70vOhnvy08xh8TCEGaduMPvsngKth9YbF-vIPCK_0QnYHYK3P40lK9Ws6XeNVWkKLKOXFYuAWvbD8XNuaqlgG49tiEI0Swf-KKHFJkwvmXkcdKM_lw8QDDMxIutuyrdExwM0weMLn-l82qJHv6Mo-zB7Cz5zyLo; efid_tokens={%22access%22:%22681fb50efb06a660dc7aaecfc3b34b0b2ef0593adfb0026cd8b30aeccf3dcb16%22%2C%22account%22:%22eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g%22}; __cf_bm=_va2YNU75ZWn96lFyOSjIeINVEUDSYHz0LoAV4mUlpU-1787605396.6273043-1.0.1.1-BfbXU2beC8Tw8IugvfJKCqKel3sOa3EKthvwv_oKKqumH8mzlCuAJrysIzgUSTLkLmSFvZ9tMJuJTNzkYNyAmBnkooz8W22_zm1LXV6a7YtNBQjMJLSuyajp1.CVZpDX; AMP_289c743076=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjJmMTRlYzk0Mi0wYmEzLTQ1YWItYWI3Ni1jNjE1Njk1NjkyZjglMjIlMkMlMjJ1c2VySWQlMjIlM0ElMjJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWElMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNzg3NjA0MzUzMTkxJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTc4NzYwNTM5NzkyMiUyQyUyMmxhc3RFdmVudElkJTIyJTNBMjglMkMlMjJwYWdlQ291bnRlciUyMiUzQTAlN0Q=
+priority
+u=1, i
+referer
+https://learn.better.efekta.com/gap/ui/self-study
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-origin
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-ef-access
+eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g
+x-ef-correlation-id
+hdEI0b_-Km5uD9Ya6oW7B
+
+--===== Open Lesson =====--
+Request URL
+https://api.study.better.efekta.com/study/progress/enrollments/87e8ec1d-a478-4d39-badd-4ddb20494eaf/open-lesson
+Request Method
+POST
+Status Code
+200 OK
+Remote Address
+104.18.32.115:443
+Referrer Policy
+origin
+access-control-allow-credentials
+true
+access-control-allow-headers
+Content-Type, User-Agent, If-Modified-Since, Cache-Control, Sec-WebSocket-Protocol, Authorization, X-EF-Correlation-ID
+access-control-allow-methods
+POST
+access-control-allow-origin
+https://lesson-player.study.better.efekta.com
+cf-cache-status
+DYNAMIC
+cf-ray
+a305505bddc482df-GIG
+content-encoding
+br
+content-security-policy
+default-src 'self'
+content-type
+application/json
+date
+Mon, 24 Aug 2026 21:05:13 GMT
+server
+cloudflare
+x-ef-correlation-id
+be9f3bc5-3d3c-4a47-b72f-8516cfe50749
+x-request-id
+5f2746e6-0590-41b5-ac05-83019c3c3b73
+x-xss-protection
+1; mode=block
+:authority
+api.study.better.efekta.com
+:method
+POST
+:path
+/study/progress/enrollments/87e8ec1d-a478-4d39-badd-4ddb20494eaf/open-lesson
+:scheme
+https
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+authorization
+Bearer eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g
+content-length
+98
+content-type
+application/json
+cookie
+catalyst_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhdGFseXN0LTIwMjUwOTExIn0.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsInNpZCI6IjY4MWZiNTBlZmIwNmE2NjBkYzdhYWVjZmMzYjM0YjBiMmVmMDU5M2FkZmIwMDI2Y2Q4YjMwYWVjY2YzZGNiMTYiLCJjbGllbnRJcCI6IjIwMS41NS40Ni44MyIsImJvdFNjb3JlIjo5OSwiamEzIjoiNjc1NTllMmU3NWZkNDZhZjg3YjI1Y2Y2YTEzMjRhM2EiLCJqYTQiOiJ0MTNkMTUxNmgyXzhkYWFmNjE1Mjc3MV84MDZhOGMyMmZkZWEiLCJhc24iOjI4NjM3LCJzdXMiOjAuOTksImNvdW50cnkiOiJCUiIsImNpdHkiOiJT77-D776jbyBQYXVsbyIsInBvc3RhbENvZGUiOiIwMTAwMC0wMDAiLCJjb3VudHJ5UmVnaW9uIjoiU1AiLCJsYXRpdHVkZSI6Ii0yMy41NDc1MCIsImxvbmdpdHVkZSI6Ii00Ni42MzYxMSIsImlhdCI6MTc4NzYwNTE2MSwibmJmIjoxNzg3NjA1MTYxLCJleHAiOjE3ODgyMDk5NjEsImF1ZCI6ImNhdGFseXN0Iiwic3ViIjoiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIn0.l8FASeKHIDAk_b3Vnp68cjosm2hyE4kWkPej3zQcpFuKuRBYkkOnM7tseW1fatApZUebiEkRh0DtoDrn2Xh6HFhEvgvpGDqMTXXDl9N08A7ZOfgBeOKrtwM2_jyz35DwhHMrHfmh4qJof0BoaoPjKciD3n9AMKtv1wXU4qceNB4H6pKtBbQuFicuhhGXKQ06GGHZUaUh7RDhmbr0CbPwVE0P3KQLhKAiR6QuQiHXz6x_oJfpHHrVWfKRVWVe4pX8dRV2ReV0uZ7hMFdH7g3_ZlNVVidd6XULPZnh3ankR7U77JPKmyq8mO4zYPDHgQ5aTtkE8aOBOHScRx-Wmm8_GLbz0w3K2fU9sZ9Uhzn3qWPKdWP13JK5KWA_a93r7EuOgG3B-Q9FItQzgyoWaWvQok0-TOv_QOHOzxq5XPUua1SFPG45gjd6W3S9Nx2sXKYTAPbGbQ3_I0TztEmpKWjJgWIMJOUdfDWuxxevSf_u9F1hmbCermA6jabTk8F-oP_Ou6kwUwUWgMxV70vOhnvy08xh8TCEGaduMPvsngKth9YbF-vIPCK_0QnYHYK3P40lK9Ws6XeNVWkKLKOXFYuAWvbD8XNuaqlgG49tiEI0Swf-KKHFJkwvmXkcdKM_lw8QDDMxIutuyrdExwM0weMLn-l82qJHv6Mo-zB7Cz5zyLo; AMP_289c743076=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjJmMTRlYzk0Mi0wYmEzLTQ1YWItYWI3Ni1jNjE1Njk1NjkyZjglMjIlMkMlMjJ1c2VySWQlMjIlM0ElMjJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWElMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNzg3NjA0MzUzMTkxJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTc4NzYwNTUwNTc4NiUyQyUyMmxhc3RFdmVudElkJTIyJTNBMzElMkMlMjJwYWdlQ291bnRlciUyMiUzQTAlN0Q=; cf_clearance=zKHzqj8xNC5.aFWNsHI3eLpT8X8CcX8Mt0wKuXfDshM-1787605512-1.2.1.1-_kBggf.99Znfou_4Kw3Fa9mh4V6LW3XMQUz1hgrI6Gz0vc7.NWOzcnY3R1rBZOe5Laqjc4.Lp4kT4Arrcl0l2.Z9IM.eohBpPVKunPNEHndDYdRTf9jXF1.lOGB2OWFMR3ShRmVOXCSaPDjmGMQi6PdoxGvyFAfCbF9yazh28yTYYh5DGE54XshTTj265_2Wr8Mcc48xBDrab9LCPHY8G9UL5wlVxRDgEiFk8i3yRDlJXI.BkEugfbgmg0hME0SnBuCVBJspctH_cmmQZ2IjuyqGwmz_7J_MoEYNKkkZU9g7qtPr3er.vuWKdx.vhthMMjlJmPmlu_E_UumisuQ6fyiVP_C4KOM6kM5P_jGjLpo; __cf_bm=aSaEVsSDivAFjV0dOxuEwD_sPxf2yxk1bLEkNBT4rpg-1787605512.1707304-1.0.1.1-xAowtVX_cebHsKbyKWO.zqXC9iToHeIY5e2cW9TxbsH4Z6dF301SK0pi352y_PNYoPzhIIWih8BcCfs4qNprjI6c1aauGN0OR_S6rnHspFp.aodjcphR92.bRMXBPNJm
+origin
+https://lesson-player.study.better.efekta.com
+priority
+u=1, i
+referer
+https://lesson-player.study.better.efekta.com/
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-ef-correlation-id
+be9f3bc5-3d3c-4a47-b72f-8516cfe50749
+
+--===== Configs =====--
+Request URL
+https://api.study.better.efekta.com/config/v1/configs?product=lesson-player
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+104.18.32.115:443
+Referrer Policy
+origin
+access-control-allow-credentials
+true
+access-control-allow-headers
+Content-Type, User-Agent, If-Modified-Since, Cache-Control, Sec-WebSocket-Protocol, Authorization, X-EF-Correlation-ID
+access-control-allow-methods
+GET
+access-control-allow-origin
+https://lesson-player.study.better.efekta.com
+cf-cache-status
+DYNAMIC
+cf-ray
+a305505c8ed6cafe-GIG
+content-encoding
+br
+content-security-policy
+default-src 'self'
+content-type
+application/json
+date
+Mon, 24 Aug 2026 21:05:13 GMT
+server
+cloudflare
+set-cookie
+__cf_bm=9NKVQPRcTwNriAoWiUczEaeqbDlazT5iHV3XKX7N0S0-1787605513.685032-1.0.1.1-.6QUgEtyNr1NTJC0FnupaZEXA3mMN__tITKWnLoqSgXtHY16hAT2oZ8_wIbHdxoX3LvGQnFawou0f4R9WR1u7EdKTDB9R4FHJuw9zekSKImVNvszycA6aY4ITueq4BQX; HttpOnly; SameSite=None; Secure; Path=/; Domain=better.efekta.com; Expires=Mon, 24 Aug 2026 21:35:13 GMT
+x-ef-correlation-id
+d8d102da-02a3-4c63-a155-e25fd1269bfa
+x-request-id
+afd45232-d8e2-4401-9d0c-7f87f58ca3e6
+x-xss-protection
+1; mode=block
+:authority
+api.study.better.efekta.com
+:method
+GET
+:path
+/config/v1/configs?product=lesson-player
+:scheme
+https
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+authorization
+Bearer eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g
+origin
+https://lesson-player.study.better.efekta.com
+priority
+u=1, i
+referer
+https://lesson-player.study.better.efekta.com/
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+
+--===== Command (Responder Lesson) =====--
+Request URL
+https://api.study.better.efekta.com/study/lesson/command
+Request Method
+POST
+Status Code
+200 OK
+Remote Address
+172.64.155.141:443
+Referrer Policy
+origin
+access-control-allow-credentials
+true
+access-control-allow-headers
+Content-Type, User-Agent, If-Modified-Since, Cache-Control, Sec-WebSocket-Protocol, Authorization, X-EF-Correlation-ID
+access-control-allow-methods
+POST
+access-control-allow-origin
+https://lesson-player.study.better.efekta.com
+cf-cache-status
+DYNAMIC
+cf-ray
+a305529e0b272fff-GIG
+content-encoding
+br
+content-security-policy
+default-src 'self'
+content-type
+application/json
+date
+Mon, 24 Aug 2026 21:06:46 GMT
+server
+cloudflare
+x-ef-correlation-id
+2579c9e6-a80b-4dcb-b1c9-17ca08536394
+x-request-id
+4b288594-b9cd-4056-8464-cf68f7b85bc1
+x-xss-protection
+1; mode=block
+:authority
+api.study.better.efekta.com
+:method
+POST
+:path
+/study/lesson/command
+:scheme
+https
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+authorization
+Bearer eyJraWQiOiJrZXlzL3B1YmxpYy9hY2NvdW50L2FjY291bnQucGVtIiwiY2F0YWx5c3Rfa2lkIjoiNzg1MDU4Y2UtYzJlZi00OTJjLTg3YTktZmZlY2M0ZjM0ZTdlIiwiYWxnIjoiUlMyNTYifQ.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsImJ1c2luZXNzVW5pdCI6ImIyYiIsInVybiI6InVybjphY2NvdW50OmV1OmVmLmIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQzpzdHVkZW50cy9iY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ0b2tlbnMiOlsiYzVlMjcxNjgtMTJlMS00ZWUwLWFkYzktZjI2ZjBjODhjYmJlIiwiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIl0sImdyYW50cyI6W3siY29kZSI6IjEwMTQifSx7ImNvZGUiOiIxMDEifSx7ImNvZGUiOiIxMDAxIn0seyJjb2RlIjoiMTAwMiJ9LHsiY29kZSI6IjEwMDMifSx7ImNvZGUiOiIxMDA0In0seyJjb2RlIjoiMzMifSx7ImNvZGUiOiI1MDAzIn0seyJjb2RlIjoiNTAwNSJ9LHsiY29kZSI6IjEwMjAifSx7ImNvZGUiOiI1MDA0In0seyJjb2RlIjoiOTk5OSJ9XSwiY2F0YWx5c3QiOnsic3R1ZHkiOnsibXVsdGlwbGVfY2hvaWNlIjp7ImZhbGxiYWNrX3RvX3RhcCI6dHJ1ZSwibWF4X3NwZWVjaF9hdHRlbXB0cyI6M30sInRlc3QiOnsiZXhjbHVkZV9zdGVwX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX0sIndyaXRpbmdfY29ycmVjdGlvbnMiOnsiYWxsb3dlZF9leHRlcm5hbF90b29scyI6WyJhaSJdfSwicGxhY2VtZW50X3Rlc3QiOnsiZXhjbHVkZV9zZWN0aW9uX2NhdGVnb3JpZXMiOlsibGFuZ3VhZ2Vfc3BlYWtpbmciXX19LCJvcmciOiJlbGl2ZSIsInVzZXJfaWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEifSwiYWNjZXNzTW9kZWwiOiJ1c2VyIiwicmVxX2NhdCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sZWFybi5lZmVrdGEuY29tIiwiYXVkIjoidXJuOmVmZWt0YTpwbGF0Zm9ybTp1c2VyIiwiZXhwIjoxNzg3NjQxMTYyLCJzaWQiOiI2ODFmYjUwZWZiMDZhNjYwZGM3YWFlY2ZjM2IzNGIwYjJlZjA1OTNhZGZiMDAyNmNkOGIzMGFlY2NmM2RjYjE2Iiwicm9sZXMiOltdLCJpYXQiOjE3ODc2MDUxNjJ9.UNJuW-wx8M-UlpYZSyS0daTsuq89LSCKBUcUQj6IkuXnIMYNDC-yzOYc3E83U9bso7KS0S7FoGIbOZWcTu-bkq4DBsmCOk0qWcgeycPOcRCwcdwQDNuQVnpAiPRpN9760BGRhJLPogEJT-8haZV9MpEsjIt0nSuiUi-yBU_iPSwQk9oBW4DDdSegqytFubHifkldURTHHnI_jT0aqr6NiOVR7eSDO5G5qS82yZVg5YLRAOx2xX38KsAZmZSPp5RaiKWtgBFGqbPvTtvqBNV-edIrThnfZBPRE94Ejr6Qqz9DbLc-2SeMWd8OTPAK2htn9wkhgiR2ITDPfF1XjHSc7g
+content-length
+745
+content-type
+application/json
+cookie
+catalyst_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhdGFseXN0LTIwMjUwOTExIn0.eyJzdHVkZW50SWQiOiJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWEiLCJ1c2VySWQiOiJjNWUyNzE2OC0xMmUxLTRlZTAtYWRjOS1mMjZmMGM4OGNiYmUiLCJzY2hvb2xJZCI6ImIyYi5ERUZBVUxULjAwMTVJMDAwMDA2TGUyaFFBQyIsInNpZCI6IjY4MWZiNTBlZmIwNmE2NjBkYzdhYWVjZmMzYjM0YjBiMmVmMDU5M2FkZmIwMDI2Y2Q4YjMwYWVjY2YzZGNiMTYiLCJjbGllbnRJcCI6IjIwMS41NS40Ni44MyIsImJvdFNjb3JlIjo5OSwiamEzIjoiNjc1NTllMmU3NWZkNDZhZjg3YjI1Y2Y2YTEzMjRhM2EiLCJqYTQiOiJ0MTNkMTUxNmgyXzhkYWFmNjE1Mjc3MV84MDZhOGMyMmZkZWEiLCJhc24iOjI4NjM3LCJzdXMiOjAuOTksImNvdW50cnkiOiJCUiIsImNpdHkiOiJT77-D776jbyBQYXVsbyIsInBvc3RhbENvZGUiOiIwMTAwMC0wMDAiLCJjb3VudHJ5UmVnaW9uIjoiU1AiLCJsYXRpdHVkZSI6Ii0yMy41NDc1MCIsImxvbmdpdHVkZSI6Ii00Ni42MzYxMSIsImlhdCI6MTc4NzYwNTE2MSwibmJmIjoxNzg3NjA1MTYxLCJleHAiOjE3ODgyMDk5NjEsImF1ZCI6ImNhdGFseXN0Iiwic3ViIjoiYmNiYzIzZDMtYjZlMi00ZTIwLTgxNDItNTk2YWFlMzM4OGFhIn0.l8FASeKHIDAk_b3Vnp68cjosm2hyE4kWkPej3zQcpFuKuRBYkkOnM7tseW1fatApZUebiEkRh0DtoDrn2Xh6HFhEvgvpGDqMTXXDl9N08A7ZOfgBeOKrtwM2_jyz35DwhHMrHfmh4qJof0BoaoPjKciD3n9AMKtv1wXU4qceNB4H6pKtBbQuFicuhhGXKQ06GGHZUaUh7RDhmbr0CbPwVE0P3KQLhKAiR6QuQiHXz6x_oJfpHHrVWfKRVWVe4pX8dRV2ReV0uZ7hMFdH7g3_ZlNVVidd6XULPZnh3ankR7U77JPKmyq8mO4zYPDHgQ5aTtkE8aOBOHScRx-Wmm8_GLbz0w3K2fU9sZ9Uhzn3qWPKdWP13JK5KWA_a93r7EuOgG3B-Q9FItQzgyoWaWvQok0-TOv_QOHOzxq5XPUua1SFPG45gjd6W3S9Nx2sXKYTAPbGbQ3_I0TztEmpKWjJgWIMJOUdfDWuxxevSf_u9F1hmbCermA6jabTk8F-oP_Ou6kwUwUWgMxV70vOhnvy08xh8TCEGaduMPvsngKth9YbF-vIPCK_0QnYHYK3P40lK9Ws6XeNVWkKLKOXFYuAWvbD8XNuaqlgG49tiEI0Swf-KKHFJkwvmXkcdKM_lw8QDDMxIutuyrdExwM0weMLn-l82qJHv6Mo-zB7Cz5zyLo; cf_clearance=zKHzqj8xNC5.aFWNsHI3eLpT8X8CcX8Mt0wKuXfDshM-1787605512-1.2.1.1-_kBggf.99Znfou_4Kw3Fa9mh4V6LW3XMQUz1hgrI6Gz0vc7.NWOzcnY3R1rBZOe5Laqjc4.Lp4kT4Arrcl0l2.Z9IM.eohBpPVKunPNEHndDYdRTf9jXF1.lOGB2OWFMR3ShRmVOXCSaPDjmGMQi6PdoxGvyFAfCbF9yazh28yTYYh5DGE54XshTTj265_2Wr8Mcc48xBDrab9LCPHY8G9UL5wlVxRDgEiFk8i3yRDlJXI.BkEugfbgmg0hME0SnBuCVBJspctH_cmmQZ2IjuyqGwmz_7J_MoEYNKkkZU9g7qtPr3er.vuWKdx.vhthMMjlJmPmlu_E_UumisuQ6fyiVP_C4KOM6kM5P_jGjLpo; __cf_bm=aSaEVsSDivAFjV0dOxuEwD_sPxf2yxk1bLEkNBT4rpg-1787605512.1707304-1.0.1.1-xAowtVX_cebHsKbyKWO.zqXC9iToHeIY5e2cW9TxbsH4Z6dF301SK0pi352y_PNYoPzhIIWih8BcCfs4qNprjI6c1aauGN0OR_S6rnHspFp.aodjcphR92.bRMXBPNJm; AMP_9518dc7517=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjI4NjhjNGY1My03MDUxLTRmZWQtYmQyOS0zMWZkOGNjMzZmZDclMjIlMkMlMjJ1c2VySWQlMjIlM0ElMjJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWElMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNzg3NjA1NTEzNjQ3JTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTc4NzYwNTUxNTIxMCUyQyUyMmxhc3RFdmVudElkJTIyJTNBMiUyQyUyMnBhZ2VDb3VudGVyJTIyJTNBMCUyQyUyMmNvb2tpZURvbWFpbiUyMiUzQSUyMi5lZmVrdGEuY29tJTIyJTdE; AMP_289c743076=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjJmMTRlYzk0Mi0wYmEzLTQ1YWItYWI3Ni1jNjE1Njk1NjkyZjglMjIlMkMlMjJ1c2VySWQlMjIlM0ElMjJiY2JjMjNkMy1iNmUyLTRlMjAtODE0Mi01OTZhYWUzMzg4YWElMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNzg3NjA0MzUzMTkxJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTc4NzYwNTUxNTIyMSUyQyUyMmxhc3RFdmVudElkJTIyJTNBMzMlMkMlMjJwYWdlQ291bnRlciUyMiUzQTAlMkMlMjJjb29raWVEb21haW4lMjIlM0ElMjIuZWZla3RhLmNvbSUyMiU3RA==
+origin
+https://lesson-player.study.better.efekta.com
+priority
+u=1, i
+referer
+https://lesson-player.study.better.efekta.com/
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-ef-correlation-id
+2579c9e6-a80b-4dcb-b1c9-17ca08536394
+
+--===== Api Boletim Completo (Sala do Futuro) =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/apiboletim/api/Boletim/GetBoletimCompleto?codigoAluno=30195374&anoLetivo=2026&codigoTurma=0
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 21:29:05 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; dtSad991g0ha=-; _ga_EBFJLFC85E=GS2.1.s1787606459$o2$g1$t1787606944$j59$l1$h457196457; _clsk=idnuhb%5E1787606944128%5E3%5E0%5Et.clarity.ms%2Fcollect; rxvt=1787608745063|1787606112461; dtPC=-26679$203928118_72h89vFTEPMMREPKRMHSJDVAAAKAQTDMAVQAAS-0e0
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|cf5df456519b47168935b136f5231133.5beb76a1664b491a
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-cf5df456519b47168935b136f5231133-5beb76a1664b491a-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Api Consulta Frequencia Bimestre =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/apiboletim/api/Frequencia/ConsultaFrequenciaBimestre?codigoAluno=30195374&anoLetivo=2026&bimestre=1&somenteAtivo=0
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 21:29:08 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; dtSad991g0ha=-; _ga_EBFJLFC85E=GS2.1.s1787606459$o2$g1$t1787606944$j59$l1$h457196457; _clsk=idnuhb%5E1787606944128%5E3%5E0%5Et.clarity.ms%2Fcollect; rxvt=1787608747346|1787606112461; dtPC=-26679$203928118_72h99vFTEPMMREPKRMHSJDVAAAKAQTDMAVQAAS-0e0
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|cf5df456519b47168935b136f5231133.efa6762ecd154a12
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-cf5df456519b47168935b136f5231133-efa6762ecd154a12-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Api Consulta Fechamento Comparativo =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/apiboletim/api/Fechamento/ConsultaFechamentoComparativo?codigoAluno=30195374&anoLetivo=2026&somenteAtivo=0&tipoFechamento=10&codigoDisciplina=0
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 21:29:09 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; dtSad991g0ha=-; _ga_EBFJLFC85E=GS2.1.s1787606459$o2$g1$t1787606944$j59$l1$h457196457; _clsk=idnuhb%5E1787606944128%5E3%5E0%5Et.clarity.ms%2Fcollect; rxvt=1787608747346|1787606112461; dtPC=-26679$203928118_72h98vFTEPMMREPKRMHSJDVAAAKAQTDMAVQAAS-0e0
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|cf5df456519b47168935b136f5231133.a5c79512576c4254
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-cf5df456519b47168935b136f5231133-a5c79512576c4254-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Api Faltas Bimestre Atual =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/apiboletim/api/Frequencia/GetFaltasBimestreAtual?codigoAluno=30195374
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 21:32:25 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; dtSad991g0ha=-; _clsk=idnuhb%5E1787606944128%5E3%5E0%5Et.clarity.ms%2Fcollect; _ga_EBFJLFC85E=GS2.1.s1787606459$o2$g1$t1787607143$j59$l1$h457196457; rxvt=1787608943951|1787606112461; dtPC=-26679$203928118_72h110vFTEPMMREPKRMHSJDVAAAKAQTDMAVQAAS-0e0
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|96273a8783174fdca4480d8292e125d2.8fd1b21c18324338
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-96273a8783174fdca4480d8292e125d2-8fd1b21c18324338-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Api Lista Motivo Falta Com Categoria =====--
+Request URL
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/apiboletim/api/Frequencia/GetListaMotivoFaltaComCategoria
+Request Method
+GET
+Status Code
+200 OK
+Remote Address
+135.232.44.57:443
+Referrer Policy
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 21:32:25 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; dtSad991g0ha=-; _clsk=idnuhb%5E1787606944128%5E3%5E0%5Et.clarity.ms%2Fcollect; _ga_EBFJLFC85E=GS2.1.s1787606459$o2$g1$t1787607144$j58$l1$h457196457; rxvt=1787608944066|1787606112461; dtPC=-26679$203928118_72h111vFTEPMMREPKRMHSJDVAAAKAQTDMAVQAAS-0e0
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|96273a8783174fdca4480d8292e125d2.b0e9e9b744804836
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-96273a8783174fdca4480d8292e125d2-b0e9e9b744804836-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Api Aluno Ultimos Dias Falta =====--
+URL da solicitação
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/apiboletim/api/Frequencia/GetAlunoUltimosDiasFalta?codigoAluno=30195374&anoLetivo=2026
+Método da solicitação
+GET
+Código de status
+200 OK
+Endereço remoto
+135.232.44.57:443
+Política do referenciador
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 21:35:36 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; dtSad991g0ha=-; _clsk=idnuhb%5E1787607144340%5E4%5E0%5Et.clarity.ms%2Fcollect; rxvt=1787609134208|1787606112461; dtPC=-26679$203928118_72h128vFTEPMMREPKRMHSJDVAAAKAQTDMAVQAAS-0e0; _ga_EBFJLFC85E=GS2.1.s1787606459$o2$g1$t1787607334$j56$l1$h457196457
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|f32612ee54704f70bd203816e426a1ad.f657f660fa5d438c
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-f32612ee54704f70bd203816e426a1ad-f657f660fa5d438c-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Api Analise Justificativa Aluno =====--
+URL da solicitação
+https://sedintegracoes.educacao.sp.gov.br/saladofuturobffapi/apiboletim/api/AnaliseJustificativaAluno/GetAnaliseJustificativaAluno?codigoAluno=30195374&anoLetivo=2026
+Método da solicitação
+GET
+Código de status
+200 OK
+Endereço remoto
+135.232.44.57:443
+Política do referenciador
+strict-origin-when-cross-origin
+access-control-allow-credentials
+true
+access-control-allow-origin
+https://saladofuturo.educacao.sp.gov.br
+connection
+keep-alive
+content-type
+application/json; charset=utf-8
+date
+Mon, 24 Aug 2026 21:35:37 GMT
+transfer-encoding
+chunked
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+connection
+keep-alive
+cookie
+dtCookie=v_4_srv_-2D26679_sn_UVLLCPF6TDU6BUI5OLV765JSF62HVVFF; rxVisitor=17876027814184P58INVCHTIRL2BGBDLDS4DHCHS8E1VE; _clck=1se7p7j%5E2%5Eg8v%5E0%5E2427; _ga=GA1.1.233621244.1787602794; ApplicationGatewayAffinityCORS=b6acccc21a1d7b0653c15fbda6021ce8; ApplicationGatewayAffinity=b6acccc21a1d7b0653c15fbda6021ce8; sf_sid=3dae217d-6589-45de-8c2c-cf5d82fe0c95; dtSad991g0ha=-; _ga_EBFJLFC85E=GS2.1.s1787606459$o2$g1$t1787607335$j55$l1$h457196457; _clsk=idnuhb%5E1787607335942%5E5%5E0%5Et.clarity.ms%2Fcollect; dtPC=-26679$203928118_72h137vFTEPMMREPKRMHSJDVAAAKAQTDMAVQAAS-0e0; rxvt=1787609136669|1787606112461
+host
+sedintegracoes.educacao.sp.gov.br
+ocp-apim-subscription-key
+d701a2043aa24d7ebb37e9adf60d043b
+origin
+https://saladofuturo.educacao.sp.gov.br
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|f32612ee54704f70bd203816e426a1ad.fcc065b283234d99
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+traceparent
+00-f32612ee54704f70bd203816e426a1ad-fcc065b283234d99-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-product-name
+SalaDoFuturo
+
+--===== Api Count =====--
+URL da solicitação
+https://edusp-api.ip.tv/survey/todo/count?&publication_target=r08f015078bd2141c1-l&publication_target=r799cd3344cdf9ca80-l&publication_target=r7f4d52c5663e5d500-l&publication_target=r08f015078bd2141c1-l%3Agabrielhenr127241606-sp&publication_target=r799cd3344cdf9ca80-l%3Agabrielhenr127241606-sp&publication_target=r7f4d52c5663e5d500-l%3Agabrielhenr127241606-sp&publication_target=2087&publication_target=1930&publication_target=1049&publication_target=1864&publication_target=1820&publication_target=764&filter_expired=true&with_answer=true&answer_statuses=draft
+Método da solicitação
+GET
+Código de status
+304 Not Modified
+Endereço remoto
+172.66.163.225:443
+Política do referenciador
+strict-origin-when-cross-origin
+access-control-allow-origin
+*
+access-control-expose-headers
+X-Server-Time
+cf-cache-status
+DYNAMIC
+cf-ray
+a3057cdc3ecec6c1-GRU
+content-security-policy
+default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+cross-origin-opener-policy
+same-origin
+cross-origin-resource-policy
+same-origin
+date
+Mon, 24 Aug 2026 21:35:36 GMT
+etag
+W/"1e-T20kvyvwmed8bLpIMiuRARKCfRY"
+origin-agent-cluster
+?1
+referrer-policy
+no-referrer
+server
+cloudflare
+strict-transport-security
+max-age=15724800; includeSubDomains
+x-content-type-options
+nosniff
+x-dns-prefetch-control
+off
+x-download-options
+noopen
+x-frame-options
+SAMEORIGIN
+x-permitted-cross-domain-policies
+none
+x-xss-protection
+0
+:authority
+edusp-api.ip.tv
+:method
+GET
+:path
+/survey/todo/count?&publication_target=r08f015078bd2141c1-l&publication_target=r799cd3344cdf9ca80-l&publication_target=r7f4d52c5663e5d500-l&publication_target=r08f015078bd2141c1-l%3Agabrielhenr127241606-sp&publication_target=r799cd3344cdf9ca80-l%3Agabrielhenr127241606-sp&publication_target=r7f4d52c5663e5d500-l%3Agabrielhenr127241606-sp&publication_target=2087&publication_target=1930&publication_target=1049&publication_target=1864&publication_target=1820&publication_target=764&filter_expired=true&with_answer=true&answer_statuses=draft
+:scheme
+https
+accept
+application/json
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+content-type
+application/json
+if-none-match
+W/"1e-T20kvyvwmed8bLpIMiuRARKCfRY"
+origin
+https://saladofuturo.educacao.sp.gov.br
+priority
+u=1, i
+referer
+https://saladofuturo.educacao.sp.gov.br/
+request-id
+|f32612ee54704f70bd203816e426a1ad.73ea5fc15dda485b
+sec-ch-ua
+"Not=A?Brand";v="99", "Google Chrome";v="151", "Chromium";v="151"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+cross-site
+traceparent
+00-f32612ee54704f70bd203816e426a1ad-73ea5fc15dda485b-01
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+x-api-key
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYXNfaWQiOiI2NDFjYWUzOTg5NjI2YjRiMjM0Yzc0ZTUiLCJ1c2VyX2lkIjoiNjQxY2FlMzk4OTYyNmI0YjIzNGM3NGU1IiwiZXh0ZXJuYWxfaWQiOiIzMDE5NTM3NDYiLCJza2V5IjoiYXV0aF90b2tlbjplZHVzcDpnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsIm5pY2siOiJnYWJyaWVsaGVucjEyNzI0MTYwNi1zcCIsInJlYWxtIjoiZWR1c3AiLCJyb2xlIjoiMDAwNiIsImlhdCI6MTc4NzYwMjg0OCwiZXhwIjoxNzg3Njg5MjQ4LCJhdWQiOiJ3ZWJjbGllbnQifQ.T9e5ObDaKcRljmEtx0NP6WGd70HGETxLfIyf2RRutUo
