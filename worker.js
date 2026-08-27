@@ -1,17 +1,17 @@
-const SUBSCRIPTION_KEYS = {
-  login: "d701a2043aa24d7ebb37e9adf60d043b",
-  aluno: "d701a2043aa24d7ebb37e9adf60d043b",
-  boletim: "a84380a41b144e0fa3d86cbc25027fe6",
-  hub: "5936fddda3484fe1aa4436df1bd76dab",
-};
-
 const EXTRA_TARGETS = ["1052", "1820", "764"];
 const EDUSP_BASE = "https://edusp-api.ip.tv";
 const SED_BASE = "https://sedintegracoes.educacao.sp.gov.br";
-const WORKER_BUILD = "sdf-flash-v8-20260826-captcha-session-cookie";
-
-const GROQ_API_KEY = "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";
+const WORKER_BUILD = "sdf-flash-v9-20260826-authenticated-rooms";
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+function getSubscriptionKeys(env) {
+  return {
+    login: String(env?.SED_LOGIN_SUBSCRIPTION_KEY || "").trim(),
+    aluno: String(env?.SED_ALUNO_SUBSCRIPTION_KEY || "").trim(),
+    boletim: String(env?.SED_BOLETIM_SUBSCRIPTION_KEY || "").trim(),
+    hub: String(env?.SED_HUB_SUBSCRIPTION_KEY || "").trim(),
+  };
+}
 
 // Notificações: sem KV/D1/R2. O Worker mantém a lista no runtime atual.
 // O frontend também guarda um cache no localStorage para sobreviver a recarregamentos.
@@ -75,6 +75,17 @@ function addUnique(array, value) {
   if (value === null || value === undefined || value === "") return;
   const s = String(value);
   if (!array.includes(s)) array.push(s);
+}
+
+function normalizeStudentCode(value) {
+  const raw = String(value ?? "").trim();
+  if (!raw) return "";
+  const digits = raw.replace(/\D/g, "");
+  if (!digits) return "";
+  // A API de Turma/Aluno usa o código curto de 8 dígitos; o login e
+  // algumas APIs de notificações usam o CD_USUARIO completo de 9 dígitos.
+  if (digits.length === 9) return String(Math.trunc(Number(digits) / 10));
+  return digits;
 }
 
 function unwrapSedList(data) {
@@ -237,11 +248,19 @@ async function handleCaptchaVerify(request) {
 // =======================================================
 // FUNÇÕES DE API (SED/EDUSP)
 // =======================================================
-async function fetchTurmas(cdUsuarioCurto) {
-  const url = `${SED_BASE}/saladofuturobffapi/apihubintegracoes/api/v2/Turma/ListarTurmasPorAluno?codigoAluno=${encodeURIComponent(cdUsuarioCurto)}`;
-  const resp = await fetch(url, { headers: { ...UPSTREAM_HEADERS, "Ocp-Apim-Subscription-Key": SUBSCRIPTION_KEYS.hub } });
+async function fetchTurmas(token, cdUsuarioCurto, env) {
+  const keys = getSubscriptionKeys(env);
+  const codigoAluno = normalizeStudentCode(cdUsuarioCurto);
+  const url = `${SED_BASE}/saladofuturobffapi/apihubintegracoes/api/v2/Turma/ListarTurmasPorAluno?codigoAluno=${encodeURIComponent(codigoAluno)}`;
+  const headers = {
+    ...UPSTREAM_HEADERS,
+    "Ocp-Apim-Subscription-Key": keys.hub,
+    "x-product-name": "SalaDoFuturo",
+  };
+  if (token) headers.Authorization = `Bearer ${String(token).replace(/^Bearer\s+/i, "")}`;
+  const resp = await fetch(url, { headers });
   const data = await readJson(resp);
-  return { resp, data, rooms: unwrapSedList(data).map(normalizeRoom) };
+  return { resp, data, codigoAluno, rooms: unwrapSedList(data).map(normalizeRoom) };
 }
 
 async function fetchTasksForTargets(token2, targets) {
@@ -315,9 +334,10 @@ function findRoomForTask(task, rooms) {
   return "";
 }
 
-async function fetchFaltas(cdUsuarioCurto) {
+async function fetchFaltas(cdUsuarioCurto, env) {
+  const keys = getSubscriptionKeys(env);
   const url = `${SED_BASE}/apiboletim/api/Frequencia/GetFaltasBimestreAtual?codigoAluno=${encodeURIComponent(cdUsuarioCurto)}`;
-  const resp = await fetch(url, { headers: { Accept: "application/json", "Content-Type": "application/json", "ocp-apim-subscription-key": SUBSCRIPTION_KEYS.boletim } });
+  const resp = await fetch(url, { headers: { Accept: "application/json", "Content-Type": "application/json", "ocp-apim-subscription-key": keys.boletim } });
   const data = await readJson(resp);
   return { resp, data, total: extractFaltasBimestre(data) };
 }
@@ -350,9 +370,10 @@ function extractFaltasBimestre(data) {
   return found ? sum : null;
 }
 
-async function fetchNotifications(cdUsuario) {
+async function fetchNotifications(cdUsuario, env) {
+  const keys = getSubscriptionKeys(env);
   const url = `${SED_BASE}/cmspwebservice/api/sala-do-futuro-alunos/consulta-notificacao-cmsp?userId=${encodeURIComponent(cdUsuario)}`;
-  const resp = await fetch(url, { headers: { Accept: "application/json", "Ocp-Apim-Subscription-Key": SUBSCRIPTION_KEYS.boletim } });
+  const resp = await fetch(url, { headers: { Accept: "application/json", "Ocp-Apim-Subscription-Key": keys.boletim } });
   const data = await readJson(resp);
   let list = [];
   if (Array.isArray(data)) list = data;
@@ -362,20 +383,22 @@ async function fetchNotifications(cdUsuario) {
   return { ok: resp.ok, data, total: list.length, unread };
 }
 
-async function fetchAgenda(token, cdUsuarioCurto) {
+async function fetchAgenda(token, cdUsuarioCurto, env) {
+  const keys = getSubscriptionKeys(env);
   const now = new Date();
   const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const end = new Date(start); end.setDate(end.getDate() + 30);
   const fmt = (d) => d.toISOString().slice(0, 10);
   const url = `${SED_BASE}/saladofuturobffapi/apiboletim/api/Agenda/GetAgendaPeriodoEscola?codigoAluno=${encodeURIComponent(cdUsuarioCurto)}&anoLetivo=${start.getFullYear()}&dataInicio=${fmt(start)}&dataFim=${fmt(end)}`;
-  const resp = await fetch(url, { headers: { Accept: "application/json", "Content-Type": "application/json", "Ocp-Apim-Subscription-Key": SUBSCRIPTION_KEYS.login, Authorization: `Bearer ${token}` } });
+  const resp = await fetch(url, { headers: { Accept: "application/json", "Content-Type": "application/json", "Ocp-Apim-Subscription-Key": keys.login, Authorization: `Bearer ${token}` } });
   const data = await readJson(resp);
   return { ok: resp.ok, data, events: unwrapSedList(data) };
 }
 
-async function fetchAluno(token, cdUsuarioCurto) {
+async function fetchAluno(token, cdUsuarioCurto, env) {
+  const keys = getSubscriptionKeys(env);
   const url = `${SED_BASE}/saladofuturobffapi/api/Aluno/ObterAlunoPorCodigo?codigoAluno=${encodeURIComponent(cdUsuarioCurto)}`;
-  const resp = await fetch(url, { headers: { Accept: "application/json", "Content-Type": "application/json", "Ocp-Apim-Subscription-Key": SUBSCRIPTION_KEYS.aluno, Authorization: `Bearer ${token}` } });
+  const resp = await fetch(url, { headers: { Accept: "application/json", "Content-Type": "application/json", "Ocp-Apim-Subscription-Key": keys.aluno, Authorization: `Bearer ${token}` } });
   return { resp, data: await readJson(resp) };
 }
 
@@ -602,14 +625,15 @@ async function handleDeleteNotification(request, url) {
 // =======================================================
 // HANDLERS DAS ROTAS
 // =======================================================
-async function handleLogin(request) {
+async function handleLogin(request, env) {
   let body;
   try { body = await request.json(); } catch { return jsonResponse({ erro: "Corpo da requisição inválido" }, 400); }
+  const keys = getSubscriptionKeys(env);
   const { usuario, senha } = body || {};
   if (!usuario || !senha) return jsonResponse({ erro: "Informe usuário e senha" }, 400);
   const loginResp = await fetch(`${SED_BASE}/saladofuturobffapi/credenciais/api/LoginCompletoToken`, {
     method: "POST",
-    headers: { Accept: "application/json", "Content-Type": "application/json", "Ocp-Apim-Subscription-Key": SUBSCRIPTION_KEYS.login },
+    headers: { Accept: "application/json", "Content-Type": "application/json", "Ocp-Apim-Subscription-Key": keys.login },
     body: JSON.stringify({ user: usuario, senha }),
   });
   const loginData = await readJson(loginResp);
@@ -628,16 +652,16 @@ async function handleLogin(request) {
   return jsonResponse({ nome: dados.NAME || "Aluno", apelido: username, email: dados.EMAIL || "", cdUsuario, cdUsuarioCurto: String(Math.trunc(cdUsuario / 10)), token, token2: tokenData.auth_token });
 }
 
-async function handleDashboard(request) {
+async function handleDashboard(request, env) {
   const token2 = getEduApiKey(request);
   const token = request.headers.get("X-Token");
   const cdUsuario = request.headers.get("X-Cd-Usuario");
   const username = request.headers.get("X-Task-User") || "";
   if (!token2 || !cdUsuario) return jsonResponse({ erro: "Cabeçalhos X-Token2 e X-Cd-Usuario são obrigatórios" }, 400);
   const [roomsResult, faltasResult, notificationsResult, alunoResult, agendaResult] = await Promise.all([
-    fetchTurmas(cdUsuario), fetchFaltas(cdUsuario), fetchNotifications(cdUsuario),
-    token ? fetchAluno(token, cdUsuario) : Promise.resolve({ resp: { ok: false }, data: null }),
-    token ? fetchAgenda(token, cdUsuario) : Promise.resolve({ ok: false, events: [] }),
+    fetchTurmas(token, cdUsuario, env), fetchFaltas(normalizeStudentCode(cdUsuario), env), fetchNotifications(cdUsuario, env),
+    token ? fetchAluno(token, normalizeStudentCode(cdUsuario), env) : Promise.resolve({ resp: { ok: false }, data: null }),
+    token ? fetchAgenda(token, normalizeStudentCode(cdUsuario), env) : Promise.resolve({ ok: false, events: [] }),
   ]);
   const rooms = roomsResult.rooms;
   const taskResult = await fetchTasks(token2, rooms, username);
@@ -652,12 +676,16 @@ async function handleDashboard(request) {
   });
 }
 
-async function handleStudentRooms(request) {
-  const code = String(new URL(request.url).searchParams.get("codigoAluno") || request.headers.get("X-Cd-Usuario") || "").trim();
+async function handleStudentRooms(request, env) {
+  const url = new URL(request.url);
+  const requestedCode = url.searchParams.get("codigoAluno") || request.headers.get("X-Cd-Usuario") || "";
+  const code = normalizeStudentCode(requestedCode);
+  const token = request.headers.get("X-Token") || "";
   if (!code) return jsonResponse({ ok: false, erro: "Código do aluno ausente", rooms: [], targets: [] }, 400);
+  if (!token) return jsonResponse({ ok: false, erro: "Cabeçalho X-Token ausente", rooms: [], targets: [] }, 401);
   try {
-    const result = await fetchTurmas(code);
-    if (!result.resp.ok) return jsonResponse({ ok: false, erro: "Não foi possível obter as turmas do aluno.", upstream_status: result.resp.status, rooms: [], targets: [] }, result.resp.status);
+    const result = await fetchTurmas(token, code, env);
+    if (!result.resp.ok) return jsonResponse({ ok: false, erro: "Não foi possível obter as turmas do aluno.", upstream_status: result.resp.status, upstream: result.data, rooms: [], targets: [] }, result.resp.status);
     const rooms = result.rooms.filter((room) => room.name || room.id !== null);
     const targets = rooms.flatMap((room) => [room.name, room.id === null ? "" : String(room.id)]).filter(Boolean);
     return jsonResponse({ ok: true, codigoAluno: code, rooms, targets });
@@ -709,12 +737,12 @@ export default {
     const path = url.pathname.replace(/\/$/, "") || "/";
     if (request.method === "OPTIONS") return new Response(null, { headers: corsHeaders() });
     try {
-      if (path === "/login" && request.method === "POST") return handleLogin(request);
+      if (path === "/login" && request.method === "POST") return handleLogin(request, env);
       if (path === "/resume" && request.method === "POST") return handleResume(request);
-      if (path === "/dashboard") return handleDashboard(request);
+      if (path === "/dashboard") return handleDashboard(request, env);
       if (path === "/captcha/challenge" && request.method === "POST") return handleCaptchaChallenge(request);
       if (path === "/captcha/verify" && request.method === "POST") return handleCaptchaVerify(request);
-      if (path === "/student-rooms" && request.method === "GET") return handleStudentRooms(request);
+      if (path === "/student-rooms" && request.method === "GET") return handleStudentRooms(request, env);
       if (path === "/task-details") return handleTaskDetails(request, url);
       if (path === "/answer-task" && request.method === "POST") return handleAnswerTask(request);
       if (path === "/groq-chat" && request.method === "POST") return handleGroqChat(request, env);
