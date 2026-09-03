@@ -1,0 +1,17 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    {
+      "name": "SED_SUBSCRIPTION_KEY",
+      "description": "Azure APIM subscription key for SED APIs (sedintegracoes.educacao.sp.gov.br). Visible in the 'API Completa SDF' capture file (ocp-apim-subscription-key header).",
+      "requiredAtBoot": true
+    },
+    {
+      "name": "GROQ_API_KEY",
+      "description": "Groq API key for the Flash IA assistant (api.groq.com). Obtain at https://console.groq.com/keys.",
+      "requiredAtBoot": false
+    }
+  ]
+}
