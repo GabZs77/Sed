@@ -64,9 +64,14 @@ assert.deepEqual(Array.from(fillContext.fillChoices({ raw: { options: { phrase: 
   { value: "A água", fixed: true },
   { value: "líquido", fixed: false, answer: "líquido" },
 ] } } })), ["líquido"]);
+assert.deepEqual(Array.from(fillContext.fillChoices({ raw: { content: { question: { options: {
+  phrase: [{ value: "Meios de", fixed: true }, { value: "", fixed: false }],
+  wordOptions: ["transporte", { label: "comunicação" }],
+} } } } })), ["transporte", "comunicação"]);
 assert.deepEqual(Array.from(fillContext.fillBuildAnswer({ 1: "gasoso", 0: "líquido" })), ["líquido", "gasoso"]);
 assert.ok(bundle.includes('answer:fillBuildAnswer(P[L.id])'), "Questões de lacunas devem usar o campo answer como array ordenado");
-assert.ok(bundle.includes('placeholder:"Digite a resposta"'), "Questões sem banco de palavras devem permitir digitação");
+assert.ok(bundle.includes('?!String(a.rawType||"").toLowerCase().includes("fill-words")&&!b.length?jsxRuntimeExports.jsx("input"'), "fill-words deve usar seleção mesmo quando o parser não encontrou opções");
+assert.ok(bundle.includes('jsxRuntimeExports.jsx("select",{className:"fill-word-gap"'), "As lacunas devem oferecer um controle de seleção");
 assert.ok(!bundle.includes("fillAnswerValues"), "O renderizador não deve chamar uma função inexistente");
 
 console.log("OK: fill usa phrase/choices e títulos permanecem separados da sala.");
