@@ -3,6 +3,7 @@ import vm from "node:vm";
 import assert from "node:assert/strict";
 
 const bundle = fs.readFileSync(new URL("./script.js", import.meta.url), "utf8");
+assert.equal(bundle.includes('fetchOptional("/tarefas")'), false, "A rota Tarefas não deve sobrescrever o dashboard com uma segunda resposta");
 const start = bundle.indexOf("function asObject(");
 const end = bundle.indexOf("const agendaTextureUrl", start);
 if (start < 0 || end < 0) throw new Error("Não foi possível localizar os normalizadores no bundle");
