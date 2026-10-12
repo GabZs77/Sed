@@ -69,6 +69,10 @@ const referenceContext = { window: {}, document: { createElement: () => ({ set i
 vm.runInNewContext(`${reference.slice(referenceStart, referenceEnd)}\nthis.gapChoices = gapChoices;`, referenceContext);
 const fillContext = { window: { __sdfGapChoices: referenceContext.gapChoices } };
 vm.runInNewContext(`${bundle.slice(fillHelpersStart, fillHelpersEnd)}\nthis.fillChoices = fillChoices; this.fillBuildAnswer = fillBuildAnswer;`, fillContext);
+const answerHelpersStart = bundle.indexOf("function parseTaskAnswerJson(");
+const answerHelpersEnd = bundle.indexOf("function QuestionAssist(", answerHelpersStart);
+if (answerHelpersStart < 0 || answerHelpersEnd < 0) throw new Error("Não foi possível localizar os validadores das respostas da IA");
+vm.runInNewContext(`${bundle.slice(answerHelpersStart, answerHelpersEnd)}\nthis.parseTaskAnswerJson = parseTaskAnswerJson; this.createTaskAnswerPrompt = createTaskAnswerPrompt; this.buildTaskAnswer = buildTaskAnswer;`, fillContext);
 assert.deepEqual(Array.from(fillContext.fillChoices({ raw: { options: { phrase: [
   { value: "A água", fixed: true },
   { value: "líquido", fixed: false, answer: "líquido" },
@@ -84,4 +88,42 @@ assert.ok(bundle.includes('?!String(a.rawType||"").toLowerCase().includes("fill-
 assert.ok(bundle.includes('jsxRuntimeExports.jsx("select",{className:"fill-word-gap"'), "As lacunas devem oferecer um controle de seleção");
 assert.ok(!bundle.includes("fillAnswerValues"), "O renderizador não deve chamar uma função inexistente");
 
-console.log("OK: fill usa phrase/choices e títulos permanecem separados da sala.");
+const toPlain = (value) => JSON.parse(JSON.stringify(value));
+assert.deepEqual(toPlain(fillContext.parseTaskAnswerJson('```json\n{"selected_ids":["op-b"]}\n```')), { selected_ids: ["op-b"] });
+assert.equal(fillContext.buildTaskAnswer({ type: "single", options: [{ id: "op-a" }, { id: "op-b" }] }, { selected_ids: ["op-b"] }), "op-b");
+assert.throws(() => fillContext.buildTaskAnswer({ type: "single", options: [{ id: "op-a" }] }, { selected_ids: ["invalid"] }), /alternativas/);
+assert.deepEqual(Array.from(fillContext.buildTaskAnswer({ type: "multi", options: [{ id: "a" }, { id: "b" }, { id: "c" }] }, { selected_ids: ["a", "c"] })), ["a", "c"]);
+assert.deepEqual(toPlain(fillContext.buildTaskAnswer({ type: "true-false", id: "q5", options: [{ id: "a" }, { id: "b" }] }, { true_false: { a: true, b: false } })), { a: true, b: false });
+
+const twoGapQuestion = {
+  id: "q-fill",
+  type: "fill",
+  rawType: "fill-words",
+  statement: "Complete a frase:",
+  raw: { options: { phrase: [
+    { value: "A base compreende", fixed: true },
+    { value: "", fixed: false },
+    { value: " e", fixed: true },
+    { value: "", fixed: false },
+  ], choices: ["comunicação", "pesquisa"] } },
+};
+assert.deepEqual(toPlain(fillContext.buildTaskAnswer(twoGapQuestion, { fill_words: ["COMUNICACAO", "Pesquisa"] })), { 1: "comunicação", 3: "pesquisa" });
+assert.throws(() => fillContext.buildTaskAnswer(twoGapQuestion, { fill_words: ["fora do banco", "pesquisa"] }), /fora do banco/);
+const noBankQuestion = { ...twoGapQuestion, raw: { options: { phrase: [{ value: "A resposta", fixed: true }, { value: "", fixed: false }] } } };
+assert.deepEqual(toPlain(fillContext.buildTaskAnswer(noBankQuestion, { fill_words: ["inferida"] })), { 1: "inferida" });
+assert.equal(fillContext.buildTaskAnswer({ type: "text" }, { text_answer: "Resposta final." }), "Resposta final.");
+assert.ok(fillContext.createTaskAnswerPrompt(twoGapQuestion).includes('"word_bank":["comunicação","pesquisa"]'));
+assert.ok(fillContext.createTaskAnswerPrompt(noBankQuestion).includes("Infira a palavra"));
+
+const assistStart = bundle.indexOf("function QuestionAssist(");
+const assistEnd = bundle.indexOf("function QuestionText(", assistStart);
+const assistSource = bundle.slice(assistStart, assistEnd);
+assert.ok(assistSource.includes("Selecionar respostas com IA"), "O botão deve iniciar a seleção automática");
+assert.ok(!assistSource.includes("Não escolha alternativa"), "O prompt não deve impedir a seleção das respostas");
+assert.ok(assistSource.includes("update(answer)"), "A resposta validada deve atualizar os controles da questão");
+assert.ok(assistSource.includes('request("/groq-chat"'), "A seleção deve consumir a resposta JSON bruta do endpoint");
+assert.ok(!assistSource.includes("sendAssistantMessage"), "A seleção não deve passar pelo filtro textual do tutor");
+assert.ok(bundle.includes('i.map(l=>jsxRuntimeExports.jsx("option"'), "Palavras inferidas pela IA devem aparecer como opção selecionada no controle da lacuna");
+assert.equal((bundle.match(/QuestionAssist,\{question:a,onChange:o\}/g) || []).length, 4, "Todas as questões respondíveis devem receber o atualizador de resposta");
+
+console.log("OK: lacunas, seleções simples/múltiplas, certo/errado e respostas escritas são validadas e aplicadas pela IA.");
