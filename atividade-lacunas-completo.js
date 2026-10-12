@@ -109,6 +109,7 @@
     return out;
   }
 
+  window.__sdfGapChoices = gapChoices;
 
   function renderFill(host, question, value, onChange) {
     var segs = phraseSegments(question) || [];

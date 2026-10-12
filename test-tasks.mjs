@@ -3,6 +3,10 @@ import vm from "node:vm";
 import assert from "node:assert/strict";
 
 const bundle = fs.readFileSync(new URL("./script.js", import.meta.url), "utf8");
+const reference = fs.readFileSync(new URL("./atividade-lacunas-completo.js", import.meta.url), "utf8");
+const html = fs.readFileSync(new URL("./index.html", import.meta.url), "utf8");
+assert.ok(html.indexOf("atividade-lacunas-completo.js") < html.indexOf('type="module" src="./script.js"'), "O helper de lacunas deve carregar antes do app");
+assert.ok(reference.includes("window.__sdfGapChoices = gapChoices"), "O helper deve expor o extrator de palavras");
 assert.equal(bundle.includes('fetchOptional("/tarefas")'), false, "A rota Tarefas não deve sobrescrever o dashboard com uma segunda resposta");
 const start = bundle.indexOf("function asObject(");
 const end = bundle.indexOf("const agendaTextureUrl", start);
@@ -58,7 +62,12 @@ assert.equal(questionContext.hasAnswer({ 0: "" }, "fill"), false);
 const fillHelpersStart = bundle.indexOf("function fillRaw(");
 const fillHelpersEnd = bundle.indexOf("function TaskQuestionCard(", fillHelpersStart);
 if (fillHelpersStart < 0 || fillHelpersEnd < 0) throw new Error("Não foi possível localizar os auxiliares de lacunas no bundle");
-const fillContext = {};
+const referenceStart = reference.indexOf("function raw(question)");
+const referenceEnd = reference.indexOf("function renderFill(", referenceStart);
+if (referenceStart < 0 || referenceEnd < 0) throw new Error("Não foi possível localizar o extrator de referência");
+const referenceContext = { window: {}, document: { createElement: () => ({ set innerHTML(value) { this.textContent = value; }, textContent: "" }) } };
+vm.runInNewContext(`${reference.slice(referenceStart, referenceEnd)}\nthis.gapChoices = gapChoices;`, referenceContext);
+const fillContext = { window: { __sdfGapChoices: referenceContext.gapChoices } };
 vm.runInNewContext(`${bundle.slice(fillHelpersStart, fillHelpersEnd)}\nthis.fillChoices = fillChoices; this.fillBuildAnswer = fillBuildAnswer;`, fillContext);
 assert.deepEqual(Array.from(fillContext.fillChoices({ raw: { options: { phrase: [
   { value: "A água", fixed: true },
@@ -69,7 +78,7 @@ assert.deepEqual(Array.from(fillContext.fillChoices({ raw: { content: { question
   wordOptions: ["transporte", { label: "comunicação" }],
 } } } } })), ["transporte", "comunicação"]);
 assert.deepEqual(Array.from(fillContext.fillBuildAnswer({ 1: "gasoso", 0: "líquido" })), ["líquido", "gasoso"]);
-assert.deepEqual(Array.from(fillContext.fillChoices({ type: "fill", rawType: "fill-words", statement: "A base para a transformação da economia exposta no texto compreende a melhora dos meios de transporte." })), ["pesquisa", "comunicação", "mercadorias", "industriais", "estatais", "transnacionais", "transporte", "técnico"]);
+assert.deepEqual(Array.from(fillContext.fillChoices({ raw: { options: { choices: ["pesquisa", "comunicação", "transporte"] } } })), ["pesquisa", "comunicação", "transporte"]);
 assert.ok(bundle.includes('answer:fillBuildAnswer(P[L.id])'), "Questões de lacunas devem usar o campo answer como array ordenado");
 assert.ok(bundle.includes('?!String(a.rawType||"").toLowerCase().includes("fill-words")&&!b.length?jsxRuntimeExports.jsx("input"'), "fill-words deve usar seleção mesmo quando o parser não encontrou opções");
 assert.ok(bundle.includes('jsxRuntimeExports.jsx("select",{className:"fill-word-gap"'), "As lacunas devem oferecer um controle de seleção");
