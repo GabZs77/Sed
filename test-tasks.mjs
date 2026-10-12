@@ -11,6 +11,11 @@ if (start < 0 || end < 0) throw new Error("Não foi possível localizar os norma
 const context = {};
 vm.runInNewContext(`${bundle.slice(start, end)}\nthis.normalizeTasks = normalizeTasks;\nthis.hydrateTaskRooms = hydrateTaskRooms;`, context);
 
+const questionStart = bundle.indexOf("function hasAnswer");
+const questionEnd = bundle.indexOf("function extractTaskStatement", questionStart);
+const questionContext = {};
+vm.runInNewContext(`${bundle.slice(questionStart, questionEnd)}\nthis.extractTaskQuestions = extractTaskQuestions;\nthis.normalizeQuestionType = normalizeQuestionType;\nthis.hasAnswer = hasAnswer;`, questionContext);
+
 const rooms = [{ CodigoTurma: 42, NomeTurma: "3A - Sala de Leitura", descricao: "3A - Sala de Leitura" }];
 const tasks = {
   data: [
@@ -20,8 +25,7 @@ const tasks = {
 };
 
 const normalized = context.hydrateTaskRooms(context.normalizeTasks(tasks), rooms);
-const titles = normalized.map((task) => task.title);
-assert.deepEqual(titles, [
+assert.deepEqual(normalized.map((task) => task.title), [
   "Tarefa 1: Fluxos globais: conceitos, informação e tecnologia",
   "Tarefa 2: Prosa regionalista romântica",
 ]);
@@ -30,4 +34,18 @@ assert.deepEqual(normalized.map((task) => task.roomName), [
   "3A - Sala de Leitura",
 ]);
 
-console.log("OK: nomes das atividades permanecem separados do nome da sala.");
+assert.equal(questionContext.normalizeQuestionType("fill-words", {}), "fill-words");
+const fillQuestions = questionContext.extractTaskQuestions({
+  questions: [{
+    id: "q3",
+    type: "fill-words",
+    statement: "Complete: ___ e ___ são conceitos relacionados.",
+    options: ["global", "rede", "local"],
+  }],
+});
+assert.equal(fillQuestions[0].type, "fill-words");
+assert.equal(fillQuestions[0].blankCount, 2);
+assert.equal(questionContext.hasAnswer({ 0: "global", 1: "rede" }, "fill-words"), true);
+assert.equal(questionContext.hasAnswer({ 0: "global", 1: "" }, "fill-words"), false);
+
+console.log("OK: títulos permanecem separados e questões fill-words usam campos de lacunas.");
