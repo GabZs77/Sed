@@ -55,4 +55,18 @@ assert.deepEqual(fillQuestions[0].raw.options.choices, ["sólido", "líquido", "
 assert.equal(questionContext.hasAnswer({ 0: "líquido" }, "fill"), true);
 assert.equal(questionContext.hasAnswer({ 0: "" }, "fill"), false);
 
+const fillHelpersStart = bundle.indexOf("function fillRaw(");
+const fillHelpersEnd = bundle.indexOf("function TaskQuestionCard(", fillHelpersStart);
+if (fillHelpersStart < 0 || fillHelpersEnd < 0) throw new Error("Não foi possível localizar os auxiliares de lacunas no bundle");
+const fillContext = {};
+vm.runInNewContext(`${bundle.slice(fillHelpersStart, fillHelpersEnd)}\nthis.fillChoices = fillChoices; this.fillBuildAnswer = fillBuildAnswer;`, fillContext);
+assert.deepEqual(Array.from(fillContext.fillChoices({ raw: { options: { phrase: [
+  { value: "A água", fixed: true },
+  { value: "líquido", fixed: false, answer: "líquido" },
+] } } })), ["líquido"]);
+assert.deepEqual(Array.from(fillContext.fillBuildAnswer({ 1: "gasoso", 0: "líquido" })), ["líquido", "gasoso"]);
+assert.ok(bundle.includes('answer:fillBuildAnswer(P[L.id])'), "Questões de lacunas devem usar o campo answer como array ordenado");
+assert.ok(bundle.includes('placeholder:"Digite a resposta"'), "Questões sem banco de palavras devem permitir digitação");
+assert.ok(!bundle.includes("fillAnswerValues"), "O renderizador não deve chamar uma função inexistente");
+
 console.log("OK: fill usa phrase/choices e títulos permanecem separados da sala.");
