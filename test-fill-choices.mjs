@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const context = {window:{},document:{createElement(){return {set innerHTML(v){this.textContent=String(v).replace(/<[^>]*>/g,'');}};}}};
+vm.runInNewContext(fs.readFileSync(new URL('./sdf-fill-choices-fix.js',import.meta.url),'utf8'),context);
+const extract = q => Array.from(context.window.__sdfGapChoices(q));
+assert.deepEqual(extract({raw:{options:{choices:['transporte','comunicação']}}}),['transporte','comunicação']);
+assert.deepEqual(extract({raw:{content:{question:{options:{word_bank:{items:[{text:'transporte'},{text:'comunicação'}]}}}}}}),['transporte','comunicação']);
+assert.deepEqual(extract({raw:{options:{phrase:[{value:'texto fixo',fixed:true},{value:'industrial',fixed:false}]}}}),['industrial']);
+assert.deepEqual(extract({raw:{options:[{label:'comunicação'},{label:'produção'}]}}),['comunicação','produção']);
+console.log('Four word-bank regression cases passed.');
