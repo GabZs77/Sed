@@ -34,18 +34,25 @@ assert.deepEqual(normalized.map((task) => task.roomName), [
   "3A - Sala de Leitura",
 ]);
 
-assert.equal(questionContext.normalizeQuestionType("fill-words", {}), "fill-words");
+assert.equal(questionContext.normalizeQuestionType("fill-words", {}), "fill");
 const fillQuestions = questionContext.extractTaskQuestions({
   questions: [{
     id: "q3",
     type: "fill-words",
-    statement: "Complete: ___ e ___ são conceitos relacionados.",
-    options: ["global", "rede", "local"],
+    statement: "Complete a frase:",
+    options: {
+      phrase: [
+        { value: "A água pode estar no estado", fixed: true },
+        { value: "", fixed: false },
+        { value: ".", fixed: true },
+      ],
+      choices: ["sólido", "líquido", "gasoso"],
+    },
   }],
 });
-assert.equal(fillQuestions[0].type, "fill-words");
-assert.equal(fillQuestions[0].blankCount, 2);
-assert.equal(questionContext.hasAnswer({ 0: "global", 1: "rede" }, "fill-words"), true);
-assert.equal(questionContext.hasAnswer({ 0: "global", 1: "" }, "fill-words"), false);
+assert.equal(fillQuestions[0].type, "fill");
+assert.deepEqual(fillQuestions[0].raw.options.choices, ["sólido", "líquido", "gasoso"]);
+assert.equal(questionContext.hasAnswer({ 0: "líquido" }, "fill"), true);
+assert.equal(questionContext.hasAnswer({ 0: "" }, "fill"), false);
 
-console.log("OK: títulos permanecem separados e questões fill-words usam campos de lacunas.");
+console.log("OK: fill usa phrase/choices e títulos permanecem separados da sala.");
