@@ -69,6 +69,7 @@ assert.deepEqual(Array.from(fillContext.fillChoices({ raw: { content: { question
   wordOptions: ["transporte", { label: "comunicação" }],
 } } } } })), ["transporte", "comunicação"]);
 assert.deepEqual(Array.from(fillContext.fillBuildAnswer({ 1: "gasoso", 0: "líquido" })), ["líquido", "gasoso"]);
+assert.deepEqual(Array.from(fillContext.fillChoices({ type: "fill", rawType: "fill-words", statement: "A base para a transformação da economia exposta no texto compreende a melhora dos meios de transporte." })), ["pesquisa", "comunicação", "mercadorias", "industriais", "estatais", "transnacionais", "transporte", "técnico"]);
 assert.ok(bundle.includes('answer:fillBuildAnswer(P[L.id])'), "Questões de lacunas devem usar o campo answer como array ordenado");
 assert.ok(bundle.includes('?!String(a.rawType||"").toLowerCase().includes("fill-words")&&!b.length?jsxRuntimeExports.jsx("input"'), "fill-words deve usar seleção mesmo quando o parser não encontrou opções");
 assert.ok(bundle.includes('jsxRuntimeExports.jsx("select",{className:"fill-word-gap"'), "As lacunas devem oferecer um controle de seleção");
