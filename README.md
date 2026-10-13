@@ -7,6 +7,7 @@ Versão estática do painel acadêmico SED Aluno, com agenda, presença, boletim
 - `index.html`: entrada da aplicação.
 - `style.css`: estilos compilados.
 - `script.js`: aplicação compilada em modo de produção.
+- `admin-panel.js`: painel administrativo restrito aos RAs autorizados, com gestão local de usuários, avisos, configurações, auditoria e manutenção.
 - `worker.js`: proxy Cloudflare com identificação oficial de sala por aluno.
 - `EF/` e `EM/`: apostilas PDF mantidas no repositório.
 
@@ -21,3 +22,7 @@ A rota `GET /student-rooms` e a carga do dashboard usam o endpoint oficial `List
 A correção em `worker.js` agora envia o token SED, inclui `x-product-name: SalaDoFuturo` e normaliza automaticamente o `CD_USUARIO` completo de 9 dígitos para o código curto de 8 dígitos usado pelas APIs de turma e aluno. A rota direta também valida a existência de `X-Token` e devolve o diagnóstico do upstream quando a API falha.
 
 Foi validado o fluxo com um teste isolado que confirma a conversão de `301953746` para `30195374`, a montagem correta da URL e o envio do Bearer token.
+
+## Administração SedX
+
+A aba **Administração** aparece somente para os RAs administrativos configurados no frontend (`1127620514SP` e `1127241606SP`). O painel mantém o visual atual e oferece visão geral, usuários, avisos, configurações, logs/auditoria e ferramentas de manutenção. Como esta versão do repositório é um frontend estático, os dados administrativos ficam no `localStorage` do navegador; para produção, a autorização e os dados devem ser movidos para endpoints protegidos no Worker/backend.
