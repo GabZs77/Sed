@@ -39,7 +39,7 @@
     if (session.token2) headers.set('X-Token2', session.token2);
     if (session.token) headers.set('X-Token', session.token);
     if (session.usuario) headers.set('X-Usuario', session.usuario);
-    headers.set('X-Admin-User', currentRa());
+    headers.set('X-Admin-User', session.usuario || '');
     const response = await fetch(`${WORKER_URL}${path}`, { ...options, headers });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.erro || `Falha na API administrativa (${response.status})`);
@@ -150,13 +150,22 @@
 
   async function openPanel() {
     if (!isAdmin()) return;
+    if (location.pathname !== '/admin') {
+      sessionStorage.setItem('sedx_admin_login_intent', '1');
+      history.pushState({}, '', '/admin');
+    }
     await syncAdminData();
     if (!document.querySelector('[data-admin-backdrop]')) document.body.insertAdjacentHTML('beforeend', panelTemplate());
     document.body.classList.add('admin-open');
     showTab('overview');
     log('Painel administrativo acessado', `Acesso realizado pelo RA ${currentRa()}`);
   }
-  function closePanel() { document.querySelector('[data-admin-backdrop]')?.remove(); document.body.classList.remove('admin-open'); }
+  function closePanel() {
+    document.querySelector('[data-admin-backdrop]')?.remove();
+    document.body.classList.remove('admin-open');
+    sessionStorage.removeItem('sedx_admin_login_intent');
+    if (location.pathname === '/admin') history.pushState({}, '', '/');
+  }
 
   function noticeForm(existing = {}) {
     const title = prompt('Título do aviso:', existing.title || ''); if (title === null) return;
