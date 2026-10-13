@@ -39,7 +39,7 @@
     if (session.token2) headers.set('X-Token2', session.token2);
     if (session.token) headers.set('X-Token', session.token);
     if (session.usuario) headers.set('X-Usuario', session.usuario);
-    headers.set('X-Admin-User', session.usuario || '');
+    headers.set('X-Admin-User', currentRa());
     const response = await fetch(`${WORKER_URL}${path}`, { ...options, headers });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.erro || `Falha na API administrativa (${response.status})`);
