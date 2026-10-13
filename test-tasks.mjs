@@ -77,6 +77,18 @@ assert.equal(fillQuestions[0].type, "fill");
 assert.deepEqual(fillQuestions[0].raw.options.choices, ["sólido", "líquido", "gasoso"]);
 assert.equal(questionContext.hasAnswer({ 0: "líquido" }, "fill"), true);
 assert.equal(questionContext.hasAnswer({ 0: "" }, "fill"), false);
+const orderedQuestions = questionContext.extractTaskQuestions({ questions: [{
+  id: "q-word-order",
+  type: "text",
+  statement: "Ordene as palavras a seguir para formar uma frase.",
+  options: { word_bank: ["A", "vida", "regionalista", "romântica", "representava", "o", "modo", "de", "prosa", "sertanejo."] },
+}] });
+assert.equal(orderedQuestions[0].type, "word-order", "Um enunciado de ordenação com banco de palavras não deve virar resposta escrita");
+assert.equal(orderedQuestions[0].rawType, "text", "O tipo original deve ser preservado para o envio");
+assert.equal(questionContext.hasAnswer(["A", "vida"], "word-order"), true);
+assert.equal(questionContext.hasAnswer([], "word-order"), false);
+const essayWithoutBank = questionContext.extractTaskQuestions({ questions: [{ type: "text", statement: "Escreva uma redação sobre a sua rotina." }] });
+assert.equal(essayWithoutBank[0].type, "text", "Uma resposta escrita comum continua sendo textual");
 
 const fillHelpersStart = bundle.indexOf("function fillRaw(");
 const fillHelpersEnd = bundle.indexOf("function TaskQuestionCard(", fillHelpersStart);
@@ -87,7 +99,7 @@ if (referenceStart < 0 || referenceEnd < 0) throw new Error("Não foi possível 
 const referenceContext = { window: {}, document: { createElement: () => ({ set innerHTML(value) { this.textContent = value; }, textContent: "" }) } };
 vm.runInNewContext(`${reference.slice(referenceStart, referenceEnd)}\nthis.gapChoices = gapChoices;`, referenceContext);
 const fillContext = { window: { __sdfGapChoices: referenceContext.gapChoices } };
-vm.runInNewContext(`${bundle.slice(fillHelpersStart, fillHelpersEnd)}\nthis.fillChoices = fillChoices; this.fillBuildAnswer = fillBuildAnswer;`, fillContext);
+vm.runInNewContext(`${bundle.slice(fillHelpersStart, fillHelpersEnd)}\nthis.fillChoices = fillChoices; this.fillBuildAnswer = fillBuildAnswer; this.wordOrderNormalizeAnswer = wordOrderNormalizeAnswer; this.wordOrderBuildAnswer = wordOrderBuildAnswer;`, fillContext);
 const answerHelpersStart = bundle.indexOf("function parseTaskAnswerJson(");
 const answerHelpersEnd = bundle.indexOf("function QuestionAssist(", answerHelpersStart);
 if (answerHelpersStart < 0 || answerHelpersEnd < 0) throw new Error("Não foi possível localizar os validadores das respostas da IA");
@@ -102,7 +114,15 @@ assert.deepEqual(Array.from(fillContext.fillChoices({ raw: { content: { question
 } } } } })), ["transporte", "comunicação"]);
 assert.deepEqual(Array.from(fillContext.fillBuildAnswer({ 1: "gasoso", 0: "líquido" })), ["líquido", "gasoso"]);
 assert.deepEqual(Array.from(fillContext.fillChoices({ raw: { options: { choices: ["pesquisa", "comunicação", "transporte"] } } })), ["pesquisa", "comunicação", "transporte"]);
+const orderBank = ["A", "vida", "regionalista", "romântica", "representava", "o", "modo", "de", "prosa", "sertanejo."];
+assert.deepEqual(Array.from(fillContext.fillChoices(orderedQuestions[0])), orderBank);
+const orderedAnswer = ["A", "prosa", "regionalista", "romântica", "representava", "o", "modo", "de", "vida", "sertanejo."];
+assert.deepEqual(Array.from(fillContext.wordOrderNormalizeAnswer(orderedAnswer, orderBank)), orderedAnswer, "A resposta ordenada mantém a grafia original do banco");
+assert.deepEqual(Array.from(fillContext.wordOrderNormalizeAnswer("A prosa regionalista romantica representava o modo de vida sertanejo.", orderBank)), orderedAnswer, "A resposta textual da IA deve ser convertida em palavras do banco");
+assert.deepEqual(Array.from(fillContext.wordOrderBuildAnswer(orderedAnswer)), orderedAnswer);
 assert.ok(bundle.includes('answer:fillBuildAnswer(P[L.id])'), "Questões de lacunas devem usar o campo answer como array ordenado");
+assert.ok(bundle.includes('value:wordOrderBuildAnswer(P[L.id])'), "Questões de ordenação devem enviar as palavras na sequência escolhida");
+assert.ok(bundle.includes('className:"word-order-choice'), "A questão de ordenação deve renderizar as palavras como controles selecionáveis");
 assert.ok(bundle.includes('?!String(a.rawType||"").toLowerCase().includes("fill-words")&&!b.length?jsxRuntimeExports.jsx("input"'), "fill-words deve usar seleção mesmo quando o parser não encontrou opções");
 assert.ok(bundle.includes('jsxRuntimeExports.jsx("select",{className:"fill-word-gap"'), "As lacunas devem oferecer um controle de seleção");
 assert.ok(!bundle.includes("fillAnswerValues"), "O renderizador não deve chamar uma função inexistente");
@@ -113,6 +133,9 @@ assert.equal(fillContext.buildTaskAnswer({ type: "single", options: [{ id: "op-a
 assert.throws(() => fillContext.buildTaskAnswer({ type: "single", options: [{ id: "op-a" }] }, { selected_ids: ["invalid"] }), /alternativas/);
 assert.deepEqual(Array.from(fillContext.buildTaskAnswer({ type: "multi", options: [{ id: "a" }, { id: "b" }, { id: "c" }] }, { selected_ids: ["a", "c"] })), ["a", "c"]);
 assert.deepEqual(toPlain(fillContext.buildTaskAnswer({ type: "true-false", id: "q5", options: [{ id: "a" }, { id: "b" }] }, { true_false: { a: true, b: false } })), { a: true, b: false });
+assert.ok(fillContext.createTaskAnswerPrompt(orderedQuestions[0]).includes('"word_bank"'), "O prompt da IA deve receber o banco de palavras da questão");
+assert.deepEqual(toPlain(fillContext.buildTaskAnswer(orderedQuestions[0], { word_order: orderedAnswer })), orderedAnswer, "A IA deve retornar a sequência validada do banco");
+assert.throws(() => fillContext.buildTaskAnswer(orderedQuestions[0], { word_order: ["palavra inventada"] }), /fora do banco/);
 
 const twoGapQuestion = {
   id: "q-fill",
