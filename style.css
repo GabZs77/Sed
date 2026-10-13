@@ -14,9 +14,10 @@ button,a,[role="button"],input,select,textarea{transition:color .2s ease,backgro
 button:not(:disabled):hover,[role="button"]:not([aria-disabled="true"]):hover{transform:translateY(-1px)}
 button:not(:disabled):active,[role="button"]:active{transform:translateY(0) scale(.98)}
 :focus-visible{outline:2px solid #d7d8dc!important;outline-offset:3px}
-.task-card,.stat-card,.panel,.card,.side-rail,.task-reader-modal,.question-card{animation:mono-enter .48s cubic-bezier(.2,.75,.25,1) both}
+.task-card,.stat-card,.panel,.card,.task-reader-modal,.question-card{animation:mono-enter .48s cubic-bezier(.2,.75,.25,1) both}
 .task-card:hover,.stat-card:hover,.panel:hover,.card:hover{border-color:#777980;box-shadow:0 14px 34px #0005;transform:translateY(-3px)}
 .question-assist-button:hover{color:#fff;background:#ffffff20;border-color:#ffffff70;box-shadow:0 0 0 4px #ffffff0c}
 .fill-word-field select:focus,.fill-word-field input:focus,input:focus,select:focus,textarea:focus{border-color:#bfc1c7;box-shadow:0 0 0 3px #ffffff14}
+.mobile-close{position:relative;z-index:2;touch-action:manipulation;cursor:pointer}
 @keyframes mono-enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
