@@ -63,6 +63,8 @@ export default {
         redirect: "manual",
         headers: {
           Accept: "application/json",
+          "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0",
           "X-Api-Key": apiKey,
           Origin: "https://saladofuturo.educacao.sp.gov.br",
           Referer: "https://saladofuturo.educacao.sp.gov.br/",

@@ -36,6 +36,7 @@ assert.equal(captured.url.searchParams.get("offset"), "0", "Offsets negativos de
 assert.equal(captured.url.searchParams.get("is_essay"), "true");
 assert.deepEqual(captured.url.searchParams.getAll("answer_statuses"), ["draft", "pending"]);
 assert.equal(captured.init.headers["X-Api-Key"], "runtime-session-token");
+assert.match(captured.init.headers["User-Agent"], /Chrome/);
 const body = await response.json();
 assert.equal(body[0].id, 7);
 console.log("OK: Worker de redações limita a rota, aplica CORS do Sed e encaminha a sessão sem persistência.");
