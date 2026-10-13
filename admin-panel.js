@@ -16,7 +16,7 @@
     favicon: '/favicon.ico',
     welcome: 'Agenda, presença e tarefas em um só lugar.',
     support: 'suporte@sedx.app',
-    maintenanceMessage: 'O SedX está temporariamente em manutenção. Voltaremos em breve.',
+    maintenanceMessage: 'Estamos realizando uma manutenção programada para deixar o SedX mais rápido, estável e seguro. O acesso será restabelecido assim que concluirmos os ajustes. Obrigado pela compreensão.',
     featureIa: true,
     featureApostilas: true,
   };
@@ -39,7 +39,7 @@
     if (session.token2) headers.set('X-Token2', session.token2);
     if (session.token) headers.set('X-Token', session.token);
     if (session.usuario) headers.set('X-Usuario', session.usuario);
-    headers.set('X-Admin-RA', currentRa());
+    headers.set('X-Admin-User', currentRa());
     const response = await fetch(`${WORKER_URL}${path}`, { ...options, headers });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.erro || `Falha na API administrativa (${response.status})`);
@@ -55,19 +55,17 @@
       if (data.stats) write(STORAGE.stats, data.stats);
       write(STORAGE.maintenance, Boolean(data.settings?.maintenance));
       return data;
-    } catch (error) { console.warn('[SedX Administração]', error); return null; }
+    } catch (error) {
+      console.warn('[SedX Administração]', error);
+      [STORAGE.notices, STORAGE.users, STORAGE.audit, STORAGE.stats, STORAGE.maintenance].forEach((key) => localStorage.removeItem(key));
+      return null;
+    }
   }
   const fmtDate = (value) => new Date(value).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
   const now = () => new Date().toISOString();
 
-  const seedUsers = () => read(STORAGE.users, [
-    { ra: '1127620514SP', name: 'Administrador 1', role: 'Administrador', status: 'Ativo', lastSeen: 'Agora' },
-    { ra: '1127241606SP', name: 'Administrador 2', role: 'Administrador', status: 'Ativo', lastSeen: 'Agora' },
-    { ra: '301953746SP', name: 'Conta de exemplo', role: 'Aluno', status: 'Ativo', lastSeen: 'Hoje' },
-  ]);
-  const seedNotices = () => read(STORAGE.notices, [
-    { id: 'welcome', title: 'Bem-vindo ao painel administrativo', description: 'Use esta área para acompanhar o SedX e publicar comunicados para os alunos.', image: '', publishedAt: now(), audience: 'Todos os alunos' },
-  ]);
+  const seedUsers = () => read(STORAGE.users, []);
+  const seedNotices = () => read(STORAGE.notices, []);
 
   function log(action, detail) {
     const entries = read(STORAGE.audit, []);
@@ -165,11 +163,8 @@
     const description = prompt('Descrição do aviso:', existing.description || ''); if (description === null) return;
     const audience = prompt('Área de publicação (ex.: Todos os alunos, Dashboard, Tarefas):', existing.audience || 'Todos os alunos'); if (audience === null) return;
     const image = prompt('URL da imagem do aviso (opcional):', existing.image || ''); if (image === null) return;
-    const notices = seedNotices();
-    if (existing.id) Object.assign(notices.find((item) => item.id === existing.id) || {}, { title, description, audience, publishedAt: existing.publishedAt || now() });
-    else notices.unshift({ id: `notice-${Date.now()}`, title, description, audience, image: '', publishedAt: now() });
-    write(STORAGE.notices, notices); log(existing.id ? 'Aviso editado' : 'Aviso publicado', title);
-    apiRequest('/admin/notification', { method: existing.id ? 'PUT' : 'POST', body: JSON.stringify({ id: existing.id, title, description, audience, image, publishedAt: existing.publishedAt }) }).then(syncAdminData).then(() => showTab('notices')).catch((error) => alert(`Não foi possível salvar o aviso: ${error.message}`));
+    const action = existing.id ? 'Aviso editado' : 'Aviso publicado';
+    apiRequest('/admin/notification', { method: existing.id ? 'PUT' : 'POST', body: JSON.stringify({ id: existing.id, title, description, audience, image, publishedAt: existing.publishedAt }) }).then(() => syncAdminData()).then(() => { log(action, title); showTab('notices'); }).catch((error) => alert(`Não foi possível salvar o aviso no servidor: ${error.message}`));
   }
 
   function bindPanelEvents(event) {
@@ -180,13 +175,13 @@
     if (action === 'close-admin') return closePanel();
     if (action === 'new-notice') return noticeForm();
     if (action === 'edit-notice') return noticeForm(seedNotices().find((item) => item.id === target.dataset.id) || {});
-    if (action === 'delete-notice') { const item = seedNotices().find((notice) => notice.id === target.dataset.id); if (item && confirm(`Excluir o aviso “${item.title}”?`)) { write(STORAGE.notices, seedNotices().filter((notice) => notice.id !== item.id)); log('Aviso excluído', item.title); apiRequest(`/admin/notification?id=${encodeURIComponent(item.id)}`, { method: 'DELETE' }).then(syncAdminData).then(() => showTab('notices')).catch((error) => alert(`Não foi possível excluir o aviso: ${error.message}`)); } return; }
-    if (action === 'toggle-user') { const users = seedUsers(); const user = users.find((item) => item.ra === target.dataset.ra); if (user) { user.status = user.status === 'Ativo' ? 'Suspenso' : 'Ativo'; write(STORAGE.users, users); log(user.status === 'Ativo' ? 'Usuário reativado' : 'Usuário suspenso', user.ra); apiRequest('/admin/user', { method: 'PUT', body: JSON.stringify(user) }).then(syncAdminData).then(() => showTab('users')).catch((error) => alert(`Não foi possível atualizar o usuário: ${error.message}`)); } return; }
-    if (action === 'save-settings') { const form = document.querySelector('#admin-settings-form'); const data = Object.fromEntries(new FormData(form).entries()); data.featureIa = form.featureIa.checked; data.featureApostilas = form.featureApostilas.checked; write(STORAGE.settings, data); log('Configurações alteradas', 'Identidade, mensagens e funcionalidades do site'); apiRequest('/admin/settings', { method: 'PUT', body: JSON.stringify(data) }).then(syncAdminData).then(() => alert('Configurações salvas no servidor.')).catch((error) => alert(`Não foi possível salvar as configurações: ${error.message}`)); return; }
+    if (action === 'delete-notice') { const item = seedNotices().find((notice) => notice.id === target.dataset.id); if (item && confirm(`Excluir o aviso “${item.title}”?`)) { apiRequest(`/admin/notification?id=${encodeURIComponent(item.id)}`, { method: 'DELETE' }).then(() => syncAdminData()).then(() => { log('Aviso excluído', item.title); showTab('notices'); }).catch((error) => alert(`Não foi possível excluir o aviso no servidor: ${error.message}`)); } return; }
+    if (action === 'toggle-user') { const user = seedUsers().find((item) => item.ra === target.dataset.ra); if (user) { const next = { ...user, status: user.status === 'Ativo' ? 'Suspenso' : 'Ativo' }; apiRequest('/admin/user', { method: 'PUT', body: JSON.stringify(next) }).then(() => syncAdminData()).then(() => { log(next.status === 'Ativo' ? 'Usuário reativado' : 'Usuário suspenso', next.ra); showTab('users'); }).catch((error) => alert(`Não foi possível atualizar o usuário no servidor: ${error.message}`)); } return; }
+    if (action === 'save-settings') { const form = document.querySelector('#admin-settings-form'); const data = Object.fromEntries(new FormData(form).entries()); data.featureIa = form.featureIa.checked; data.featureApostilas = form.featureApostilas.checked; apiRequest('/admin/settings', { method: 'PUT', body: JSON.stringify(data) }).then(() => syncAdminData()).then(() => { log('Configurações alteradas', 'Identidade, mensagens e funcionalidades do site'); alert('Configurações salvas no servidor.'); showTab('settings'); }).catch((error) => alert(`Não foi possível salvar as configurações no servidor: ${error.message}`)); return; }
     if (action === 'clear-audit') { if (confirm('Limpar todos os registros de auditoria?')) { write(STORAGE.audit, []); showTab('audit'); } return; }
-    if (action === 'toggle-maintenance') { const next = !read(STORAGE.maintenance, false); const settings = { ...read(STORAGE.settings, defaults), maintenance: next }; write(STORAGE.maintenance, next); write(STORAGE.settings, settings); log(next ? 'Modo de manutenção ativado' : 'Modo de manutenção desativado', 'Ferramenta de manutenção'); apiRequest('/admin/settings', { method: 'PUT', body: JSON.stringify({ maintenance: next, maintenanceMessage: settings.maintenanceMessage }) }).then(syncAdminData).then(() => showTab('maintenance')).catch((error) => alert(`Não foi possível alterar a manutenção: ${error.message}`)); return; }
+    if (action === 'toggle-maintenance') { const current = Boolean(read(STORAGE.maintenance, false)); const settings = { ...read(STORAGE.settings, defaults), maintenance: !current }; apiRequest('/admin/settings', { method: 'PUT', body: JSON.stringify({ maintenance: settings.maintenance, maintenanceMessage: settings.maintenanceMessage }) }).then(() => syncAdminData()).then(() => { log(settings.maintenance ? 'Modo de manutenção ativado' : 'Modo de manutenção desativado', 'Ferramenta de manutenção'); showTab('maintenance'); }).catch((error) => alert(`Não foi possível alterar a manutenção no servidor: ${error.message}`)); return; }
     if (action === 'clear-cache') { const preserve = ['sed_sessao', STORAGE.notices, STORAGE.settings, STORAGE.users, STORAGE.audit, STORAGE.maintenance]; Object.keys(localStorage).filter((key) => key.startsWith('sed_') && !preserve.includes(key)).forEach((key) => localStorage.removeItem(key)); log('Cache limpo', 'Dados locais não essenciais removidos'); alert('Cache local do site limpo neste dispositivo.'); return; }
-    if (target.dataset.userRole) { const users = seedUsers(); const user = users.find((item) => item.ra === target.dataset.ra); if (user) { user.role = target.value; write(STORAGE.users, users); log('Permissão alterada', `${user.ra}: ${user.role}`); apiRequest('/admin/user', { method: 'PUT', body: JSON.stringify(user) }).catch((error) => alert(`Não foi possível alterar a permissão: ${error.message}`)); } return; }
+    if (target.dataset.userRole) { const user = seedUsers().find((item) => item.ra === target.dataset.ra); if (user) { const next = { ...user, role: target.value }; apiRequest('/admin/user', { method: 'PUT', body: JSON.stringify(next) }).then(() => syncAdminData()).then(() => { log('Permissão alterada', `${next.ra}: ${next.role}`); showTab('users'); }).catch((error) => alert(`Não foi possível alterar a permissão no servidor: ${error.message}`)); } return; }
     if (target.dataset.userSearch) { const query = target.value.toLowerCase(); document.querySelectorAll('[data-user-row]').forEach((row) => { row.hidden = !row.dataset.search.includes(query); }); }
   }
 
