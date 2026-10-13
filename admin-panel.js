@@ -8,6 +8,7 @@
     audit: 'sedx_admin_audit',
     users: 'sedx_admin_users',
     maintenance: 'sedx_admin_maintenance',
+    stats: 'sedx_admin_stats',
   };
   const defaults = {
     siteName: 'SEDX Aluno',
@@ -29,6 +30,33 @@
   const normalizeRa = (value) => String(value || '').replace(/\D/g, '');
   const isAdmin = () => ADMIN_RAS.has(normalizeRa(getSession()?.usuario));
   const currentRa = () => normalizeRa(getSession()?.usuario);
+  const WORKER_URL = 'https://sdf.gabrielreplit56.workers.dev';
+  async function apiRequest(path, options = {}) {
+    const session = getSession() || {};
+    const headers = new Headers(options.headers || {});
+    headers.set('Accept', 'application/json');
+    headers.set('Content-Type', 'application/json');
+    if (session.token2) headers.set('X-Token2', session.token2);
+    if (session.token) headers.set('X-Token', session.token);
+    if (session.usuario) headers.set('X-Usuario', session.usuario);
+    headers.set('X-Admin-RA', currentRa());
+    const response = await fetch(`${WORKER_URL}${path}`, { ...options, headers });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.erro || `Falha na API administrativa (${response.status})`);
+    return data;
+  }
+  async function syncAdminData() {
+    try {
+      const data = await apiRequest('/admin/data');
+      if (Array.isArray(data.notices)) write(STORAGE.notices, data.notices);
+      if (Array.isArray(data.users)) write(STORAGE.users, data.users);
+      if (Array.isArray(data.audit)) write(STORAGE.audit, data.audit);
+      if (data.settings) write(STORAGE.settings, { ...defaults, ...data.settings });
+      if (data.stats) write(STORAGE.stats, data.stats);
+      write(STORAGE.maintenance, Boolean(data.settings?.maintenance));
+      return data;
+    } catch (error) { console.warn('[SedX Administração]', error); return null; }
+  }
   const fmtDate = (value) => new Date(value).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
   const now = () => new Date().toISOString();
 
@@ -63,9 +91,10 @@
   function renderStats() {
     const users = seedUsers();
     const notices = seedNotices();
+    const stats = read(STORAGE.stats, {});
     const active = users.filter((user) => user.status === 'Ativo').length;
     return `<section class="admin-stat-grid">
-      <article class="admin-stat"><span>Total de acessos</span><strong>12.486</strong><small>+8,4% neste mês</small></article>
+      <article class="admin-stat"><span>Total de acessos</span><strong>${Number(stats.accesses || 0).toLocaleString('pt-BR')}</strong><small>Leituras reais do estado público</small></article>
       <article class="admin-stat"><span>Usuários registrados</span><strong>${users.length}</strong><small>Contas no SedX</small></article>
       <article class="admin-stat"><span>Ativos recentemente</span><strong>${active}</strong><small>Últimos 7 dias</small></article>
       <article class="admin-stat"><span>Avisos publicados</span><strong>${notices.length}</strong><small>Visíveis no sistema</small></article>
@@ -121,8 +150,9 @@
     content.innerHTML = tab === 'overview' ? renderOverview() : tab === 'users' ? renderUsers() : tab === 'notices' ? renderNotices() : tab === 'settings' ? renderSettings() : tab === 'audit' ? renderAudit() : renderMaintenance();
   }
 
-  function openPanel() {
+  async function openPanel() {
     if (!isAdmin()) return;
+    await syncAdminData();
     if (!document.querySelector('[data-admin-backdrop]')) document.body.insertAdjacentHTML('beforeend', panelTemplate());
     document.body.classList.add('admin-open');
     showTab('overview');
@@ -134,10 +164,12 @@
     const title = prompt('Título do aviso:', existing.title || ''); if (title === null) return;
     const description = prompt('Descrição do aviso:', existing.description || ''); if (description === null) return;
     const audience = prompt('Área de publicação (ex.: Todos os alunos, Dashboard, Tarefas):', existing.audience || 'Todos os alunos'); if (audience === null) return;
+    const image = prompt('URL da imagem do aviso (opcional):', existing.image || ''); if (image === null) return;
     const notices = seedNotices();
     if (existing.id) Object.assign(notices.find((item) => item.id === existing.id) || {}, { title, description, audience, publishedAt: existing.publishedAt || now() });
     else notices.unshift({ id: `notice-${Date.now()}`, title, description, audience, image: '', publishedAt: now() });
-    write(STORAGE.notices, notices); log(existing.id ? 'Aviso editado' : 'Aviso publicado', title); showTab('notices');
+    write(STORAGE.notices, notices); log(existing.id ? 'Aviso editado' : 'Aviso publicado', title);
+    apiRequest('/admin/notification', { method: existing.id ? 'PUT' : 'POST', body: JSON.stringify({ id: existing.id, title, description, audience, image, publishedAt: existing.publishedAt }) }).then(syncAdminData).then(() => showTab('notices')).catch((error) => alert(`Não foi possível salvar o aviso: ${error.message}`));
   }
 
   function bindPanelEvents(event) {
@@ -148,19 +180,20 @@
     if (action === 'close-admin') return closePanel();
     if (action === 'new-notice') return noticeForm();
     if (action === 'edit-notice') return noticeForm(seedNotices().find((item) => item.id === target.dataset.id) || {});
-    if (action === 'delete-notice') { const item = seedNotices().find((notice) => notice.id === target.dataset.id); if (item && confirm(`Excluir o aviso “${item.title}”?`)) { write(STORAGE.notices, seedNotices().filter((notice) => notice.id !== item.id)); log('Aviso excluído', item.title); showTab('notices'); } return; }
-    if (action === 'toggle-user') { const users = seedUsers(); const user = users.find((item) => item.ra === target.dataset.ra); if (user) { user.status = user.status === 'Ativo' ? 'Suspenso' : 'Ativo'; write(STORAGE.users, users); log(user.status === 'Ativo' ? 'Usuário reativado' : 'Usuário suspenso', user.ra); showTab('users'); } return; }
-    if (action === 'save-settings') { const form = document.querySelector('#admin-settings-form'); const data = Object.fromEntries(new FormData(form).entries()); data.featureIa = form.featureIa.checked; data.featureApostilas = form.featureApostilas.checked; write(STORAGE.settings, data); log('Configurações alteradas', 'Identidade, mensagens e funcionalidades do site'); alert('Configurações salvas neste dispositivo.'); return; }
+    if (action === 'delete-notice') { const item = seedNotices().find((notice) => notice.id === target.dataset.id); if (item && confirm(`Excluir o aviso “${item.title}”?`)) { write(STORAGE.notices, seedNotices().filter((notice) => notice.id !== item.id)); log('Aviso excluído', item.title); apiRequest(`/admin/notification?id=${encodeURIComponent(item.id)}`, { method: 'DELETE' }).then(syncAdminData).then(() => showTab('notices')).catch((error) => alert(`Não foi possível excluir o aviso: ${error.message}`)); } return; }
+    if (action === 'toggle-user') { const users = seedUsers(); const user = users.find((item) => item.ra === target.dataset.ra); if (user) { user.status = user.status === 'Ativo' ? 'Suspenso' : 'Ativo'; write(STORAGE.users, users); log(user.status === 'Ativo' ? 'Usuário reativado' : 'Usuário suspenso', user.ra); apiRequest('/admin/user', { method: 'PUT', body: JSON.stringify(user) }).then(syncAdminData).then(() => showTab('users')).catch((error) => alert(`Não foi possível atualizar o usuário: ${error.message}`)); } return; }
+    if (action === 'save-settings') { const form = document.querySelector('#admin-settings-form'); const data = Object.fromEntries(new FormData(form).entries()); data.featureIa = form.featureIa.checked; data.featureApostilas = form.featureApostilas.checked; write(STORAGE.settings, data); log('Configurações alteradas', 'Identidade, mensagens e funcionalidades do site'); apiRequest('/admin/settings', { method: 'PUT', body: JSON.stringify(data) }).then(syncAdminData).then(() => alert('Configurações salvas no servidor.')).catch((error) => alert(`Não foi possível salvar as configurações: ${error.message}`)); return; }
     if (action === 'clear-audit') { if (confirm('Limpar todos os registros de auditoria?')) { write(STORAGE.audit, []); showTab('audit'); } return; }
-    if (action === 'toggle-maintenance') { const next = !read(STORAGE.maintenance, false); write(STORAGE.maintenance, next); log(next ? 'Modo de manutenção ativado' : 'Modo de manutenção desativado', 'Ferramenta de manutenção'); showTab('maintenance'); return; }
-    if (action === 'clear-cache') { const preserve = ['sed_sessao', STORAGE.notices, STORAGE.settings, STORAGE.users, STORAGE.audit, STORAGE.maintenance]; Object.keys(localStorage).filter((key) => key.startsWith('sed_') && !preserve.includes(key)).forEach((key) => localStorage.removeItem(key)); log('Cache limpo', 'Dados locais não essenciais removidos'); alert('Cache do site limpo neste dispositivo.'); return; }
-    if (target.dataset.userRole) { const users = seedUsers(); const user = users.find((item) => item.ra === target.dataset.ra); if (user) { user.role = target.value; write(STORAGE.users, users); log('Permissão alterada', `${user.ra}: ${user.role}`); } return; }
+    if (action === 'toggle-maintenance') { const next = !read(STORAGE.maintenance, false); const settings = { ...read(STORAGE.settings, defaults), maintenance: next }; write(STORAGE.maintenance, next); write(STORAGE.settings, settings); log(next ? 'Modo de manutenção ativado' : 'Modo de manutenção desativado', 'Ferramenta de manutenção'); apiRequest('/admin/settings', { method: 'PUT', body: JSON.stringify({ maintenance: next, maintenanceMessage: settings.maintenanceMessage }) }).then(syncAdminData).then(() => showTab('maintenance')).catch((error) => alert(`Não foi possível alterar a manutenção: ${error.message}`)); return; }
+    if (action === 'clear-cache') { const preserve = ['sed_sessao', STORAGE.notices, STORAGE.settings, STORAGE.users, STORAGE.audit, STORAGE.maintenance]; Object.keys(localStorage).filter((key) => key.startsWith('sed_') && !preserve.includes(key)).forEach((key) => localStorage.removeItem(key)); log('Cache limpo', 'Dados locais não essenciais removidos'); alert('Cache local do site limpo neste dispositivo.'); return; }
+    if (target.dataset.userRole) { const users = seedUsers(); const user = users.find((item) => item.ra === target.dataset.ra); if (user) { user.role = target.value; write(STORAGE.users, users); log('Permissão alterada', `${user.ra}: ${user.role}`); apiRequest('/admin/user', { method: 'PUT', body: JSON.stringify(user) }).catch((error) => alert(`Não foi possível alterar a permissão: ${error.message}`)); } return; }
     if (target.dataset.userSearch) { const query = target.value.toLowerCase(); document.querySelectorAll('[data-user-row]').forEach((row) => { row.hidden = !row.dataset.search.includes(query); }); }
   }
 
   document.addEventListener('click', bindPanelEvents);
   document.addEventListener('input', bindPanelEvents);
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closePanel(); });
+  window.__sedxAdminOpen = openPanel;
   const observer = new MutationObserver(() => injectNav());
   const boot = () => { injectNav(); observer.observe(document.body, { childList: true, subtree: true }); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
