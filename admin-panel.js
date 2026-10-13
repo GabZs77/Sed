@@ -82,7 +82,14 @@
     link.className = 'rail-link sedx-admin-link';
     link.dataset.sedxAdminLink = 'true';
     link.innerHTML = '<span class="sedx-admin-shield">◆</span><span>Administração</span>';
-    link.addEventListener('click', openPanel);
+    link.addEventListener('click', () => {
+      sessionStorage.setItem('sedx_admin_login_intent', '1');
+      if (location.pathname !== '/admin-tab') {
+        window.location.assign('/admin-tab');
+        return;
+      }
+      openPanel();
+    });
     nav.appendChild(link);
   }
 

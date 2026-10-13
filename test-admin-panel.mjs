@@ -14,6 +14,7 @@ for (const feature of ['Gerenciamento de usuários', 'Avisos e notificações', 
 }
 assert.ok(admin.includes("localStorage.getItem('sed_sessao')"), 'A autorização deve usar a sessão atual.');
 assert.ok(admin.includes("history.pushState({}, '', '/admin-tab')"), 'Abrir a administração deve atualizar a rota para /admin-tab.');
+assert.ok(admin.includes("window.location.assign('/admin-tab')"), 'O clique na aba deve navegar de verdade para /admin-tab.');
 assert.ok(admin.includes("headers.set('X-Admin-User', session.usuario || '')"), 'A API administrativa deve receber o identificador completo da sessão.');
 assert.ok(css.includes('.sedx-admin-panel'), 'O painel deve ter estilos próprios.');
 console.log('OK: painel administrativo autorizado por RA e recursos principais presentes.');
