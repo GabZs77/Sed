@@ -33,17 +33,24 @@
   const WORKER_URL = 'https://sdf.gabrielreplit56.workers.dev';
   async function apiRequest(path, options = {}) {
     const session = getSession() || {};
-    const headers = new Headers(options.headers || {});
-    headers.set('Accept', 'application/json');
-    headers.set('Content-Type', 'application/json');
-    if (session.token2) headers.set('X-Token2', session.token2);
-    if (session.token) headers.set('X-Token', session.token);
-    if (session.usuario) headers.set('X-Usuario', session.usuario);
-    headers.set('X-Admin-User', currentRa());
-    const response = await fetch(`${WORKER_URL}${path}`, { ...options, headers });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.erro || `Falha na API administrativa (${response.status})`);
-    return data;
+    const adminIdentities = [...new Set([currentRa(), String(session.usuario || '').trim()].filter(Boolean))];
+    let lastError;
+    for (const adminIdentity of adminIdentities) {
+      const headers = new Headers(options.headers || {});
+      headers.set('Accept', 'application/json');
+      headers.set('Content-Type', 'application/json');
+      if (session.token2) headers.set('X-Token2', session.token2);
+      if (session.token) headers.set('X-Token', session.token);
+      if (session.usuario) headers.set('X-Usuario', session.usuario);
+      if (session.cdUsuarioCurto) headers.set('X-Cd-Usuario', session.cdUsuarioCurto);
+      headers.set('X-Admin-User', adminIdentity);
+      const response = await fetch(`${WORKER_URL}${path}`, { ...options, headers });
+      const data = await response.json().catch(() => ({}));
+      if (response.ok) return data;
+      lastError = new Error(data.erro || `Falha na API administrativa (${response.status})`);
+      if (response.status !== 401 && response.status !== 403) throw lastError;
+    }
+    throw lastError || new Error('Sessão administrativa inválida. Faça login novamente.');
   }
   async function syncAdminData() {
     try {
