@@ -27,28 +27,6 @@ button:not(:disabled):active,[role="button"]:active{transform:translateY(0) scal
 .task-deadline.expired{color:#a2a4a9}
 .task-card.compact .task-deadline{margin-top:7px;font-size:11px}
 
-/* Aba Redação — estilos isolados da nova funcionalidade */
-.essay-page{animation:essay-page-in .35s ease both}
-.essay-list{display:grid;gap:14px}
-.essay-card{position:relative;overflow:hidden;padding:20px;border:1px solid rgba(255,255,255,.12);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025));transition:transform .2s ease,border-color .2s ease,background .2s ease}
-.essay-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.26);background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.035))}
-.essay-card-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
-.essay-card-heading h2{margin:5px 0 0;color:#f3f4f6;font-size:17px;line-height:1.45}
-.essay-eyebrow{color:#a8abb2;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}
-.essay-status{flex:none;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:5px 10px;color:#e5e7eb;background:rgba(255,255,255,.06);font-size:11px;font-weight:700}
-.essay-status.is-draft{color:#c2c5cb;background:rgba(255,255,255,.035)}
-.essay-description{margin:12px 0 0;color:#b5b7bd;font-size:13px;line-height:1.6}
-.essay-meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px;color:#c5c7cc;font-size:12px}
-.essay-meta strong{color:#f2f3f5}
-.essay-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.essay-tag{padding:4px 8px;border:1px solid rgba(255,255,255,.1);border-radius:999px;color:#a8abb2;font-size:10px}
-.essay-empty,.essay-loading,.essay-error{padding:28px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:rgba(255,255,255,.035);color:#bec0c6;text-align:center}
-.essay-error{border-color:rgba(255,255,255,.2);color:#e5e7eb}
-@keyframes essay-page-in{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:600px){.essay-card{padding:16px;border-radius:15px}.essay-card-heading{gap:10px}.essay-card-heading h2{font-size:15px}.essay-meta{gap:8px 14px}}
-@media(prefers-reduced-motion:reduce){.essay-page{animation:none}.essay-card{transition:none}}
-
-
 /* Questões de ordenação de palavras */
 .word-order-answer,
 .word-order-bank {
