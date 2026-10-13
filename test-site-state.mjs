@@ -10,5 +10,6 @@ assert.ok(module.includes('/site-state'));
 assert.ok(module.includes('O SedX está em manutenção'));
 assert.ok(module.includes('/admin'));
 assert.ok(module.includes('/admin-tab'));
+assert.ok(module.includes("!document.querySelector('[data-admin-backdrop]')"));
 assert.ok(module.includes('sedx-notification-button'));
 console.log('OK: fluxo público de notificações, manutenção e exceção das rotas administrativas presente.');

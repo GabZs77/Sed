@@ -47,11 +47,11 @@
   function adminRoute() {
     if (location.pathname === '/admin' || location.pathname === '/admin-tab') {
       sessionStorage.setItem('sedx_admin_login_intent', '1');
-      if (isAdmin() && window.__sedxAdminOpen) window.__sedxAdminOpen();
+      if (isAdmin() && window.__sedxAdminOpen && !document.querySelector('[data-admin-backdrop]')) window.__sedxAdminOpen();
     } else if (sessionStorage.getItem('sedx_admin_login_intent') === '1' && isAdmin()) {
       sessionStorage.removeItem('sedx_admin_login_intent');
       history.replaceState({}, '', '/admin-tab');
-      if (window.__sedxAdminOpen) window.__sedxAdminOpen();
+      if (window.__sedxAdminOpen && !document.querySelector('[data-admin-backdrop]')) window.__sedxAdminOpen();
     }
   }
   const boot = () => { checkMaintenance(); adminRoute(); injectNotificationButton(); const observer = new MutationObserver(() => { adminRoute(); injectNotificationButton(); }); observer.observe(document.body, { childList: true, subtree: true }); setInterval(checkMaintenance, 60000); };
