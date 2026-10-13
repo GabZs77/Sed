@@ -21,3 +21,8 @@ button:not(:disabled):active,[role="button"]:active{transform:translateY(0) scal
 .mobile-close{position:relative;z-index:2;touch-action:manipulation;cursor:pointer}
 @keyframes mono-enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Prazo de entrega em destaque nos cards de atividades */
+.task-deadline{display:block;margin-top:9px;color:#e1e2e5;font-size:12px;font-weight:700;line-height:1.45}
+.task-deadline.expired{color:#a2a4a9}
+.task-card.compact .task-deadline{margin-top:7px;font-size:11px}

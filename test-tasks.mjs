@@ -18,7 +18,7 @@ const end = bundle.indexOf("const agendaTextureUrl", start);
 if (start < 0 || end < 0) throw new Error("Não foi possível localizar os normalizadores no bundle");
 
 const context = {};
-vm.runInNewContext(`${bundle.slice(start, end)}\nthis.normalizeTasks = normalizeTasks;\nthis.hydrateTaskRooms = hydrateTaskRooms;`, context);
+vm.runInNewContext(`${bundle.slice(start, end)}\nthis.normalizeTasks = normalizeTasks;\nthis.hydrateTaskRooms = hydrateTaskRooms;\nthis.formatTaskDeadline = formatTaskDeadline;\nthis.taskDeadlineExpired = taskDeadlineExpired;`, context);
 
 const questionStart = bundle.indexOf("function hasAnswer");
 const questionEnd = bundle.indexOf("function extractTaskStatement", questionStart);
@@ -42,7 +42,21 @@ assert.deepEqual(normalized.map((task) => task.roomName), [
   "3A - Sala de Leitura",
   "3A - Sala de Leitura",
 ]);
-
+const withDeadlines = context.normalizeTasks({ data: [
+  { id: "prazo-1", dataLimite: "2099-05-06", code: "ATV-01" },
+  { id: "prazo-2", dueAt: "2099-05-06T17:30:00", code: "ATV-02" },
+  { id: "prazo-legado", apply_moment: "2099-06-01" },
+  { id: "prazo-antigo", deadline: "2000-01-01" },
+] });
+assert.equal(withDeadlines.find((task) => task.id === "prazo-1").due, "2099-05-06");
+assert.equal(withDeadlines.find((task) => task.id === "prazo-1").status, "pending");
+assert.equal(withDeadlines.find((task) => task.id === "prazo-legado").due, "2099-06-01");
+assert.equal(context.formatTaskDeadline("2099-05-06"), "06/05/2099");
+assert.ok(context.formatTaskDeadline("2099-05-06T17:30:00").includes("17:30"));
+assert.equal(context.taskDeadlineExpired("2000-01-01"), true);
+assert.equal(context.taskDeadlineExpired(new Date().toISOString().slice(0, 10)), false, "Uma tarefa vence no final do dia informado");
+assert.ok(bundle.includes("Prazo de envio:"), "O card deve rotular claramente o prazo");
+assert.ok(bundle.includes("a.code||\"\""), "O código da atividade não deve mais ocultar o prazo");
 assert.equal(questionContext.normalizeQuestionType("fill-words", {}), "fill");
 const fillQuestions = questionContext.extractTaskQuestions({
   questions: [{
