@@ -80,7 +80,7 @@ assert.equal(questionContext.hasAnswer({ 0: "" }, "fill"), false);
 const orderedQuestions = questionContext.extractTaskQuestions({ questions: [{
   id: "q-word-order",
   type: "text",
-  statement: "Ordene as palavras a seguir para formar uma frase.",
+  statement: 'O Texto 1 apresenta um trecho inicial do romance "Inocência", escrito pelo Visconde de Taunay durante o movimento romântico. Com base no trecho, ordene as palavras a seguir para formar uma frase que sintetize uma característica da prosa regionalista romântica.',
   options: { word_bank: ["A", "vida", "regionalista", "romântica", "representava", "o", "modo", "de", "prosa", "sertanejo."] },
 }] });
 assert.equal(orderedQuestions[0].type, "word-order", "Um enunciado de ordenação com banco de palavras não deve virar resposta escrita");
@@ -133,7 +133,12 @@ assert.equal(fillContext.buildTaskAnswer({ type: "single", options: [{ id: "op-a
 assert.throws(() => fillContext.buildTaskAnswer({ type: "single", options: [{ id: "op-a" }] }, { selected_ids: ["invalid"] }), /alternativas/);
 assert.deepEqual(Array.from(fillContext.buildTaskAnswer({ type: "multi", options: [{ id: "a" }, { id: "b" }, { id: "c" }] }, { selected_ids: ["a", "c"] })), ["a", "c"]);
 assert.deepEqual(toPlain(fillContext.buildTaskAnswer({ type: "true-false", id: "q5", options: [{ id: "a" }, { id: "b" }] }, { true_false: { a: true, b: false } })), { a: true, b: false });
-assert.ok(fillContext.createTaskAnswerPrompt(orderedQuestions[0]).includes('"word_bank"'), "O prompt da IA deve receber o banco de palavras da questão");
+const wordOrderPrompt = fillContext.createTaskAnswerPrompt(orderedQuestions[0]);
+assert.ok(wordOrderPrompt.includes('"word_bank"'), "O prompt da IA deve receber o banco de palavras da questão");
+assert.ok(wordOrderPrompt.includes("frase completa, natural e coerente em português brasileiro"), "A IA deve priorizar uma frase gramatical e coerente");
+assert.ok(wordOrderPrompt.includes("não preserve sua ordem original"), "A IA não deve simplesmente reutilizar a ordem embaralhada do banco");
+assert.ok(wordOrderPrompt.includes("sujeito e verbo devem formar uma oração"), "O prompt deve exigir uma revisão sintática antes da resposta");
+assert.deepEqual(toPlain(fillContext.buildTaskAnswer(orderedQuestions[0], { word_order: ["A", "prosa", "regionalista", "romântica", "representava", "o", "modo", "de", "vida", "sertanejo."] })), orderedAnswer, "O exemplo da captura deve aceitar a frase gramatical completa");
 assert.deepEqual(toPlain(fillContext.buildTaskAnswer(orderedQuestions[0], { word_order: orderedAnswer })), orderedAnswer, "A IA deve retornar a sequência validada do banco");
 assert.throws(() => fillContext.buildTaskAnswer(orderedQuestions[0], { word_order: ["palavra inventada"] }), /fora do banco/);
 
