@@ -35,7 +35,10 @@ assert.equal(captured.url.searchParams.get("limit"), "100", "O limite deve ser l
 assert.equal(captured.url.searchParams.get("offset"), "0", "Offsets negativos devem ser corrigidos");
 assert.equal(captured.url.searchParams.get("is_essay"), "true");
 assert.deepEqual(captured.url.searchParams.getAll("answer_statuses"), ["draft", "pending"]);
-assert.equal(captured.init.headers["X-Api-Key"], "runtime-session-token");
+assert.equal(captured.init.headers["content-type"], "application/json");
+assert.equal(captured.init.headers["x-api-platform"], "webclient");
+assert.equal(captured.init.headers["x-api-realm"], "edusp");
+assert.equal(captured.init.headers["x-api-key"], "runtime-session-token");
 assert.match(captured.init.headers["User-Agent"], /Chrome/);
 const body = await response.json();
 assert.equal(body[0].id, 7);
