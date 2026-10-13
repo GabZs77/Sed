@@ -4,11 +4,11 @@ import fs from "node:fs";
 const html = fs.readFileSync(new URL("./index.html", import.meta.url), "utf8");
 const app = fs.readFileSync(new URL("./script.js", import.meta.url), "utf8");
 const css = fs.readFileSync(new URL("./style.css", import.meta.url), "utf8");
-const logo = fs.readFileSync(new URL("./sedx-logo.png", import.meta.url));
+const logo = fs.readFileSync(new URL("./sedx-logo-login-dashboard.png", import.meta.url));
 const share = fs.readFileSync(new URL("./sedx-share.png", import.meta.url));
 
-assert.ok(app.includes('const logoUrl="/sedx-logo.png";'));
-assert.ok(app.includes('const logoUrl$1="/sedx-logo.png",headerTextureUrl='));
+assert.ok(app.includes('const logoUrl="/sedx-logo-login-dashboard.png";'));
+assert.ok(app.includes('const logoUrl$1="/sedx-logo-login-dashboard.png",headerTextureUrl='));
 assert.ok(app.includes('alt:"SEDX Aluno"'));
 assert.ok(app.includes('children:"SEDX"'));
 assert.ok(app.includes('children:["SEDX "'));
