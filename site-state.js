@@ -8,7 +8,7 @@
   const request = async (path) => { const response = await fetch(`${WORKER_URL}${path}`, { cache: 'no-store' }); return response.json(); };
 
   async function checkMaintenance() {
-    if (location.pathname === '/admin' || isAdmin()) return;
+    if (location.pathname === '/admin' || location.pathname === '/admin-tab' || isAdmin()) return;
     try {
       const state = await request('/site-state');
       if (state.maintenance) showMaintenance(state.maintenanceMessage);
@@ -45,12 +45,12 @@
   }
 
   function adminRoute() {
-    if (location.pathname === '/admin') {
+    if (location.pathname === '/admin' || location.pathname === '/admin-tab') {
       sessionStorage.setItem('sedx_admin_login_intent', '1');
       if (isAdmin() && window.__sedxAdminOpen) window.__sedxAdminOpen();
     } else if (sessionStorage.getItem('sedx_admin_login_intent') === '1' && isAdmin()) {
       sessionStorage.removeItem('sedx_admin_login_intent');
-      history.replaceState({}, '', '/admin');
+      history.replaceState({}, '', '/admin-tab');
       if (window.__sedxAdminOpen) window.__sedxAdminOpen();
     }
   }

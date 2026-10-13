@@ -8,7 +8,7 @@ Versão estática do painel acadêmico SED Aluno, com agenda, presença, boletim
 - `style.css`: estilos compilados.
 - `script.js`: aplicação compilada em modo de produção.
 - `admin-panel.js`: painel administrativo restrito aos RAs autorizados, com gestão de usuários, avisos, configurações, auditoria e manutenção.
-- `site-state.js`: central pública de notificações, rota `/admin` e bloqueio de manutenção para usuários comuns.
+- `site-state.js`: central pública de notificações, rota `/admin-tab` e bloqueio de manutenção para usuários comuns.
 - `sedx-admin-schema.sql`: schema versionado do banco D1 administrativo.
 - `worker.js`: proxy Cloudflare com identificação oficial de sala por aluno.
 - `EF/` e `EM/`: apostilas PDF mantidas no repositório.
@@ -27,8 +27,8 @@ Foi validado o fluxo com um teste isolado que confirma a conversão de `30195374
 
 ## Administração SedX
 
-A aba **Administração** aparece somente para os RAs administrativos configurados (`1127620514SP` e `1127241606SP`). Também é possível acessar diretamente `/admin`: a tela de login padrão é exibida e, depois de um login válido, o painel administrativo é aberto sem aplicar a tela de manutenção aos administradores.
+A aba **Administração** aparece somente para os RAs administrativos configurados (`1127620514SP` e `1127241606SP`). Também é possível acessar diretamente `/admin-tab`: a tela de login padrão é exibida e, depois de um login válido, o painel administrativo é aberto sem aplicar a tela de manutenção aos administradores. A rota antiga `/admin` continua aceita como compatibilidade e é direcionada para `/admin-tab` após a autenticação.
 
-As notificações, configurações, manutenção, usuários e auditoria agora são persistidas no banco **Cloudflare D1 `sedx-admin`**, através das rotas administrativas do Worker `sdf`. Usuários comuns consultam as notificações pelo botão de sino na dashboard. Quando o administrador ativa a manutenção, todos os usuários comuns recebem a tela “O SedX está em manutenção”; a rota `/admin` permanece disponível para os administradores.
+As notificações, configurações, manutenção, usuários e auditoria agora são persistidas no banco **Cloudflare D1 `sedx-admin`**, através das rotas administrativas do Worker `sdf`. Usuários comuns consultam as notificações pelo botão de sino na dashboard. Quando o administrador ativa a manutenção, todos os usuários comuns recebem a tela “O SedX está em manutenção”; a rota `/admin-tab` permanece disponível para os administradores.
 
 As rotas administrativas exigem o RA autorizado, `X-Token2` da sessão oficial e são gravadas no log de auditoria. O Worker mantém o binding D1 `SEDX_ADMIN` e o schema das tabelas `notifications`, `site_settings`, `admin_users` e `audit_logs`.

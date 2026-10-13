@@ -150,9 +150,9 @@
 
   async function openPanel() {
     if (!isAdmin()) return;
-    if (location.pathname !== '/admin') {
+    if (location.pathname !== '/admin-tab') {
       sessionStorage.setItem('sedx_admin_login_intent', '1');
-      history.pushState({}, '', '/admin');
+      history.pushState({}, '', '/admin-tab');
     }
     await syncAdminData();
     if (!document.querySelector('[data-admin-backdrop]')) document.body.insertAdjacentHTML('beforeend', panelTemplate());
@@ -164,7 +164,7 @@
     document.querySelector('[data-admin-backdrop]')?.remove();
     document.body.classList.remove('admin-open');
     sessionStorage.removeItem('sedx_admin_login_intent');
-    if (location.pathname === '/admin') history.pushState({}, '', '/');
+    if (location.pathname === '/admin-tab') history.pushState({}, '', '/');
   }
 
   function noticeForm(existing = {}) {
