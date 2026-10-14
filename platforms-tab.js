@@ -10,6 +10,20 @@
     try { return JSON.parse(localStorage.getItem('sed_sessao') || 'null'); } catch { return null; }
   }
 
+  function browserFingerprint() {
+    const hints = navigator.userAgentData;
+    const brands = Array.isArray(hints?.brands)
+      ? hints.brands.map(({ brand, version }) => `"${brand}";v="${version}"`).join(', ')
+      : '';
+    const platform = hints?.platform || navigator.platform || 'Android';
+    return {
+      user_agent: navigator.userAgent || '',
+      sec_ch_ua: brands,
+      sec_ch_ua_mobile: hints?.mobile ? '?1' : '?0',
+      sec_ch_ua_platform: JSON.stringify(platform),
+    };
+  }
+
   function urlWithoutPlatformTab() {
     const params = new URLSearchParams(location.search);
     params.delete(TAB_PARAM);
@@ -140,6 +154,13 @@
     input.name = 'token_sed';
     input.value = tokenSed;
     form.appendChild(input);
+    for (const [name, value] of Object.entries(browserFingerprint())) {
+      const hint = document.createElement('input');
+      hint.type = 'hidden';
+      hint.name = name;
+      hint.value = value;
+      form.appendChild(hint);
+    }
     document.body.appendChild(form);
     try {
       form.submit();
