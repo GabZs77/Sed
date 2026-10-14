@@ -15,6 +15,8 @@ assert.match(script, /const WORKER_URL = 'https:\/\/sdf\.gabrielreplit56\.worker
 assert.match(script, /WORKER_URL}\/leiasp\/login/);
 assert.match(script, /form\.method = 'POST'/);
 assert.match(script, /input\.name = 'token_sed'/);
+assert.match(script, /currentSession\?\.token2/);
+assert.match(script, /fallbackInput\.name = 'token_sed_alt'/);
 assert.match(script, /function browserFingerprint\(\)/);
 assert.match(script, /sec_ch_ua_mobile/);
 assert.match(script, /sec_ch_ua_platform/);

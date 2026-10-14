@@ -10,7 +10,7 @@ Versão estática do painel acadêmico SED Aluno, com agenda, presença, boletim
 - `admin-panel.js`: painel administrativo restrito aos RAs autorizados, com gestão de usuários, avisos, configurações, auditoria, manutenção e temas sazonais globais.
 - `site-state.js`: central pública de notificações, temas sazonais, rota `/admin-tab` e bloqueio de manutenção para usuários comuns.
 - `seasonal-themes.css`: paletas e efeitos visuais de Halloween, Natal e Dia das crianças.
-- `platforms-tab.js` e `platforms-tab.css`: navegação e apresentação da plataforma LeiaSP; reutilizam o token SED da sessão e encaminham a autenticação pelo Worker.
+- `platforms-tab.js` e `platforms-tab.css`: navegação e apresentação da plataforma LeiaSP; encaminham a sessão ao Worker por POST, com fallback para o token secundário apenas após rejeição do principal.
 - `sedx-admin-schema.sql`: schema versionado do banco D1 administrativo.
 - `worker.js`: proxy Cloudflare com identificação oficial de sala por aluno.
 - `EF/` e `EM/`: apostilas PDF mantidas no repositório.
@@ -37,4 +37,4 @@ As rotas administrativas exigem o RA autorizado, `X-Token2` da sessão oficial e
 
 A aba **Tema** permite escolher entre o visual Original, Halloween, Natal e Dia das crianças. A seleção fica salva em `site_settings.activeTheme` e é publicada pela rota pública `/site-state` para sincronizar todos os dispositivos; partículas e elementos decorativos respeitam a preferência por movimento reduzido do navegador.
 
-A aba **Plataformas** adiciona o LeiaSP à navegação do aluno. O botão envia o token SED da sessão atual por POST ao Worker; o Worker obtém o JWT do LeiaSP e segue o fluxo OAuth do cliente Python, repassando somente o redirecionamento HTTPS para o domínio oficial do leitor. O token de acesso do LeiaSP não é persistido pelo SedX.
+A aba **Plataformas** adiciona o LeiaSP à navegação do aluno. O botão envia os tokens temporários da sessão SedX por POST ao Worker. A autenticação tenta primeiro o token SED principal e, somente se houver rejeição HTTP 401/403, tenta o token secundário da mesma sessão; o Worker então obtém o JWT do LeiaSP e segue o fluxo OAuth do cliente Python, repassando apenas o redirecionamento HTTPS para o domínio oficial do leitor. Nenhum token de acesso do LeiaSP é persistido pelo SedX.

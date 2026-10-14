@@ -97,9 +97,9 @@
             <button type="button" class="leiasp-login-button" data-leiasp-login><span aria-hidden="true">Entrar no LeiaSP</span><span aria-hidden="true">→</span></button>
             <a class="leiasp-official-link" href="https://reader.elefanteletrado.com.br/" target="_blank" rel="noopener noreferrer">Site oficial</a>
           </div>
-          <p class="leiasp-status" data-leiasp-status role="status" aria-live="polite">A autenticação usa o token SED temporário da sua sessão atual.</p>
+          <p class="leiasp-status" data-leiasp-status role="status" aria-live="polite">A autenticação usa os tokens temporários da sua sessão atual.</p>
         </article>
-        <p class="platforms-privacy-note"><span aria-hidden="true">●</span> O token da sessão SedX é enviado ao Worker por POST. O fluxo continua em HTTPS no domínio oficial do leitor.</p>
+        <p class="platforms-privacy-note"><span aria-hidden="true">●</span> A sessão SedX é enviada ao Worker por POST. O fluxo continua em HTTPS no domínio oficial do leitor.</p>
       </div>`;
     document.body.appendChild(overlay);
     setNavActive(true);
@@ -135,7 +135,9 @@
     const status = overlay?.querySelector('[data-leiasp-status]');
     const currentSession = session();
     const tokenSed = typeof currentSession?.token === 'string' ? currentSession.token.trim() : '';
-    if (!tokenSed || tokenSed === 'null' || tokenSed === 'undefined') {
+    const tokenSedAlt = typeof currentSession?.token2 === 'string' ? currentSession.token2.trim() : '';
+    const isUsableToken = (value) => value && value !== 'null' && value !== 'undefined';
+    if (!isUsableToken(tokenSed) && !isUsableToken(tokenSedAlt)) {
       if (status) status.textContent = 'Sua sessão não contém um token SED válido. Saia do SedX e entre novamente antes de abrir o LeiaSP.';
       return;
     }
@@ -154,6 +156,11 @@
     input.name = 'token_sed';
     input.value = tokenSed;
     form.appendChild(input);
+    const fallbackInput = document.createElement('input');
+    fallbackInput.type = 'hidden';
+    fallbackInput.name = 'token_sed_alt';
+    fallbackInput.value = tokenSedAlt;
+    form.appendChild(fallbackInput);
     for (const [name, value] of Object.entries(browserFingerprint())) {
       const hint = document.createElement('input');
       hint.type = 'hidden';
