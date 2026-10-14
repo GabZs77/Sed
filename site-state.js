@@ -2,15 +2,71 @@
   'use strict';
   const WORKER_URL = 'https://sdf.gabrielreplit56.workers.dev';
   const ADMIN_RAS = new Set(['1127620514', '1127241606']);
+  const THEMES = new Set(['default', 'halloween', 'christmas', 'kids']);
+  const THEME_STORAGE = 'sedx_active_theme';
+  let activeTheme = 'default';
+
   const session = () => { try { return JSON.parse(localStorage.getItem('sed_sessao') || 'null'); } catch { return null; } };
   const isAdmin = () => ADMIN_RAS.has(String(session()?.usuario || '').replace(/\D/g, ''));
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#039;' }[c]));
   const request = async (path) => { const response = await fetch(`${WORKER_URL}${path}`, { cache: 'no-store' }); return response.json(); };
 
+  function makeParticles(theme) {
+    const existing = document.querySelector('[data-sedx-theme-particles]');
+    if (theme === 'default') { existing?.remove(); return; }
+    if (activeTheme === theme && existing) return;
+    existing?.remove();
+    const symbols = {
+      halloween: ['✦', '🦇', '·', '✧', '🍂', '✦', '🦇'],
+      christmas: ['❄', '❅', '✦', '❄', '✧', '❆', '❄'],
+      kids: ['✦', '🍬', '·', '🍭', '✧', '🎊', '✦'],
+    }[theme];
+    if (!symbols) return;
+    const layer = document.createElement('div');
+    layer.className = `sedx-theme-particles sedx-theme-particles-${theme}`;
+    layer.dataset.sedxThemeParticles = theme;
+    layer.setAttribute('aria-hidden', 'true');
+    const count = window.matchMedia('(max-width: 600px)').matches ? 14 : 26;
+    for (let index = 0; index < count; index += 1) {
+      const particle = document.createElement('span');
+      particle.textContent = symbols[index % symbols.length];
+      particle.style.setProperty('--particle-x', `${Math.random() * 100}%`);
+      particle.style.setProperty('--particle-size', `${8 + Math.random() * (theme === 'christmas' ? 9 : 12)}px`);
+      particle.style.setProperty('--particle-duration', `${11 + Math.random() * 14}s`);
+      particle.style.setProperty('--particle-delay', `${-Math.random() * 24}s`);
+      particle.style.setProperty('--particle-drift', `${Math.round(Math.random() * 100 - 50)}px`);
+      layer.appendChild(particle);
+    }
+    document.body.appendChild(layer);
+  }
+
+  function applyTheme(value) {
+    const theme = THEMES.has(value) ? value : 'default';
+    activeTheme = theme;
+    document.body.classList.remove('sedx-theme-halloween', 'sedx-theme-christmas', 'sedx-theme-kids');
+    if (theme !== 'default') document.body.classList.add(`sedx-theme-${theme}`);
+    document.documentElement.dataset.sedxTheme = theme;
+    try { localStorage.setItem(THEME_STORAGE, JSON.stringify(theme)); } catch {}
+    makeParticles(theme);
+  }
+
+  function loadCachedTheme() {
+    try {
+      const stored = localStorage.getItem(THEME_STORAGE);
+      if (stored) applyTheme(JSON.parse(stored));
+    } catch { applyTheme('default'); }
+  }
+  window.addEventListener('sedx:theme-change', (event) => applyTheme(event.detail?.activeTheme ?? event.detail?.theme));
+
   async function checkMaintenance() {
-    if (location.pathname === '/admin' || location.pathname === '/admin-tab' || isAdmin()) return;
+    const adminView = location.pathname === '/admin' || location.pathname === '/admin-tab' || isAdmin();
     try {
       const state = await request('/site-state');
+      if (Object.prototype.hasOwnProperty.call(state, 'activeTheme')) applyTheme(state.activeTheme);
+      if (adminView) {
+        document.querySelector('[data-sedx-maintenance]')?.remove();
+        return;
+      }
       if (state.maintenance) showMaintenance(state.maintenanceMessage);
       else document.querySelector('[data-sedx-maintenance]')?.remove();
     } catch (error) { console.warn('[SedX estado público]', error); }
@@ -54,6 +110,6 @@
       if (window.__sedxAdminOpen && !document.querySelector('[data-admin-backdrop]')) window.__sedxAdminOpen();
     }
   }
-  const boot = () => { checkMaintenance(); adminRoute(); injectNotificationButton(); const observer = new MutationObserver(() => { adminRoute(); injectNotificationButton(); }); observer.observe(document.body, { childList: true, subtree: true }); setInterval(checkMaintenance, 60000); };
+  const boot = () => { loadCachedTheme(); checkMaintenance(); adminRoute(); injectNotificationButton(); const observer = new MutationObserver(() => { adminRoute(); injectNotificationButton(); }); observer.observe(document.body, { childList: true, subtree: true }); setInterval(checkMaintenance, 60000); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

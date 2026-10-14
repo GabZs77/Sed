@@ -7,8 +7,9 @@ Versão estática do painel acadêmico SED Aluno, com agenda, presença, boletim
 - `index.html`: entrada da aplicação.
 - `style.css`: estilos compilados.
 - `script.js`: aplicação compilada em modo de produção.
-- `admin-panel.js`: painel administrativo restrito aos RAs autorizados, com gestão de usuários, avisos, configurações, auditoria e manutenção.
-- `site-state.js`: central pública de notificações, rota `/admin-tab` e bloqueio de manutenção para usuários comuns.
+- `admin-panel.js`: painel administrativo restrito aos RAs autorizados, com gestão de usuários, avisos, configurações, auditoria, manutenção e temas sazonais globais.
+- `site-state.js`: central pública de notificações, temas sazonais, rota `/admin-tab` e bloqueio de manutenção para usuários comuns.
+- `seasonal-themes.css`: paletas e efeitos visuais de Halloween, Natal e Dia das crianças.
 - `sedx-admin-schema.sql`: schema versionado do banco D1 administrativo.
 - `worker.js`: proxy Cloudflare com identificação oficial de sala por aluno.
 - `EF/` e `EM/`: apostilas PDF mantidas no repositório.
@@ -32,3 +33,5 @@ A aba **Administração** aparece somente para os RAs administrativos configurad
 As notificações, configurações, manutenção, usuários e auditoria agora são persistidas no banco **Cloudflare D1 `sedx-admin`**, através das rotas administrativas do Worker `sdf`. Usuários comuns consultam as notificações pelo botão de sino na dashboard. Quando o administrador ativa a manutenção, todos os usuários comuns recebem a tela “O SedX está em manutenção”; a rota `/admin-tab` permanece disponível para os administradores.
 
 As rotas administrativas exigem o RA autorizado, `X-Token2` da sessão oficial e são gravadas no log de auditoria. O Worker mantém o binding D1 `SEDX_ADMIN` e o schema das tabelas `notifications`, `site_settings`, `admin_users` e `audit_logs`.
+
+A aba **Tema** permite escolher entre o visual Original, Halloween, Natal e Dia das crianças. A seleção fica salva em `site_settings.activeTheme` e é publicada pela rota pública `/site-state` para sincronizar todos os dispositivos; partículas e elementos decorativos respeitam a preferência por movimento reduzido do navegador.

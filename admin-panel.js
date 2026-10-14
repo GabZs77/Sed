@@ -19,6 +19,7 @@
     maintenanceMessage: 'Estamos realizando uma manutenção programada para deixar o SedX mais rápido, estável e seguro. O acesso será restabelecido assim que concluirmos os ajustes. Obrigado pela compreensão.',
     featureIa: true,
     featureApostilas: true,
+    activeTheme: 'default',
   };
 
   const read = (key, fallback) => {
@@ -151,15 +152,26 @@
     return `<div class="admin-section-head"><div><span class="admin-kicker">Operação</span><h2>Ferramentas de manutenção</h2><p>Diagnóstico rápido e controles operacionais do SedX.</p></div></div><div class="maintenance-grid"><button data-action="toggle-maintenance" class="maintenance-action ${active ? 'active' : ''}"><strong>${active ? 'Desativar' : 'Ativar'} modo de manutenção</strong><span>Exibe um aviso aos visitantes e bloqueia novas operações.</span></button><button data-action="clear-cache" class="maintenance-action"><strong>Limpar cache do site</strong><span>Remove dados locais não essenciais deste dispositivo.</span></button><div class="diagnostic-card"><span class="admin-kicker">Diagnóstico</span><strong>Versão atual: 1.0.0</strong><p>Frontend: operacional · APIs: monitoradas · Última verificação: agora</p></div></div>`;
   }
 
+  function renderTheme() {
+    const activeTheme = read(STORAGE.settings, defaults).activeTheme || 'default';
+    const themes = [
+      { id: 'default', name: 'Original', icon: '◐', note: 'Visual padrão do SedX, sem efeitos sazonais.', symbols: '◆ · ✦' },
+      { id: 'halloween', name: 'Halloween', icon: '🎃', note: 'Laranja noturno, abóboras, morcegos e partículas brilhantes.', symbols: '🦇 · ✦ · 🎃' },
+      { id: 'christmas', name: 'Natal', icon: '🎅', note: 'Azul glacial, neve caindo, presentes e pinheiros iluminados.', symbols: '❄ · 🎁 · ✨' },
+      { id: 'kids', name: 'Dia das crianças', icon: '🍭', note: 'Cores vibrantes, doces, confetes e detalhes divertidos.', symbols: '🍬 · 🍭 · ✨' },
+    ];
+    return `<div class="admin-section-head"><div><span class="admin-kicker">Personalização global</span><h2>Tema</h2><p>Escolha a aparência que será exibida para todos os alunos. Os efeitos podem ser desativados no tema Original.</p></div></div><div class="theme-grid" role="group" aria-label="Temas do site">${themes.map((theme) => `<article class="theme-option ${activeTheme === theme.id ? 'selected' : ''}" data-theme-preview="${theme.id}"><div class="theme-preview-art" aria-hidden="true"><span class="theme-preview-icon">${theme.icon}</span><span class="theme-preview-sparkles">${theme.symbols}</span></div><div class="theme-option-copy"><span class="admin-kicker">${theme.id === 'default' ? 'SEDX CLÁSSICO' : 'TEMA SAZONAL'}</span><h3>${theme.name}</h3><p>${theme.note}</p><button type="button" class="theme-select-button" data-theme-option="${theme.id}" aria-pressed="${activeTheme === theme.id}">${activeTheme === theme.id ? 'Tema ativo' : `Ativar ${theme.name}`}</button></div></article>`).join('')}</div><p class="theme-sync-note"><span aria-hidden="true">✦</span> A escolha é salva no servidor e sincronizada com os dispositivos dos alunos.</p>`;
+  }
+
   function panelTemplate() {
-    return `<div class="sedx-admin-backdrop" data-admin-backdrop><section class="sedx-admin-panel" role="dialog" aria-modal="true" aria-labelledby="admin-title"><header class="admin-header"><div class="admin-header-brand"><img src="/sedx-logo-login-dashboard.png" alt="SEDX"><div><span>Área restrita</span><h1 id="admin-title">Administração</h1></div></div><div class="admin-header-actions"><span class="admin-identity">RA ${escapeHtml(getSession()?.usuario || currentRa())}</span><button class="admin-close" data-action="close-admin" aria-label="Fechar">×</button></div></header><div class="admin-body"><aside class="admin-menu"><button class="active" data-tab="overview">Visão geral</button><button data-tab="users">Usuários</button><button data-tab="notices">Avisos e notificações</button><button data-tab="settings">Configurações</button><button data-tab="audit">Logs e auditoria</button><button data-tab="maintenance">Manutenção</button></aside><main class="admin-content" id="admin-content"></main></div></section></div>`;
+    return `<div class="sedx-admin-backdrop" data-admin-backdrop><section class="sedx-admin-panel" role="dialog" aria-modal="true" aria-labelledby="admin-title"><header class="admin-header"><div class="admin-header-brand"><img src="/sedx-logo-login-dashboard.png" alt="SEDX"><div><span>Área restrita</span><h1 id="admin-title">Administração</h1></div></div><div class="admin-header-actions"><span class="admin-identity">RA ${escapeHtml(getSession()?.usuario || currentRa())}</span><button class="admin-close" data-action="close-admin" aria-label="Fechar">×</button></div></header><div class="admin-body"><aside class="admin-menu"><button class="active" data-tab="overview">Visão geral</button><button data-tab="users">Usuários</button><button data-tab="notices">Avisos e notificações</button><button data-tab="settings">Configurações</button><button data-tab="audit">Logs e auditoria</button><button data-tab="maintenance">Manutenção</button><button data-tab="theme">Tema <span aria-hidden="true">✦</span></button></aside><main class="admin-content" id="admin-content"></main></div></section></div>`;
   }
 
   function showTab(tab) {
     const content = document.querySelector('#admin-content');
     if (!content) return;
     document.querySelectorAll('.admin-menu button').forEach((button) => button.classList.toggle('active', button.dataset.tab === tab));
-    content.innerHTML = tab === 'overview' ? renderOverview() : tab === 'users' ? renderUsers() : tab === 'notices' ? renderNotices() : tab === 'settings' ? renderSettings() : tab === 'audit' ? renderAudit() : renderMaintenance();
+    content.innerHTML = tab === 'overview' ? renderOverview() : tab === 'users' ? renderUsers() : tab === 'notices' ? renderNotices() : tab === 'settings' ? renderSettings() : tab === 'audit' ? renderAudit() : tab === 'theme' ? renderTheme() : renderMaintenance();
   }
 
   async function openPanel() {
@@ -190,10 +202,32 @@
     apiRequest('/admin/notification', { method: existing.id ? 'PUT' : 'POST', body: JSON.stringify({ id: existing.id, title, description, audience, image, publishedAt: existing.publishedAt }) }).then(() => syncAdminData()).then(() => { log(action, title); showTab('notices'); }).catch((error) => alert(`Não foi possível salvar o aviso no servidor: ${error.message}`));
   }
 
+  async function saveTheme(theme) {
+    const supportedThemes = new Set(['default', 'halloween', 'christmas', 'kids']);
+    if (!supportedThemes.has(theme)) return;
+    const currentSettings = { ...defaults, ...read(STORAGE.settings, {}) };
+    const previousTheme = currentSettings.activeTheme || 'default';
+    write(STORAGE.settings, { ...currentSettings, activeTheme: theme });
+    window.dispatchEvent(new CustomEvent('sedx:theme-change', { detail: { activeTheme: theme } }));
+    try {
+      await apiRequest('/admin/settings', { method: 'PUT', body: JSON.stringify({ activeTheme: theme }) });
+      await syncAdminData();
+      const name = ({ default: 'Original', halloween: 'Halloween', christmas: 'Natal', kids: 'Dia das crianças' })[theme];
+      log('Tema global alterado', name);
+      showTab('theme');
+    } catch (error) {
+      write(STORAGE.settings, { ...currentSettings, activeTheme: previousTheme });
+      window.dispatchEvent(new CustomEvent('sedx:theme-change', { detail: { activeTheme: previousTheme } }));
+      alert(`Não foi possível salvar o tema no servidor: ${error.message}`);
+      showTab('theme');
+    }
+  }
+
   function bindPanelEvents(event) {
-    const target = event.target.closest('[data-action], [data-tab], [data-user-role], [data-user-search]');
+    const target = event.target.closest('[data-action], [data-tab], [data-user-role], [data-user-search], [data-theme-option]');
     if (!target) return;
     if (target.dataset.tab) return showTab(target.dataset.tab);
+    if (target.dataset.themeOption) return void saveTheme(target.dataset.themeOption);
     const action = target.dataset.action;
     if (action === 'close-admin') return closePanel();
     if (action === 'new-notice') return noticeForm();
