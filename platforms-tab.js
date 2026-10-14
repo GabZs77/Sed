@@ -1,34 +1,22 @@
 (() => {
   'use strict';
 
-  const WORKER_URL = 'https://sdf.gabrielreplit56.workers.dev';
   const TAB_PARAM = 'sedxTab';
+  const LEGACY_TAB_VALUE = 'plataformas';
+  const TAB_VALUE = 'ferramentas';
   let overlay = null;
   let returnUrl = '';
 
-  function session() {
-    try { return JSON.parse(localStorage.getItem('sed_sessao') || 'null'); } catch { return null; }
-  }
-
-  function browserFingerprint() {
-    const hints = navigator.userAgentData;
-    const brands = Array.isArray(hints?.brands)
-      ? hints.brands.map(({ brand, version }) => `"${brand}";v="${version}"`).join(', ')
-      : '';
-    const platform = hints?.platform || navigator.platform || 'Android';
-    return {
-      user_agent: navigator.userAgent || '',
-      sec_ch_ua: brands,
-      sec_ch_ua_mobile: hints?.mobile ? '?1' : '?0',
-      sec_ch_ua_platform: JSON.stringify(platform),
-    };
-  }
-
-  function urlWithoutPlatformTab() {
+  function urlWithoutToolsTab() {
     const params = new URLSearchParams(location.search);
     params.delete(TAB_PARAM);
     const query = params.toString();
     return `${location.pathname}${query ? `?${query}` : ''}${location.hash}`;
+  }
+
+  function isToolsTab() {
+    const value = new URLSearchParams(location.search).get(TAB_PARAM);
+    return value === TAB_VALUE || value === LEGACY_TAB_VALUE;
   }
 
   function setNavActive(active) {
@@ -46,8 +34,8 @@
       link.type = 'button';
       link.className = 'rail-link sedx-platforms-nav-link';
       link.dataset.sedxPlatformLink = 'desktop';
-      link.setAttribute('aria-label', 'Abrir Plataformas');
-      link.innerHTML = '<span class="platform-nav-icon" aria-hidden="true">▧</span><span>Plataformas</span>';
+      link.setAttribute('aria-label', 'Abrir Ferramentas');
+      link.innerHTML = '<span class="platform-nav-icon" aria-hidden="true">▧</span><span>Ferramentas</span>';
       rail.appendChild(link);
     }
 
@@ -57,8 +45,8 @@
       link.type = 'button';
       link.className = 'bottom-link sedx-platforms-bottom-link';
       link.dataset.sedxPlatformLink = 'mobile';
-      link.setAttribute('aria-label', 'Abrir Plataformas');
-      link.innerHTML = '<span class="bottom-icon-wrap"><span class="platform-nav-icon" aria-hidden="true">▧</span></span><span>Plataformas</span>';
+      link.setAttribute('aria-label', 'Abrir Ferramentas');
+      link.innerHTML = '<span class="bottom-icon-wrap"><span class="platform-nav-icon" aria-hidden="true">▧</span></span><span>Ferramentas</span>';
       bottom.appendChild(link);
     }
   }
@@ -68,38 +56,22 @@
     overlay.className = 'sedx-platforms-overlay';
     overlay.dataset.sedxPlatformsOverlay = 'true';
     overlay.setAttribute('role', 'region');
-    overlay.setAttribute('aria-label', 'Plataformas');
+    overlay.setAttribute('aria-label', 'Ferramentas');
     overlay.innerHTML = `
       <div class="platforms-tab-panel">
         <header class="platforms-tab-heading">
           <div>
-            <span class="eyebrow">Suas ferramentas de leitura</span>
-            <h1>Plataformas</h1>
-            <p>Acesse serviços educacionais com a sessão segura da sua conta SedX.</p>
+            <span class="eyebrow">Área de ferramentas</span>
+            <h1>Ferramentas</h1>
+            <p>Recursos disponíveis para apoiar sua rotina de estudos.</p>
           </div>
-          <button type="button" class="platforms-close" data-platforms-close aria-label="Fechar Plataformas">×</button>
+          <button type="button" class="platforms-close" data-platforms-close aria-label="Fechar Ferramentas">×</button>
         </header>
-        <article class="leiasp-platform-card">
-          <div class="leiasp-card-topline">
-            <div class="leiasp-brand-mark" aria-hidden="true">L<span>+</span></div>
-            <span class="leiasp-availability"><i></i> Plataforma disponível</span>
-          </div>
-          <div class="leiasp-card-copy">
-            <span class="platform-card-kicker">LEITURA DIGITAL</span>
-            <h2>LeiaSP</h2>
-            <p>Entre na plataforma de leitura da Secretaria da Educação de São Paulo usando a sessão oficial já iniciada no SedX.</p>
-          </div>
-          <div class="leiasp-card-details">
-            <div><span class="leiasp-detail-icon" aria-hidden="true">↗</span><span>A autenticação será concluída no site oficial do LeiaSP.</span></div>
-            <div><span class="leiasp-detail-icon" aria-hidden="true">⌑</span><span>Não pedimos nem salvamos sua senha do LeiaSP.</span></div>
-          </div>
-          <div class="leiasp-card-actions">
-            <button type="button" class="leiasp-login-button" data-leiasp-login><span aria-hidden="true">Entrar no LeiaSP</span><span aria-hidden="true">→</span></button>
-            <a class="leiasp-official-link" href="https://reader.elefanteletrado.com.br/" target="_blank" rel="noopener noreferrer">Site oficial</a>
-          </div>
-          <p class="leiasp-status" data-leiasp-status role="status" aria-live="polite">A autenticação usa os tokens temporários da sua sessão atual.</p>
-        </article>
-        <p class="platforms-privacy-note"><span aria-hidden="true">●</span> A sessão SedX é enviada ao Worker por POST. O fluxo continua em HTTPS no domínio oficial do leitor.</p>
+        <div class="tools-empty-state" role="status">
+          <span class="tools-empty-icon" aria-hidden="true">▧</span>
+          <h2>Nenhuma ferramenta disponível no momento</h2>
+          <p>Novas ferramentas poderão ser adicionadas aqui futuramente.</p>
+        </div>
       </div>`;
     document.body.appendChild(overlay);
     setNavActive(true);
@@ -111,11 +83,11 @@
     if (overlay?.isConnected) { setNavActive(true); return; }
     const params = new URLSearchParams(location.search);
     if (updateHistory && !params.has(TAB_PARAM)) {
-      returnUrl = urlWithoutPlatformTab();
-      params.set(TAB_PARAM, 'plataformas');
+      returnUrl = urlWithoutToolsTab();
+      params.set(TAB_PARAM, TAB_VALUE);
       history.pushState({ ...(history.state || {}), sedxPlatformTab: true, sedxReturnUrl: returnUrl }, '', `${location.pathname}?${params.toString()}${location.hash}`);
     } else if (!returnUrl) {
-      returnUrl = history.state?.sedxReturnUrl || urlWithoutPlatformTab();
+      returnUrl = history.state?.sedxReturnUrl || urlWithoutToolsTab();
     }
     renderPage();
   }
@@ -125,82 +97,31 @@
     overlay = null;
     setNavActive(false);
     if (restoreUrl && new URLSearchParams(location.search).has(TAB_PARAM)) {
-      const target = returnUrl || urlWithoutPlatformTab();
+      const target = returnUrl || urlWithoutToolsTab();
       history.replaceState({ ...(history.state || {}), sedxPlatformTab: false }, '', target);
     }
   }
 
-  function openLeiaSP() {
-    const button = overlay?.querySelector('[data-leiasp-login]');
-    const status = overlay?.querySelector('[data-leiasp-status]');
-    const currentSession = session();
-    const tokenSed = typeof currentSession?.token === 'string' ? currentSession.token.trim() : '';
-    const tokenSedAlt = typeof currentSession?.token2 === 'string' ? currentSession.token2.trim() : '';
-    const isUsableToken = (value) => value && value !== 'null' && value !== 'undefined';
-    if (!isUsableToken(tokenSed) && !isUsableToken(tokenSedAlt)) {
-      if (status) status.textContent = 'Sua sessão não contém um token SED válido. Saia do SedX e entre novamente antes de abrir o LeiaSP.';
-      return;
-    }
-
-    if (button) { button.disabled = true; button.setAttribute('aria-busy', 'true'); }
-    if (status) status.textContent = 'Conectando ao LeiaSP com a sessão atual do SedX…';
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = `${WORKER_URL}/leiasp/login`;
-    form.target = '_blank';
-    form.enctype = 'application/x-www-form-urlencoded';
-    form.setAttribute('rel', 'noopener noreferrer');
-    form.hidden = true;
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'token_sed';
-    input.value = tokenSed;
-    form.appendChild(input);
-    const fallbackInput = document.createElement('input');
-    fallbackInput.type = 'hidden';
-    fallbackInput.name = 'token_sed_alt';
-    fallbackInput.value = tokenSedAlt;
-    form.appendChild(fallbackInput);
-    for (const [name, value] of Object.entries(browserFingerprint())) {
-      const hint = document.createElement('input');
-      hint.type = 'hidden';
-      hint.name = name;
-      hint.value = value;
-      form.appendChild(hint);
-    }
-    document.body.appendChild(form);
-    try {
-      form.submit();
-      if (status) status.textContent = 'A solicitação foi enviada em uma nova aba. Se o navegador bloquear a abertura, permita pop-ups para concluir a autenticação.';
-    } catch {
-      if (status) status.textContent = 'Não foi possível abrir a janela do LeiaSP. Tente novamente ou use o site oficial.';
-    } finally {
-      form.remove();
-      window.setTimeout(() => { if (button?.isConnected) { button.disabled = false; button.removeAttribute('aria-busy'); } }, 1200);
-    }
-  }
-
   document.addEventListener('click', (event) => {
-    const platformLink = event.target.closest('[data-sedx-platform-link]');
-    if (platformLink) { event.preventDefault(); openTab(); return; }
+    const toolsLink = event.target.closest('[data-sedx-platform-link]');
+    if (toolsLink) { event.preventDefault(); openTab(); return; }
     if (overlay && event.target.closest('[data-platforms-close]')) { closeTab(); return; }
-    if (overlay && event.target.closest('[data-leiasp-login]')) { openLeiaSP(); return; }
     const otherNav = event.target.closest('.rail-nav .rail-link, .bottom-nav .bottom-link');
     if (overlay && otherNav) closeTab();
   });
 
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && overlay) closeTab(); });
   window.addEventListener('popstate', () => {
-    if (new URLSearchParams(location.search).get(TAB_PARAM) === 'plataformas') openTab({ updateHistory: false });
+    if (isToolsTab()) openTab({ updateHistory: false });
     else closeTab({ restoreUrl: false });
   });
 
   function boot() {
     injectNavLinks();
-    if (new URLSearchParams(location.search).get(TAB_PARAM) === 'plataformas') openTab({ updateHistory: false });
+    if (isToolsTab()) openTab({ updateHistory: false });
     const observer = new MutationObserver(() => {
       injectNavLinks();
-      if (new URLSearchParams(location.search).get(TAB_PARAM) === 'plataformas' && !overlay?.isConnected) openTab({ updateHistory: false });
+      if (isToolsTab() && !overlay?.isConnected) openTab({ updateHistory: false });
     });
     observer.observe(document.body, { childList: true, subtree: true });
   }

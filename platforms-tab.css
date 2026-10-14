@@ -1,4 +1,4 @@
-/* Aba de plataformas integrada à navegação existente do SedX. */
+/* Aba Ferramentas integrada à navegação existente do SedX. */
 .sedx-platforms-overlay {
   position: fixed;
   z-index: 19;
@@ -45,89 +45,32 @@
   transition: transform .16s, border-color .16s, color .16s;
 }
 .platforms-close:hover { color: var(--primary-strong); border-color: var(--primary); transform: rotate(4deg); }
-.leiasp-platform-card {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
+.tools-empty-state {
+  display: grid;
+  justify-items: center;
   width: min(100%, 760px);
-  padding: clamp(21px, 4vw, 34px);
-  background: radial-gradient(ellipse at 100% 0, #6c55ce19, transparent 24rem), linear-gradient(145deg, var(--card-soft), var(--card));
+  min-height: 230px;
+  margin-top: 20px;
+  padding: 36px 24px;
+  text-align: center;
+  align-content: center;
+  background: linear-gradient(145deg, var(--card-soft), var(--card));
   border: 1px solid var(--border);
-  border-radius: 23px;
+  border-radius: 20px;
   box-shadow: var(--shadow-deep), inset 0 1px #ffffff0a;
 }
-.leiasp-platform-card::after {
-  position: absolute;
-  z-index: -1;
-  right: -56px;
-  bottom: -82px;
-  width: 240px;
-  height: 240px;
-  content: "";
-  background: radial-gradient(circle, color-mix(in srgb, var(--primary) 18%, transparent), transparent 70%);
-  pointer-events: none;
-}
-.leiasp-card-topline { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.leiasp-brand-mark {
+.tools-empty-icon {
   display: grid;
   place-items: center;
-  width: 54px;
-  height: 54px;
-  color: #171320;
-  background: linear-gradient(140deg, #f3f0ff, #b6a5ff);
-  border: 1px solid #ffffff65;
-  border-radius: 17px;
-  box-shadow: 0 8px 24px #8f72ff30;
-  font: 900 27px/1 Manrope, sans-serif;
-  letter-spacing: -.1em;
+  width: 48px;
+  height: 48px;
+  color: var(--primary-strong);
+  background: color-mix(in srgb, var(--primary) 13%, transparent);
+  border-radius: 15px;
+  font-size: 23px;
 }
-.leiasp-brand-mark span { color: #6749ca; font-size: 14px; align-self: start; margin: 7px 0 0 -3px; }
-.leiasp-availability {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 10px;
-  color: var(--muted-strong);
-  background: #ffffff08;
-  border: 1px solid var(--border-soft);
-  border-radius: 99px;
-  font-size: 10px;
-  font-weight: 750;
-  letter-spacing: .025em;
-}
-.leiasp-availability i { width: 7px; height: 7px; background: #58d49d; border-radius: 50%; box-shadow: 0 0 11px #58d49d88; }
-.leiasp-card-copy { max-width: 580px; margin-top: 26px; }
-.platform-card-kicker { color: var(--primary-strong); font: 800 10px/1.2 Manrope, sans-serif; letter-spacing: .13em; }
-.leiasp-card-copy h2 { margin: 8px 0 9px; color: var(--foreground); font: 900 clamp(27px, 5vw, 39px)/1.08 Manrope, "DM Sans", sans-serif; letter-spacing: -.045em; }
-.leiasp-card-copy p { margin: 0; color: var(--muted-strong); font-size: 13px; line-height: 1.72; }
-.leiasp-card-details { display: grid; gap: 10px; margin: 22px 0; padding-top: 17px; border-top: 1px solid var(--border-soft); }
-.leiasp-card-details > div { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 11px; line-height: 1.5; }
-.leiasp-detail-icon { display: grid; flex: 0 0 25px; place-items: center; width: 25px; height: 25px; color: var(--primary-strong); background: color-mix(in srgb, var(--primary) 15%, transparent); border-radius: 8px; font-size: 14px; }
-.leiasp-card-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 13px; }
-.leiasp-login-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 23px;
-  min-width: 220px;
-  min-height: 45px;
-  padding: 0 16px;
-  color: var(--primary-foreground);
-  background: linear-gradient(130deg, var(--primary-strong), var(--primary));
-  border: 0;
-  border-radius: 12px;
-  box-shadow: 0 8px 25px color-mix(in srgb, var(--primary) 28%, transparent);
-  font: 800 12px Manrope, sans-serif;
-  cursor: pointer;
-  transition: filter .18s, transform .18s, opacity .18s;
-}
-.leiasp-login-button:hover { filter: brightness(1.08); transform: translateY(-1px); }
-.leiasp-login-button:disabled { opacity: .65; cursor: wait; transform: none; }
-.leiasp-official-link { color: var(--muted-strong); font-size: 11px; font-weight: 750; text-decoration: none; }
-.leiasp-official-link:hover { color: var(--primary-strong); text-decoration: underline; }
-.leiasp-status { min-height: 18px; margin: 15px 0 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
-.platforms-privacy-note { display: flex; align-items: flex-start; gap: 8px; max-width: 760px; margin: 15px 2px 0; color: var(--muted); font-size: 10px; line-height: 1.6; }
-.platforms-privacy-note span { color: var(--primary-strong); font-size: 8px; padding-top: 3px; }
+.tools-empty-state h2 { margin: 18px 0 7px; color: var(--foreground); font: 800 17px/1.3 Manrope, "DM Sans", sans-serif; }
+.tools-empty-state p { max-width: 42ch; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
 .sedx-platforms-nav-link .platform-nav-icon,
 .sedx-platforms-bottom-link .platform-nav-icon { color: inherit; font-size: 19px; line-height: 1; }
 .sedx-platforms-nav-link.active,
@@ -141,15 +84,12 @@
   .platforms-tab-heading { margin-bottom: 17px; }
   .platforms-tab-heading p { max-width: 42ch; font-size: 11px; }
   .platforms-close { width: 36px; height: 36px; flex-basis: 36px; }
-  .leiasp-platform-card { padding: 19px 17px; border-radius: 19px; }
-  .leiasp-card-copy { margin-top: 21px; }
-  .leiasp-card-copy p { font-size: 12px; }
-  .leiasp-card-actions { align-items: stretch; }
-  .leiasp-login-button { width: 100%; }
+  .tools-empty-state { min-height: 200px; padding: 30px 18px; }
+  .tools-empty-state h2 { font-size: 15px; }
   .sedx-platforms-bottom-link { font-size: 8px; letter-spacing: -.035em; }
   .sedx-platforms-bottom-link .platform-nav-icon { font-size: 17px; }
   .bottom-nav:has(.sedx-platforms-bottom-link) { grid-template-columns: repeat(8, minmax(0, 1fr)); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sedx-platforms-overlay, .platforms-close, .leiasp-login-button { animation: none; transition: none; }
+  .sedx-platforms-overlay, .platforms-close { animation: none; transition: none; }
 }

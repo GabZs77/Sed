@@ -9,21 +9,17 @@ const [html, script, styles] = await Promise.all([
 
 assert.match(html, /platforms-tab\.css/);
 assert.match(html, /platforms-tab\.js/);
-assert.match(script, /Plataformas/);
-assert.match(script, /LeiaSP/);
-assert.match(script, /const WORKER_URL = 'https:\/\/sdf\.gabrielreplit56\.workers\.dev'/);
-assert.match(script, /WORKER_URL}\/leiasp\/login/);
-assert.match(script, /form\.method = 'POST'/);
-assert.match(script, /input\.name = 'token_sed'/);
-assert.match(script, /currentSession\?\.token2/);
-assert.match(script, /fallbackInput\.name = 'token_sed_alt'/);
-assert.match(script, /function browserFingerprint\(\)/);
-assert.match(script, /sec_ch_ua_mobile/);
-assert.match(script, /sec_ch_ua_platform/);
-assert.match(script, /form\.target = '_blank'/);
-assert.match(script, /session\(\)/);
+assert.match(script, /Ferramentas/);
+assert.doesNotMatch(script, /LeiaSP|leiasp|WORKER_URL|token_sed/);
+assert.match(script, /const TAB_VALUE = 'ferramentas'/);
+assert.match(script, /const LEGACY_TAB_VALUE = 'plataformas'/);
+assert.match(script, /function isToolsTab\(\)/);
+assert.match(script, /data-sedx-platform-link/);
+assert.match(script, /data-platforms-close/);
 assert.match(styles, /\.sedx-platforms-overlay/);
+assert.match(styles, /\.tools-empty-state/);
 assert.match(styles, /repeat\(8, minmax\(0, 1fr\)\)/);
 assert.match(styles, /prefers-reduced-motion/);
+assert.doesNotMatch(styles, /leiasp/i);
 
-console.log('OK: a aba Plataformas carrega e o LeiaSP usa POST com a sessão SED, menu mobile e movimento reduzido.');
+console.log('OK: Ferramentas permanece na navegação e em links legados; LeiaSP e sua integração foram removidos.');
