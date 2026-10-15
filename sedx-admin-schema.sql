@@ -37,5 +37,17 @@ CREATE TABLE IF NOT EXISTS site_metrics (
   updated_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS published_tools (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  image TEXT NOT NULL DEFAULT '',
+  action_type TEXT NOT NULL CHECK (action_type IN ('copy', 'site')),
+  content TEXT NOT NULL,
+  published_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+
 CREATE INDEX IF NOT EXISTS idx_notifications_published ON notifications(published_at);
 CREATE INDEX IF NOT EXISTS idx_audit_created ON audit_logs(created_at);
+CREATE INDEX IF NOT EXISTS idx_published_tools_published ON published_tools(published_at);

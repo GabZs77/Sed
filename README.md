@@ -10,31 +10,31 @@ Versão estática do painel acadêmico SED Aluno, com agenda, presença, boletim
 - `admin-panel.js`: painel administrativo restrito aos RAs autorizados, com gestão de usuários, avisos, configurações, auditoria, manutenção e temas sazonais globais.
 - `site-state.js`: central pública de notificações, temas sazonais, rota `/admin-tab` e bloqueio de manutenção para usuários comuns.
 - `seasonal-themes.css`: paletas e efeitos visuais de Halloween, Natal e Dia das crianças.
-- `platforms-tab.js` e `platforms-tab.css`: navegação e apresentação da aba Ferramentas.
+- `tools-tab.js` e `tools-tab.css`: navegação, publicação administrativa e exibição de ferramentas para os alunos.
 - `sedx-admin-schema.sql`: schema versionado do banco D1 administrativo.
-- `worker.js`: proxy Cloudflare com identificação oficial de sala por aluno.
+- Worker Cloudflare `sdf`: proxy da aplicação e API administrativa; o código ativo é gerenciado no Cloudflare.
 - `EF/` e `EM/`: apostilas PDF mantidas no repositório.
 
 ## Configuração do Worker
 
-As chaves de upstream e do provedor de IA não são incluídas neste repositório público. Configure os seguintes secrets no Cloudflare Worker antes de publicar o `worker.js`: `SED_LOGIN_SUBSCRIPTION_KEY`, `SED_TURMAS_SUBSCRIPTION_KEY` (ou a de login), `SED_ALUNO_SUBSCRIPTION_KEY`, `SED_BOLETIM_SUBSCRIPTION_KEY`, `SED_HUB_SUBSCRIPTION_KEY` e `GROQ_API_KEY`. Nunca coloque tokens, senhas, cookies ou arquivos `.env` no GitHub. O arquivo de captura de rede mantido no repositório contém apenas valores sensíveis redigidos.
+As chaves de upstream e do provedor de IA não são incluídas neste repositório público. Configure os secrets necessários diretamente no Cloudflare Worker. Nunca coloque tokens, senhas, cookies ou arquivos `.env` no GitHub. O arquivo de captura de rede mantido no repositório contém apenas valores sensíveis redigidos.
 
 ## Correção da obtenção da sala do aluno
 
-A rota `GET /student-rooms` e a carga do dashboard usam o endpoint oficial `ListarTurmasPorAluno`. Esse endpoint exige simultaneamente o `codigoAluno` curto e o cabeçalho `Authorization: Bearer <token>` da sessão SED. O Worker estava enviando apenas a subscription key, por isso a API upstream rejeitava a consulta e o frontend não conseguia identificar a sala.
-
-A correção em `worker.js` agora envia o token SED, inclui `x-product-name: SalaDoFuturo` e normaliza automaticamente o `CD_USUARIO` completo de 9 dígitos para o código curto de 8 dígitos usado pelas APIs de turma e aluno. A rota direta também valida a existência de `X-Token` e devolve o diagnóstico do upstream quando a API falha.
-
-Foi validado o fluxo com um teste isolado que confirma a conversão de `301953746` para `30195374`, a montagem correta da URL e o envio do Bearer token.
+A rota `GET /student-rooms` e a carga do dashboard usam o endpoint oficial `ListarTurmasPorAluno`. Esse endpoint exige simultaneamente o `codigoAluno` curto e o cabeçalho `Authorization: Bearer <token>` da sessão SED. O Worker envia o token da sessão, inclui `x-product-name: SalaDoFuturo` e normaliza o `CD_USUARIO` para o código usado pelas APIs de turma e aluno.
 
 ## Administração SedX
 
-A aba **Administração** aparece somente para os RAs administrativos configurados (`1127620514SP` e `1127241606SP`). Também é possível acessar diretamente `/admin-tab`: a tela de login padrão é exibida e, depois de um login válido, o painel administrativo é aberto sem aplicar a tela de manutenção aos administradores. A rota antiga `/admin` continua aceita como compatibilidade e é direcionada para `/admin-tab` após a autenticação.
+A aba **Administração** aparece somente para os RAs administrativos configurados. Também é possível acessar diretamente `/admin-tab`: a tela de login padrão é exibida e, depois de um login válido, o painel administrativo é aberto sem aplicar a tela de manutenção aos administradores.
 
-As notificações, configurações, manutenção, usuários e auditoria agora são persistidas no banco **Cloudflare D1 `sedx-admin`**, através das rotas administrativas do Worker `sdf`. Usuários comuns consultam as notificações pelo botão de sino na dashboard. Quando o administrador ativa a manutenção, todos os usuários comuns recebem a tela “O SedX está em manutenção”; a rota `/admin-tab` permanece disponível para os administradores.
+As notificações, configurações, manutenção, usuários e auditoria são persistidas no banco **Cloudflare D1 `sedx-admin`**, através das rotas administrativas do Worker `sdf`. Usuários comuns consultam as notificações pelo botão de sino na dashboard. Quando o administrador ativa a manutenção, todos os usuários comuns recebem a tela “O SedX está em manutenção”; a rota `/admin-tab` permanece disponível para os administradores.
 
-As rotas administrativas exigem o RA autorizado, `X-Token2` da sessão oficial e são gravadas no log de auditoria. O Worker mantém o binding D1 `SEDX_ADMIN` e o schema das tabelas `notifications`, `site_settings`, `admin_users` e `audit_logs`.
+As rotas administrativas exigem o RA autorizado e `X-Token2` da sessão oficial, e as operações são registradas no log de auditoria. O binding D1 é `SEDX_ADMIN`; o schema inclui as tabelas `notifications`, `site_settings`, `admin_users`, `audit_logs`, `site_metrics` e `published_tools`.
 
 A aba **Tema** permite escolher entre o visual Original, Halloween, Natal e Dia das crianças. A seleção fica salva em `site_settings.activeTheme` e é publicada pela rota pública `/site-state` para sincronizar todos os dispositivos; partículas e elementos decorativos respeitam a preferência por movimento reduzido do navegador.
 
-A aba **Ferramentas** permanece disponível na navegação do aluno para receber recursos futuramente. O acesso por links antigos com `?sedxTab=plataformas` continua funcionando e abre a aba renomeada.
+## Ferramentas
+
+A aba **Ferramentas** lista conteúdos publicados para os alunos. Administradores autorizados veem o botão **Publicar**, com campos de título, descrição, conteúdo e imagem opcional; podem escolher se o botão público será **Copiar** o conteúdo ou **Ir para o site**. Conteúdo de copiar é tratado como texto e nunca executado como código.
+
+As publicações são persistidas em D1 na tabela `published_tools` e sincronizadas pela rota pública `/site-state`. A criação usa `POST /admin/tools`, protegida pela mesma autorização administrativa e auditoria do Worker. Imagens são otimizadas no navegador e limitadas a 250 KB. Esta aba não executa autenticação em plataformas externas.
