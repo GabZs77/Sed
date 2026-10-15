@@ -1,0 +1,32 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+
+const html = fs.readFileSync(new URL("./index.html", import.meta.url), "utf8");
+const app = fs.readFileSync(new URL("./script.js", import.meta.url), "utf8");
+const ui = fs.readFileSync(new URL("./about-page.js", import.meta.url), "utf8");
+const css = fs.readFileSync(new URL("./style.css", import.meta.url), "utf8");
+
+assert.ok(html.includes('<script src="./about-page.js"></script>'));
+assert.ok(app.includes('href:"/sobre",label:"Sobre"'));
+assert.ok(app.includes('path:"/sobre",component:SobrePage'));
+assert.ok(ui.includes('window.SedxAboutPage = { mount }'));
+assert.ok(ui.includes('api("/about")'));
+assert.ok(ui.includes('api("/admin/about")'));
+assert.ok(ui.includes('state.isAdmin = admin?.isAdmin === true'));
+assert.ok(ui.includes('data-action="toggle-editor"'));
+assert.ok(ui.includes('data-action="add-section"'));
+assert.ok(ui.includes('data-action="move-section"'));
+assert.ok(ui.includes('data-action="remove-section"'));
+assert.ok(ui.includes('data-action="upload-image"'));
+assert.ok(ui.includes('data-action="preview-mode"'));
+assert.ok(ui.includes('api("/admin/about/draft", "PUT"'));
+assert.ok(ui.includes('api("/admin/about/publish", "POST"'));
+assert.ok(ui.includes('api("/admin/about/unpublish", "POST"'));
+assert.ok(ui.includes('api("/admin/about/restore", "POST"'));
+assert.ok(ui.includes('state.isAdmin ? `<button'));
+assert.ok(ui.includes('window.confirm'));
+assert.ok(css.includes(".about-preview-frame.is-mobile"));
+assert.ok(css.includes(".about-preview-frame.is-desktop"));
+assert.ok(css.includes("prefers-reduced-motion:reduce"));
+
+console.log("OK: aba Sobre, editor administrativo, rascunhos, publicação, versões e prévias responsivas estão conectados.");
