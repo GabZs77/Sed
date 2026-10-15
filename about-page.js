@@ -9,6 +9,12 @@
       return ADMIN_RAS.has(String(session?.usuario || "").replace(/\D/g, ""));
     } catch { return false; }
   }
+  const navOrderObserver = new MutationObserver(() => {
+    const rail = document.querySelector(".side-rail .rail-nav");
+    const aboutLink = rail?.querySelector('a[href="/sobre"]');
+    if (aboutLink && rail.lastElementChild !== aboutLink) rail.appendChild(aboutLink);
+  });
+  navOrderObserver.observe(document.documentElement, { childList: true, subtree: true });
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
   const safeUrl = (value) => {
     try {
