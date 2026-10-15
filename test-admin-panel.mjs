@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+
+const html = fs.readFileSync(new URL('./index.html', import.meta.url), 'utf8');
+const admin = fs.readFileSync(new URL('./admin-panel.js', import.meta.url), 'utf8');
+const css = fs.readFileSync(new URL('./style.css', import.meta.url), 'utf8');
+
+assert.ok(html.includes('./admin-panel.js'), 'O módulo administrativo deve ser carregado.');
+assert.ok(admin.includes("'1127620514'"), 'O primeiro RA autorizado deve existir.');
+assert.ok(admin.includes("'1127241606'"), 'O segundo RA autorizado deve existir.');
+assert.ok(admin.includes('Administração'), 'A aba administrativa deve existir.');
+for (const feature of ['Gerenciamento de usuários', 'Avisos e notificações', 'Configurações do site', 'Logs e auditoria', 'Ferramentas de manutenção', 'Tema', 'Halloween', 'Natal', 'Dia das crianças']) {
+  assert.ok(admin.includes(feature), `A funcionalidade ${feature} deve estar disponível.`);
+}
+assert.ok(admin.includes("localStorage.getItem('sed_sessao')"), 'A autorização deve usar a sessão atual.');
+assert.ok(admin.includes("history.pushState({}, '', '/admin-tab')"), 'Abrir a administração deve atualizar a rota para /admin-tab.');
+assert.ok(admin.includes("window.location.assign('/admin-tab')"), 'O clique na aba deve navegar de verdade para /admin-tab.');
+assert.ok(admin.includes("[currentRa(), String(session.usuario || '').trim()]"), 'A API administrativa deve tentar o RA normalizado.');
+assert.ok(admin.includes("headers.set('X-Admin-User', adminIdentity)"), 'A API administrativa deve enviar a identidade selecionada.');
+assert.ok(admin.includes("String(session.usuario || '').trim()"), 'A API deve ter fallback para o RA original da sessão.');
+assert.ok(admin.includes("headers.set('X-Cd-Usuario', session.cdUsuarioCurto)"), 'A API deve encaminhar o código curto da sessão quando disponível.');
+assert.ok(admin.includes('data-theme-option="${theme.id}"'), 'Cada tema deve possuir uma ação de seleção identificável.');
+assert.ok(admin.includes("JSON.stringify({ activeTheme: theme })"), 'A seleção deve ser persistida no servidor para todos os usuários.');
+assert.ok(admin.includes("detail: { activeTheme: theme }"), 'A seleção deve ser aplicada imediatamente no dispositivo do administrador.');
+assert.ok(css.includes('.sedx-admin-panel'), 'O painel deve ter estilos próprios.');
+console.log('OK: painel administrativo autorizado por RA e recursos principais presentes.');

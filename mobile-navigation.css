@@ -1,0 +1,10 @@
+/* A navegação principal permanece no menu lateral; a barra inferior foi removida. */
+.bottom-nav {
+  display: none !important;
+}
+
+@media (max-width: 720px) {
+  .page-content {
+    padding-bottom: 24px !important;
+  }
+}

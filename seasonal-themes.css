@@ -1,0 +1,321 @@
+/* Temas sazonais do SedX: ativados globalmente pelo administrador. */
+body.sedx-theme-halloween {
+  color-scheme: dark;
+  --background: #100804;
+  --foreground: #fff5eb;
+  --card: #1a100a;
+  --card-soft: #24150d;
+  --card-foreground: #fff5eb;
+  --muted: #b49a84;
+  --muted-strong: #d9bea5;
+  --border: #75401e;
+  --border-soft: #f9731630;
+  --primary: #f97316;
+  --primary-strong: #ffad45;
+  --primary-foreground: #210d03;
+  --green: #ff9d43;
+  --green-soft: #ff9d4325;
+  --cyan: #ffc078;
+  --amber: #ffb341;
+  --red: #ff7043;
+  --theme-accent: #fb7a18;
+  --theme-secondary: #ffc04d;
+  --theme-glow: #ff781b33;
+}
+
+body.sedx-theme-christmas {
+  color-scheme: dark;
+  --background: #06101d;
+  --foreground: #f4f9ff;
+  --card: #0b1b2c;
+  --card-soft: #10243a;
+  --card-foreground: #f4f9ff;
+  --muted: #9db5cb;
+  --muted-strong: #c8d9e9;
+  --border: #2f7196;
+  --border-soft: #67d9ff30;
+  --primary: #55c9f4;
+  --primary-strong: #b2efff;
+  --primary-foreground: #062033;
+  --green: #8ae6db;
+  --green-soft: #8ae6db24;
+  --cyan: #7ee0ff;
+  --amber: #ffd47b;
+  --red: #ff8290;
+  --theme-accent: #63d7ff;
+  --theme-secondary: #dff8ff;
+  --theme-glow: #31c9ff33;
+}
+
+body.sedx-theme-kids {
+  color-scheme: dark;
+  --background: #100817;
+  --foreground: #fff7ff;
+  --card: #1b1023;
+  --card-soft: #26152f;
+  --card-foreground: #fff7ff;
+  --muted: #c0a8c7;
+  --muted-strong: #e3c9ed;
+  --border: #814c85;
+  --border-soft: #ee55c833;
+  --primary: #ed5ac9;
+  --primary-strong: #ffb1e9;
+  --primary-foreground: #210b22;
+  --green: #65e4cf;
+  --green-soft: #65e4cf22;
+  --cyan: #61d8f2;
+  --amber: #ffd66e;
+  --red: #ff7f9d;
+  --theme-accent: #f265d2;
+  --theme-secondary: #68e4e0;
+  --theme-glow: #eb55ca33;
+}
+
+body.sedx-theme-halloween .app-shell {
+  background: radial-gradient(ellipse at 88% 3%, #f9731624, transparent 28rem), radial-gradient(ellipse at 4% 70%, #8f2c1020, transparent 32rem), var(--background);
+}
+body.sedx-theme-christmas .app-shell {
+  background: radial-gradient(ellipse at 82% 3%, #37c9ff22, transparent 30rem), radial-gradient(ellipse at 12% 80%, #175c9b28, transparent 36rem), var(--background);
+}
+body.sedx-theme-kids .app-shell {
+  background: radial-gradient(ellipse at 88% 5%, #e754c929, transparent 28rem), radial-gradient(ellipse at 10% 72%, #26c6da1c, transparent 34rem), var(--background);
+}
+
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .side-rail {
+  background: color-mix(in srgb, var(--background) 88%, transparent);
+  border-color: var(--border-soft);
+}
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .topbar {
+  background: color-mix(in srgb, var(--background) 82%, transparent);
+  border-color: var(--border-soft);
+}
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .rail-link.active,
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .rail-link:hover {
+  color: var(--theme-secondary);
+  background: var(--theme-glow);
+}
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .welcome-strip,
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .stat-card,
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .agenda-selector,
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .agenda-panel,
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .progress-card,
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .period-card,
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .grade-card,
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .task-card {
+  border-color: color-mix(in srgb, var(--theme-accent) 58%, var(--border));
+  box-shadow: 0 10px 32px var(--theme-glow), inset 0 1px #ffffff0b;
+}
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .stat-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--card) 92%, var(--theme-accent)), var(--background));
+}
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .stat-card > * {
+  position: relative;
+  z-index: 1;
+}
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .stat-icon {
+  color: var(--theme-secondary);
+  background: var(--theme-glow);
+  border: 1px solid color-mix(in srgb, var(--theme-accent) 45%, transparent);
+}
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .welcome-strip {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .welcome-strip > * {
+  position: relative;
+  z-index: 1;
+}
+body.sedx-theme-halloween .welcome-strip {
+  background: radial-gradient(circle at 89% 55%, #ff7a1834, transparent 11rem), linear-gradient(105deg, #271006dd, #110905c9);
+}
+body.sedx-theme-christmas .welcome-strip {
+  background: radial-gradient(circle at 89% 55%, #55d8ff38, transparent 12rem), linear-gradient(105deg, #0b2840ed, #07111fdb);
+}
+body.sedx-theme-kids .welcome-strip {
+  background: radial-gradient(circle at 87% 50%, #f45bc839, transparent 11rem), linear-gradient(105deg, #30143bdb, #10101dcf);
+}
+body.sedx-theme-halloween .welcome-strip::after,
+body.sedx-theme-christmas .welcome-strip::after,
+body.sedx-theme-kids .welcome-strip::after {
+  position: absolute;
+  z-index: 0;
+  right: clamp(16px, 6vw, 82px);
+  bottom: -20px;
+  font-size: clamp(62px, 12vw, 124px);
+  line-height: 1;
+  opacity: .88;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 22px var(--theme-glow));
+  animation: sedx-theme-float 5s ease-in-out infinite;
+}
+body.sedx-theme-halloween .welcome-strip::after { content: "🎃"; }
+body.sedx-theme-christmas .welcome-strip::after { content: "🎅"; }
+body.sedx-theme-kids .welcome-strip::after { content: "🍭"; }
+
+body.sedx-theme-halloween .stat-grid > .stat-link:nth-child(1) .stat-card::after,
+body.sedx-theme-halloween .stat-grid > .stat-link:nth-child(2) .stat-card::after,
+body.sedx-theme-halloween .stat-grid > .stat-link:nth-child(3) .stat-card::after,
+body.sedx-theme-halloween .stat-grid > .stat-link:nth-child(4) .stat-card::after,
+body.sedx-theme-christmas .stat-grid > .stat-link:nth-child(1) .stat-card::after,
+body.sedx-theme-christmas .stat-grid > .stat-link:nth-child(2) .stat-card::after,
+body.sedx-theme-christmas .stat-grid > .stat-link:nth-child(3) .stat-card::after,
+body.sedx-theme-christmas .stat-grid > .stat-link:nth-child(4) .stat-card::after,
+body.sedx-theme-kids .stat-grid > .stat-link:nth-child(1) .stat-card::after,
+body.sedx-theme-kids .stat-grid > .stat-link:nth-child(2) .stat-card::after,
+body.sedx-theme-kids .stat-grid > .stat-link:nth-child(3) .stat-card::after,
+body.sedx-theme-kids .stat-grid > .stat-link:nth-child(4) .stat-card::after {
+  position: absolute;
+  right: 12px;
+  bottom: 5px;
+  z-index: 0;
+  font-size: clamp(24px, 4vw, 42px);
+  line-height: 1;
+  opacity: .52;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 10px var(--theme-glow));
+}
+body.sedx-theme-halloween .stat-grid > .stat-link:nth-child(1) .stat-card::after { content: "🦇"; }
+body.sedx-theme-halloween .stat-grid > .stat-link:nth-child(2) .stat-card::after { content: "🎃"; }
+body.sedx-theme-halloween .stat-grid > .stat-link:nth-child(3) .stat-card::after { content: "👻"; }
+body.sedx-theme-halloween .stat-grid > .stat-link:nth-child(4) .stat-card::after { content: "🕸️"; }
+body.sedx-theme-christmas .stat-grid > .stat-link:nth-child(1) .stat-card::after { content: "🎁"; }
+body.sedx-theme-christmas .stat-grid > .stat-link:nth-child(2) .stat-card::after { content: "❄️"; }
+body.sedx-theme-christmas .stat-grid > .stat-link:nth-child(3) .stat-card::after { content: "🎄"; }
+body.sedx-theme-christmas .stat-grid > .stat-link:nth-child(4) .stat-card::after { content: "⭐"; }
+body.sedx-theme-kids .stat-grid > .stat-link:nth-child(1) .stat-card::after { content: "🍭"; }
+body.sedx-theme-kids .stat-grid > .stat-link:nth-child(2) .stat-card::after { content: "🍬"; }
+body.sedx-theme-kids .stat-grid > .stat-link:nth-child(3) .stat-card::after { content: "🧸"; }
+body.sedx-theme-kids .stat-grid > .stat-link:nth-child(4) .stat-card::after { content: "🎈"; }
+
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .agenda-panel {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background-image: radial-gradient(ellipse at 96% 98%, var(--theme-glow), transparent 17rem);
+}
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .agenda-panel > * {
+  position: relative;
+  z-index: 1;
+}
+body.sedx-theme-halloween .agenda-panel::after,
+body.sedx-theme-christmas .agenda-panel::after,
+body.sedx-theme-kids .agenda-panel::after {
+  position: absolute;
+  right: 14px;
+  bottom: 9px;
+  z-index: 0;
+  font-size: 62px;
+  line-height: 1;
+  opacity: .2;
+  pointer-events: none;
+}
+body.sedx-theme-halloween .agenda-panel::after { content: "🎃"; }
+body.sedx-theme-christmas .agenda-panel::after { content: "🎄"; }
+body.sedx-theme-kids .agenda-panel::after { content: "🎈"; }
+
+.sedx-theme-particles {
+  position: fixed;
+  inset: 0;
+  z-index: 12;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+.sedx-theme-particles span {
+  position: absolute;
+  top: -12vh;
+  left: var(--particle-x);
+  color: var(--theme-accent);
+  font-size: var(--particle-size);
+  line-height: 1;
+  opacity: 0;
+  text-shadow: 0 0 12px var(--theme-glow);
+  animation: sedx-theme-fall var(--particle-duration) linear var(--particle-delay) infinite;
+  will-change: transform, opacity;
+}
+@keyframes sedx-theme-fall {
+  0% { opacity: 0; transform: translate3d(0, -5vh, 0) rotate(0deg); }
+  12% { opacity: .78; }
+  82% { opacity: .66; }
+  100% { opacity: 0; transform: translate3d(var(--particle-drift), 115vh, 0) rotate(300deg); }
+}
+@keyframes sedx-theme-float {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .admin-menu button.active {
+  color: var(--theme-secondary);
+  border-color: var(--theme-accent);
+  background: var(--theme-glow);
+}
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .admin-primary-btn,
+body:is(.sedx-theme-halloween, .sedx-theme-christmas, .sedx-theme-kids) .theme-select-button {
+  color: var(--primary-foreground);
+  background: linear-gradient(135deg, var(--theme-secondary), var(--theme-accent));
+}
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+.theme-option {
+  --preview-accent: #a7a9b1;
+  min-width: 0;
+  overflow: hidden;
+  background: linear-gradient(145deg, #17191e, #101115);
+  border: 1px solid #ffffff18;
+  border-radius: 17px;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.theme-option:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--preview-accent) 65%, #ffffff20); }
+.theme-option.selected { border-color: var(--preview-accent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--preview-accent) 55%, transparent), 0 12px 34px color-mix(in srgb, var(--preview-accent) 18%, transparent); }
+.theme-option[data-theme-preview="halloween"] { --preview-accent: #ff8a2b; }
+.theme-option[data-theme-preview="christmas"] { --preview-accent: #65d8ff; }
+.theme-option[data-theme-preview="kids"] { --preview-accent: #f05dcc; }
+.theme-preview-art {
+  position: relative;
+  display: flex;
+  min-height: 112px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 110%, color-mix(in srgb, var(--preview-accent) 38%, transparent), transparent 68%), linear-gradient(145deg, #24262e, #111217);
+}
+.theme-option[data-theme-preview="halloween"] .theme-preview-art { background: radial-gradient(circle at 50% 105%, #ff781d70, transparent 65%), linear-gradient(145deg, #2b140a, #120905); }
+.theme-option[data-theme-preview="christmas"] .theme-preview-art { background: radial-gradient(circle at 50% 105%, #48c8ff62, transparent 66%), linear-gradient(145deg, #10283c, #08121f); }
+.theme-option[data-theme-preview="kids"] .theme-preview-art { background: radial-gradient(circle at 50% 105%, #eb58cd62, transparent 66%), linear-gradient(145deg, #30183b, #120d1b); }
+.theme-preview-icon { z-index: 1; font-size: 54px; filter: drop-shadow(0 5px 13px color-mix(in srgb, var(--preview-accent) 46%, transparent)); }
+.theme-preview-sparkles { position: absolute; inset: 13px 14px auto; color: var(--preview-accent); font-size: 13px; letter-spacing: .55em; text-align: right; opacity: .82; }
+.theme-option-copy { padding: 15px 17px 17px; }
+.theme-option-copy .admin-kicker { color: var(--preview-accent); }
+.theme-option-copy h3 { margin: 4px 0 6px; color: #f3f4f6; font: 800 17px/1.25 Manrope, sans-serif; }
+.theme-option-copy p { min-height: 38px; margin: 0 0 14px; color: #a5a8b0; font-size: 12px; line-height: 1.55; }
+.theme-select-button { width: 100%; min-height: 38px; padding: 0 12px; color: #e8e9ed; background: #ffffff0b; border: 1px solid color-mix(in srgb, var(--preview-accent) 45%, transparent); border-radius: 9px; font: 750 11px Manrope, sans-serif; cursor: pointer; transition: filter .18s, transform .18s; }
+.theme-select-button:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.theme-option.selected .theme-select-button { color: #111216; background: var(--preview-accent); }
+.theme-sync-note { display: flex; align-items: center; gap: 8px; margin: 16px 1px 0; color: #9599a2; font-size: 11px; line-height: 1.5; }
+.theme-sync-note span { color: var(--primary-strong); }
+
+@media (max-width: 760px) {
+  .theme-grid { grid-template-columns: 1fr; gap: 11px; }
+  .theme-option { display: grid; grid-template-columns: 106px minmax(0, 1fr); }
+  .theme-preview-art { min-height: 100%; }
+  .theme-preview-icon { font-size: 42px; }
+  .theme-preview-sparkles { inset: 10px 8px auto; font-size: 10px; letter-spacing: .2em; }
+  .theme-option-copy { padding: 12px; }
+  .theme-option-copy h3 { font-size: 15px; }
+  .theme-option-copy p { min-height: 0; margin-bottom: 10px; font-size: 11px; }
+  .theme-select-button { min-height: 35px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sedx-theme-particles span,
+  body.sedx-theme-halloween .welcome-strip::after,
+  body.sedx-theme-christmas .welcome-strip::after,
+  body.sedx-theme-kids .welcome-strip::after { animation: none !important; }
+  .theme-option, .theme-select-button { transition: none !important; }
+}
