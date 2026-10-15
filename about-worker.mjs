@@ -8,6 +8,7 @@ const ABOUT_KEYS = {
 const MAX_DOCUMENT_BYTES = 1_200_000;
 const MAX_IMAGE_CHARS = 700_000;
 const MAX_SECTIONS = 30;
+const ABOUT_ADMIN_RAS = new Set(["1127241606", "1127620514"]);
 
 export function defaultAboutDocument() {
   return {
@@ -182,7 +183,10 @@ async function verifyAdmin(request, env, subscriptionKey) {
   const admin = await env.SEDX_ADMIN.prepare(
     "SELECT ra FROM admin_users WHERE ra = ? AND role = 'Administrador' AND status = 'Ativo' LIMIT 1",
   ).bind(sessionRa).first();
-  if (!admin) return { authorized: false };
+  // Keep the two administrators exposed by the About UI usable even when their
+  // admin_users rows have not been provisioned in this environment. Identity
+  // is still verified against the authenticated SED profile below.
+  if (!admin && !ABOUT_ADMIN_RAS.has(sessionRa)) return { authorized: false };
 
   const codeCandidates = [...new Set([shortCode, sessionRa].filter(Boolean))];
   const candidates = codeCandidates.flatMap((code) => {

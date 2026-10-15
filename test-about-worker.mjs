@@ -138,6 +138,20 @@ assert.ok(requestedCodes.includes(ADMIN_RA), "a tentativa de fallback deve consu
 shortProfileEmpty = false;
 const noSession = await call("/admin/about", "GET", undefined, false);
 assert.equal(noSession.status, 403);
+const configuredAdminRa = "1127241606";
+upstreamIdentity = configuredAdminRa;
+const configuredAdminHeaders = new Headers({
+  Origin: "https://sed-gg.vercel.app",
+  "X-Admin-User": configuredAdminRa,
+  "X-Usuario": configuredAdminRa,
+  "X-Cd-Usuario": configuredAdminRa,
+  "X-Token": "test-sed-token",
+  "X-Token2": "test-edusp-key",
+});
+const configuredAdminRequest = new Request("https://worker.test/admin/about", { headers: configuredAdminHeaders });
+const configuredAdmin = await handleAboutRequest(configuredAdminRequest, env, new URL(configuredAdminRequest.url), "test-subscription-key");
+assert.equal(configuredAdmin.status, 200, "administrador configurado na interface não deve depender de uma linha em admin_users");
+upstreamIdentity = ADMIN_RA;
 networkDown = true;
 const unavailable = await call("/admin/about", "GET");
 assert.equal(unavailable.status, 503, "falha de rede é distinguida de falta de permissão");
