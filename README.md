@@ -10,7 +10,7 @@ Versão estática do painel acadêmico SED Aluno, com agenda, presença, boletim
 - `admin-panel.js`: painel administrativo restrito aos RAs autorizados, com gestão de usuários, avisos, configurações, auditoria, manutenção e temas sazonais globais.
 - `site-state.js`: central pública de notificações, temas sazonais, rota `/admin-tab` e bloqueio de manutenção para usuários comuns.
 - `seasonal-themes.css`: paletas e efeitos visuais de Halloween, Natal e Dia das crianças.
-- `tools-tab.js` e `tools-tab.css`: navegação, publicação administrativa e exibição de ferramentas para os alunos.
+- `tools-tab.js`, `tools-tab.css` e `mobile-navigation.css`: navegação pelo menu lateral, publicação administrativa e remoção da barra de abas inferior em dispositivos móveis.
 - `sedx-admin-schema.sql`: schema versionado do banco D1 administrativo.
 - Worker Cloudflare `sdf`: proxy da aplicação e API administrativa; o código ativo é gerenciado no Cloudflare.
 - `EF/` e `EM/`: apostilas PDF mantidas no repositório.

@@ -47,17 +47,6 @@
       link.innerHTML = '<span class="tools-nav-icon" aria-hidden="true">⚙</span><span>Ferramentas</span>';
       rail.appendChild(link);
     }
-
-    const bottom = document.querySelector('.bottom-nav');
-    if (bottom && !bottom.querySelector('[data-sedx-tools-link]')) {
-      const link = document.createElement('button');
-      link.type = 'button';
-      link.className = 'bottom-link sedx-tools-bottom-link';
-      link.dataset.sedxToolsLink = 'mobile';
-      link.setAttribute('aria-label', 'Abrir Ferramentas');
-      link.innerHTML = '<span class="bottom-icon-wrap"><span class="tools-nav-icon" aria-hidden="true">⚙</span></span><span>Ferramentas</span>';
-      bottom.appendChild(link);
-    }
   }
 
   function renderToolList(message = '') {
@@ -330,7 +319,7 @@
     if (overlay && event.target.closest('[data-tools-retry]')) { void loadTools(); return; }
     const toolButton = overlay && event.target.closest('[data-tool-action]');
     if (toolButton) { void runToolAction(toolButton); return; }
-    const otherNav = event.target.closest('.rail-nav .rail-link, .bottom-nav .bottom-link');
+    const otherNav = event.target.closest('.rail-nav .rail-link');
     if (overlay && otherNav) closeTools();
   });
 

@@ -29,7 +29,7 @@ assert.match(script, /validSiteUrl/);
 assert.doesNotMatch(script, /token_sed|browserFingerprint|LeiaSP|Plataformas/i);
 assert.match(styles, /\.tools-publish-modal/);
 assert.match(styles, /\.tools-card-grid/);
-assert.match(styles, /repeat\(8, minmax\(0, 1fr\)\)/);
+assert.doesNotMatch(styles, /bottom-nav|sedx-tools-bottom-link/);
 assert.match(styles, /prefers-reduced-motion/);
 assert.match(schema, /CREATE TABLE IF NOT EXISTS published_tools/);
 assert.match(schema, /action_type TEXT NOT NULL CHECK \(action_type IN \('copy', 'site'\)\)/);
