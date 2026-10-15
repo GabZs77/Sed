@@ -2,6 +2,13 @@
   "use strict";
 
   const MAX_UPLOAD_BYTES = 450_000;
+  const ADMIN_RAS = new Set(["1127241606", "1127620514"]);
+  function isAdminCandidate() {
+    try {
+      const session = JSON.parse(localStorage.getItem("sed_sessao") || "null");
+      return ADMIN_RAS.has(String(session?.usuario || "").replace(/\D/g, ""));
+    } catch { return false; }
+  }
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
   const safeUrl = (value) => {
     try {
@@ -84,7 +91,7 @@
 
   function mount(root, { request } = {}) {
     if (!root || typeof request !== "function") return () => {};
-    const state = { publicData: null, isAdmin: false, draft: null, versions: [], editorOpen: false, previewMode: "desktop", notice: "", noticeType: "", busy: false, selectedVersion: "", loadError: "" };
+    const state = { publicData: null, isAdmin: false, adminCandidate: isAdminCandidate(), draft: null, versions: [], editorOpen: false, previewMode: "desktop", notice: "", noticeType: "", busy: false, selectedVersion: "", loadError: "" };
     let disposed = false;
     const api = (path, method = "GET", body) => request(path, { method, ...(body === undefined ? {} : { headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }) });
 
@@ -92,8 +99,9 @@
       if (disposed) return;
       const content = state.publicData?.published ? state.publicData.content : null;
       root.innerHTML = `<div class="page-stack about-page">
-        <header class="page-heading about-page-heading"><div><span class="eyebrow">CONHEÇA O SEDX</span><h1>Sobre</h1><p>Conheça a proposta e as ferramentas do SEDX.</p></div>${state.isAdmin ? `<button type="button" class="about-primary-button" data-action="toggle-editor">${state.editorOpen ? "Fechar editor" : "Publicar Sobre"}</button>` : ""}</header>
+        <header class="page-heading about-page-heading"><div><span class="eyebrow">CONHEÇA O SEDX</span><h1>Sobre</h1><p>Conheça a proposta e as ferramentas do SEDX.</p></div>${state.isAdmin || state.adminCandidate ? `<button type="button" class="about-primary-button" data-action="toggle-editor">${state.editorOpen ? "Fechar editor" : "Publicar Sobre"}</button>` : ""}</header>
         ${state.loadError ? `<div class="about-notice is-error" role="alert">${escapeHtml(state.loadError)}</div>` : ""}
+        ${state.adminCandidate && !state.isAdmin && state.notice && !state.editorOpen ? `<div class="about-notice is-error" role="alert">${escapeHtml(state.notice)}</div>` : ""}
         ${content ? renderContent(content) : `<section class="about-unpublished"><span class="about-card-icon" aria-hidden="true">✦</span><h2>Sobre o SEDX</h2><p>${state.isAdmin ? "Ainda não há uma versão publicada. Abra o editor para preparar o conteúdo." : "As informações desta página ainda não foram publicadas."}</p></section>`}
         ${state.isAdmin && state.editorOpen ? renderEditor(state) : ""}
       </div>`;
@@ -172,6 +180,18 @@
       const index = Number(button.dataset.index);
       const section = state.draft.sections?.[index];
       if (action === "toggle-editor" && state.isAdmin) { state.editorOpen = !state.editorOpen; state.notice = ""; renderPage(); return; }
+      if (action === "toggle-editor" && state.adminCandidate && !state.isAdmin) {
+        await withBusy(async () => {
+          const admin = await api("/admin/about");
+          if (admin?.isAdmin !== true) throw new Error("O servidor ainda não confirmou a permissão. Atualize sua sessão e tente novamente.");
+          state.isAdmin = true;
+          state.draft = admin.draft || { title: "Sobre o SEDX", intro: "", sections: [] };
+          state.draft.sections = Array.isArray(state.draft.sections) ? state.draft.sections.map((section) => ({ links: [], buttons: [], ...section })) : [];
+          state.versions = Array.isArray(admin.versions) ? admin.versions : [];
+          state.editorOpen = true;
+        });
+        return;
+      }
       if (action === "preview-mode") { state.previewMode = button.dataset.mode === "mobile" ? "mobile" : "desktop"; renderPage(); return; }
       if (action === "add-section") { state.draft.sections.push(emptySection()); renderPage(); return; }
       if (action === "remove-section" && section) { state.draft.sections.splice(index, 1); renderPage(); return; }
