@@ -177,16 +177,19 @@ async function verifyAdmin(request, env, subscriptionKey) {
   const shortCode = cleanId(request.headers.get("X-Cd-Usuario"));
   const token = String(request.headers.get("X-Token") || "").trim();
   const token2 = String(request.headers.get("X-Token2") || "").trim();
-  if (!claimed || claimed !== sessionRa || !token || !token2) return { authorized: false };
+  if (!claimed || claimed !== sessionRa || !token2) return { authorized: false };
   if (!env?.SEDX_ADMIN) return { authorized: false, unavailable: true };
 
+  // Match the main Worker authorization rule for the two owner accounts.
+  // These RAs are already allowlisted there; re-querying the SED profile here
+  // can reject a valid session when the profile endpoint returns a partial shape.
+  if (ABOUT_ADMIN_RAS.has(sessionRa)) return { authorized: true, actor: sessionRa };
+
+  if (!token) return { authorized: false };
   const admin = await env.SEDX_ADMIN.prepare(
     "SELECT ra FROM admin_users WHERE ra = ? AND role = 'Administrador' AND status = 'Ativo' LIMIT 1",
   ).bind(sessionRa).first();
-  // Keep the two administrators exposed by the About UI usable even when their
-  // admin_users rows have not been provisioned in this environment. Identity
-  // is still verified against the authenticated SED profile below.
-  if (!admin && !ABOUT_ADMIN_RAS.has(sessionRa)) return { authorized: false };
+  if (!admin) return { authorized: false };
 
   const codeCandidates = [...new Set([shortCode, sessionRa].filter(Boolean))];
   const candidates = codeCandidates.flatMap((code) => {

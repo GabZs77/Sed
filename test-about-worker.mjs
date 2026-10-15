@@ -145,12 +145,13 @@ const configuredAdminHeaders = new Headers({
   "X-Admin-User": configuredAdminRa,
   "X-Usuario": configuredAdminRa,
   "X-Cd-Usuario": configuredAdminRa,
-  "X-Token": "test-sed-token",
   "X-Token2": "test-edusp-key",
 });
 const configuredAdminRequest = new Request("https://worker.test/admin/about", { headers: configuredAdminHeaders });
+const callsBeforeConfiguredAdmin = upstreamCalls;
 const configuredAdmin = await handleAboutRequest(configuredAdminRequest, env, new URL(configuredAdminRequest.url), "test-subscription-key");
 assert.equal(configuredAdmin.status, 200, "administrador configurado na interface não deve depender de uma linha em admin_users");
+assert.equal(upstreamCalls, callsBeforeConfiguredAdmin, "RAs allowlisted no Worker principal não devem ser rejeitados por formato parcial do perfil SED");
 upstreamIdentity = ADMIN_RA;
 networkDown = true;
 const unavailable = await call("/admin/about", "GET");
