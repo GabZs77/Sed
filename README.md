@@ -29,7 +29,7 @@ A aba **Administração** aparece somente para os RAs administrativos configurad
 
 As notificações, configurações, manutenção, usuários e auditoria são persistidas no banco **Cloudflare D1 `sedx-admin`**, através das rotas administrativas do Worker `sdf`. Usuários comuns consultam as notificações pelo botão de sino na dashboard. Quando o administrador ativa a manutenção, todos os usuários comuns recebem a tela “O SedX está em manutenção”; a rota `/admin-tab` permanece disponível para os administradores.
 
-As rotas administrativas exigem o RA autorizado e `X-Token2` da sessão oficial, e as operações são registradas no log de auditoria. O binding D1 é `SEDX_ADMIN`; o schema inclui as tabelas `notifications`, `site_settings`, `admin_users`, `audit_logs`, `site_metrics` e `published_tools`.
+As rotas administrativas exigem o RA autorizado e `X-Token2` da sessão oficial, e as operações são registradas no log de auditoria. O binding D1 é `SEDX_ADMIN`; o schema inclui as tabelas `notifications`, `site_settings`, `admin_users`, `audit_logs`, `site_metrics`, `published_tools` e `published_partnerships`.
 
 A aba **Tema** permite escolher entre o visual Original, Halloween, Natal e Dia das crianças. A seleção fica salva em `site_settings.activeTheme` e é publicada pela rota pública `/site-state` para sincronizar todos os dispositivos; partículas e elementos decorativos respeitam a preferência por movimento reduzido do navegador.
 
@@ -38,3 +38,9 @@ A aba **Tema** permite escolher entre o visual Original, Halloween, Natal e Dia 
 A aba **Ferramentas** lista conteúdos publicados para os alunos. Administradores autorizados veem o botão **Publicar**, com campos de título, descrição, conteúdo e imagem opcional; podem escolher se o botão público será **Copiar** o conteúdo ou **Ir para o site**. Conteúdo de copiar é tratado como texto e nunca executado como código.
 
 As publicações são persistidas em D1 na tabela `published_tools` e sincronizadas pela rota pública `/site-state`. A criação usa `POST /admin/tools`, protegida pela mesma autorização administrativa e auditoria do Worker. Imagens são otimizadas no navegador e limitadas a 250 KB. Esta aba não executa autenticação em plataformas externas.
+
+## Parcerias
+
+A aba **Parcerias** usa um ícone de handshake e lista as parcerias publicadas para todos os alunos. Administradores autorizados podem criar e editar parcerias com título, descrição, link de destino e tipo (**Discord**, **WhatsApp** ou **Outro**), além de logo e banner opcionais. Antes de publicar uma parceria nova ou um rascunho, o administrador confere a pré-visualização; parcerias publicadas podem ser despublicadas, e a exclusão pede confirmação.
+
+As parcerias são persistidas em D1 na tabela `published_partnerships`. `GET /partnerships` retorna apenas itens publicados; leitura e alterações administrativas usam rotas protegidas pelo mesmo RA e sessão oficial do Worker (`GET/POST/DELETE /admin/partnerships` e `PUT /admin/partnerships/status`). As ações administrativas são auditadas. Logo e banner são otimizados no navegador e limitados a 250 KB cada. A interface apresenta mensagens explícitas de sucesso e erro.
