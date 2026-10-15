@@ -1,5 +1,5 @@
 const SITE_ORIGIN = "https://sed-gg.vercel.app";
-const SED_PROFILE_URL = "https://sedintegracoes.educacao.sp.gov.br/api/Aluno/ObterAlunoPorCodigo";
+const SED_BASE = "https://sedintegracoes.educacao.sp.gov.br";
 const ABOUT_KEYS = {
   draft: "about:draft",
   published: "about:published",
@@ -53,7 +53,7 @@ export function defaultAboutDocument() {
       {
         id: "integradas",
         title: "Ferramentas integradas",
-        text: "Recursos de apoio ao estudo, como consulta de redações e assistência por IA, complementam as ferramentas escolares.",
+        text: "Recursos de apoio ao estudo, como assistência por IA, complementam as ferramentas escolares.",
         icon: "⌘",
         image: "",
         links: [],
@@ -148,6 +148,7 @@ function identityValues(data) {
   const identityKeys = new Set([
     "ra", "numerora", "cdusuario", "cdusuariocurto", "cdusuariocompleto",
     "codigoaluno", "codigousuario", "cdaluno", "identificadoraluno",
+    "raaluno", "radigito", "raestudante", "numeroraaluno", "codigoalunora",
   ]);
   const walk = (node, depth = 0) => {
     if (!node || typeof node !== "object" || depth > 8 || visited.has(node)) return;
@@ -184,24 +185,40 @@ async function verifyAdmin(request, env, subscriptionKey) {
   if (!admin) return { authorized: false };
 
   const codeToCheck = shortCode || sessionRa;
-  let upstream;
-  try {
-    upstream = await fetch(`${SED_PROFILE_URL}?codigoAluno=${encodeURIComponent(codeToCheck)}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Ocp-Apim-Subscription-Key": subscriptionKey,
-        "x-product-name": "SalaDoFuturo",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    });
-  } catch {
-    return { authorized: false, unavailable: true };
+  const query = `api/Aluno/ObterAlunoPorCodigo?codigoAluno=${encodeURIComponent(codeToCheck)}`;
+  const candidates = [
+    `${SED_BASE}/${query}`,
+    `${SED_BASE}/saladofuturobffapi/${query}`,
+  ];
+  let profile = null;
+  let profileLoaded = false;
+  let upstreamUnavailable = false;
+  for (const endpoint of candidates) {
+    let upstream;
+    try {
+      upstream = await fetch(endpoint, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Ocp-Apim-Subscription-Key": subscriptionKey,
+          "x-product-name": "SalaDoFuturo",
+          Authorization: `Bearer ${token}`,
+        },
+        cache: "no-store",
+      });
+    } catch {
+      upstreamUnavailable = true;
+      continue;
+    }
+    if (!upstream.ok) {
+      if (upstream.status >= 500) upstreamUnavailable = true;
+      continue;
+    }
+    try { profile = await upstream.json(); profileLoaded = true; break; }
+    catch { continue; }
   }
-  if (!upstream.ok) return { authorized: false };
-  let profile;
-  try { profile = await upstream.json(); } catch { return { authorized: false }; }
+  if (!profileLoaded) return { authorized: false, unavailable: upstreamUnavailable };
   const actualIds = identityValues(profile);
   const acceptedIds = new Set([sessionRa]);
   // A tela de aluno usa o código curto sem o último dígito verificador.

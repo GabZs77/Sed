@@ -43,6 +43,8 @@ globalThis.fetch = async (url, options) => {
   upstreamCalls += 1;
   assert.match(String(url), /ObterAlunoPorCodigo/);
   assert.equal(options.headers.Authorization, "Bearer test-sed-token");
+  assert.equal(options.headers["Ocp-Apim-Subscription-Key"], "test-subscription-key");
+  if (!String(url).includes("/saladofuturobffapi/")) return new Response("not found", { status: 404 });
   return new Response(JSON.stringify({ data: { ra: upstreamIdentity } }), {
     status: 200,
     headers: { "Content-Type": "application/json" },
