@@ -26,7 +26,7 @@ export function defaultAboutDocument() {
       {
         id: "praticidade",
         title: "Praticidade",
-        text: "Consulte agenda, tarefas, presença, boletim, apostilas e redações sem precisar percorrer várias telas diferentes.",
+        text: "Consulte agenda, tarefas, presença, boletim e apostilas sem precisar percorrer várias telas diferentes.",
         icon: "◉",
         image: "",
         links: [],

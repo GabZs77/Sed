@@ -7,6 +7,7 @@ const settings = new Map();
 const auditRows = [];
 let upstreamIdentity = ADMIN_RA;
 let upstreamCalls = 0;
+let networkDown = false;
 
 class FakeStatement {
   constructor(sql) { this.sql = sql; this.params = []; }
@@ -41,6 +42,7 @@ class FakeStatement {
 const env = { SEDX_ADMIN: { prepare: (sql) => new FakeStatement(sql) } };
 globalThis.fetch = async (url, options) => {
   upstreamCalls += 1;
+  if (networkDown) throw new Error("upstream unavailable");
   assert.match(String(url), /ObterAlunoPorCodigo/);
   assert.equal(options.headers.Authorization, "Bearer test-sed-token");
   assert.equal(options.headers["Ocp-Apim-Subscription-Key"], "test-subscription-key");
@@ -123,6 +125,10 @@ assert.equal(spoofed.status, 403, "a identidade devolvida pelo SED precisa corre
 assert.ok(upstreamCalls > callsBeforeSpoof);
 const noSession = await call("/admin/about", "GET", undefined, false);
 assert.equal(noSession.status, 403);
+networkDown = true;
+const unavailable = await call("/admin/about", "GET");
+assert.equal(unavailable.status, 503, "falha de rede é distinguida de falta de permissão");
+networkDown = false;
 
 const oversized = "data:image/webp;base64," + "A".repeat(700_001);
 assert.throws(() => normalizeAboutDocument({ title: "Teste", sections: [{ title: "Imagem", image: oversized }] }), /inválido|excede/i);
