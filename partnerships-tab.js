@@ -65,7 +65,9 @@
     link.dataset.sedxPartnershipsLink = 'true';
     link.setAttribute('aria-label', 'Abrir Parcerias');
     link.innerHTML = `${HANDSHAKE_ICON}<span>Parcerias</span>`;
-    rail.appendChild(link);
+    const aboutLink = rail.querySelector('a[href="/sobre"]');
+    if (aboutLink) rail.insertBefore(link, aboutLink);
+    else rail.appendChild(link);
   }
 
   function showToast(message, kind = 'success') {

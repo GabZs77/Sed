@@ -13,6 +13,7 @@ assert.match(html, /partnerships-tab\.css/, 'o CSS da aba deve ser carregado');
 assert.match(html, /partnerships-tab\.js/, 'o controlador da aba deve ser carregado');
 assert.match(controller, /data-sedx-partnerships-link/, 'a aba deve entrar na navegação lateral');
 assert.match(controller, /<span>Parcerias<\/span>/, 'a navegação deve exibir o nome Parcerias');
+assert.match(controller, /insertBefore\(link,\s*aboutLink\)/, 'Parcerias deve ficar imediatamente acima de Sobre');
 assert.match(controller, /partnership-handshake-icon/, 'a aba deve usar um ícone de handshake');
 
 const adminRas = (source) => {

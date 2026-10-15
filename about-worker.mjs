@@ -184,15 +184,18 @@ async function verifyAdmin(request, env, subscriptionKey) {
   ).bind(sessionRa).first();
   if (!admin) return { authorized: false };
 
-  const codeToCheck = shortCode || sessionRa;
-  const query = `api/Aluno/ObterAlunoPorCodigo?codigoAluno=${encodeURIComponent(codeToCheck)}`;
-  const candidates = [
-    `${SED_BASE}/${query}`,
-    `${SED_BASE}/saladofuturobffapi/${query}`,
-  ];
-  let profile = null;
+  const codeCandidates = [...new Set([shortCode, sessionRa].filter(Boolean))];
+  const candidates = codeCandidates.flatMap((code) => {
+    const query = `api/Aluno/ObterAlunoPorCodigo?codigoAluno=${encodeURIComponent(code)}`;
+    return [`${SED_BASE}/${query}`, `${SED_BASE}/saladofuturobffapi/${query}`];
+  });
   let profileLoaded = false;
   let upstreamUnavailable = false;
+  const acceptedIds = new Set([sessionRa]);
+  // A tela de aluno pode identificar o RA pelo código curto sem o dígito verificador.
+  if (shortCode && sessionRa.length === shortCode.length + 1 && sessionRa.startsWith(shortCode)) {
+    acceptedIds.add(shortCode);
+  }
   for (const endpoint of candidates) {
     let upstream;
     try {
@@ -215,17 +218,17 @@ async function verifyAdmin(request, env, subscriptionKey) {
       if (upstream.status >= 500) upstreamUnavailable = true;
       continue;
     }
-    try { profile = await upstream.json(); profileLoaded = true; break; }
+    try {
+      const profile = await upstream.json();
+      profileLoaded = true;
+      if (identityValues(profile).some((id) => acceptedIds.has(id))) {
+        return { authorized: true, actor: sessionRa };
+      }
+    }
     catch { continue; }
   }
   if (!profileLoaded) return { authorized: false, unavailable: upstreamUnavailable };
-  const actualIds = identityValues(profile);
-  const acceptedIds = new Set([sessionRa]);
-  // A tela de aluno usa o código curto sem o último dígito verificador.
-  if (shortCode && sessionRa.length === shortCode.length + 1 && sessionRa.startsWith(shortCode)) {
-    acceptedIds.add(shortCode);
-  }
-  return { authorized: actualIds.some((id) => acceptedIds.has(id)), actor: sessionRa };
+  return { authorized: false, actor: sessionRa };
 }
 
 function parseSetting(row) {

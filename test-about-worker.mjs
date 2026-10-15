@@ -7,6 +7,8 @@ const settings = new Map();
 const auditRows = [];
 let upstreamIdentity = ADMIN_RA;
 let upstreamCalls = 0;
+let shortProfileEmpty = false;
+const requestedCodes = [];
 let networkDown = false;
 
 class FakeStatement {
@@ -42,12 +44,15 @@ class FakeStatement {
 const env = { SEDX_ADMIN: { prepare: (sql) => new FakeStatement(sql) } };
 globalThis.fetch = async (url, options) => {
   upstreamCalls += 1;
+  const code = new URL(String(url)).searchParams.get("codigoAluno");
+  if (code) requestedCodes.push(code);
   if (networkDown) throw new Error("upstream unavailable");
   assert.match(String(url), /ObterAlunoPorCodigo/);
   assert.equal(options.headers.Authorization, "Bearer test-sed-token");
   assert.equal(options.headers["Ocp-Apim-Subscription-Key"], "test-subscription-key");
   if (!String(url).includes("/saladofuturobffapi/")) return new Response("not found", { status: 404 });
-  return new Response(JSON.stringify({ data: { ra: upstreamIdentity } }), {
+  const profile = shortProfileEmpty && code === ADMIN_SHORT ? { data: { nome: "Aluno" } } : { data: { ra: upstreamIdentity } };
+  return new Response(JSON.stringify(profile), {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
@@ -123,6 +128,14 @@ upstreamIdentity = "9999999999";
 const spoofed = await call("/admin/about", "GET");
 assert.equal(spoofed.status, 403, "a identidade devolvida pelo SED precisa corresponder ao administrador");
 assert.ok(upstreamCalls > callsBeforeSpoof);
+upstreamIdentity = ADMIN_RA;
+shortProfileEmpty = true;
+const callsBeforeFallback = upstreamCalls;
+const fullRaFallback = await call("/admin/about", "GET");
+assert.equal(fullRaFallback.status, 200, "deve tentar o RA completo se a busca pelo código curto não identificar o perfil");
+assert.ok(upstreamCalls >= callsBeforeFallback + 4, "deve testar o código curto e o RA completo nas duas rotas SED");
+assert.ok(requestedCodes.includes(ADMIN_RA), "a tentativa de fallback deve consultar o RA completo");
+shortProfileEmpty = false;
 const noSession = await call("/admin/about", "GET", undefined, false);
 assert.equal(noSession.status, 403);
 networkDown = true;
