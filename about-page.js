@@ -1,7 +1,8 @@
 (() => {
   "use strict";
 
-  const MAX_UPLOAD_BYTES = 450_000;
+  const MAX_SOURCE_UPLOAD_BYTES = 5 * 1024 * 1024;
+  const MAX_STORED_IMAGE_BYTES = 450_000;
   const ADMIN_RAS = new Set(["1127241606", "1127620514"]);
   function isAdminCandidate() {
     try {
@@ -63,9 +64,12 @@
     if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
       throw new Error("Escolha uma imagem PNG, JPEG ou WebP.");
     }
-    if (file.size <= MAX_UPLOAD_BYTES) return readImageDataUrl(file);
+    if (file.size > MAX_SOURCE_UPLOAD_BYTES) {
+      throw new Error("A imagem deve ter até 5 MB.");
+    }
+    if (file.size <= MAX_STORED_IMAGE_BYTES) return readImageDataUrl(file);
     if (typeof createImageBitmap !== "function") {
-      throw new Error("Esta imagem é grande demais para este navegador. Escolha uma imagem de até 450 KB.");
+      throw new Error("Este navegador não consegue otimizar essa imagem. Atualize o navegador e tente novamente.");
     }
 
     const bitmap = await createImageBitmap(file);
@@ -84,7 +88,7 @@
         context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
         for (const quality of [0.86, 0.76, 0.66, 0.56, 0.46]) {
           const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/webp", quality));
-          if (blob && blob.size <= MAX_UPLOAD_BYTES) return await readImageDataUrl(blob);
+          if (blob && blob.size <= MAX_STORED_IMAGE_BYTES) return await readImageDataUrl(blob);
         }
         scale *= 0.78;
       }
@@ -126,7 +130,7 @@
             <label class="about-field"><span>Título da seção</span><input data-field="section" data-index="${index}" data-key="title" value="${escapeHtml(section.title || "")}" maxlength="120"></label>
             <label class="about-field"><span>Texto</span><textarea data-field="section" data-index="${index}" data-key="text" rows="4" maxlength="3000">${escapeHtml(section.text || "")}</textarea></label>
             <label class="about-field"><span>Ícone ou emoji</span><input data-field="section" data-index="${index}" data-key="icon" value="${escapeHtml(section.icon || "")}" maxlength="32" placeholder="Ex.: ✦, 📚, ♡"></label>
-            <label class="about-field"><span>Imagem (PNG, JPEG ou WebP; imagens maiores serão otimizadas automaticamente)</span><input type="file" accept="image/png,image/jpeg,image/webp" data-action="upload-image" data-index="${index}"></label>
+            <label class="about-field"><span>Imagem (PNG, JPEG ou WebP; até 5 MB, com otimização automática)</span><input type="file" accept="image/png,image/jpeg,image/webp" data-action="upload-image" data-index="${index}"></label>
             ${section.image ? `<div class="about-upload-preview"><img src="${escapeHtml(section.image)}" alt="Prévia da imagem"><button type="button" class="about-quiet-button" data-action="remove-image" data-index="${index}">Remover imagem</button></div>` : ""}
             ${renderLinkEditor(index, "links", section.links)}${renderLinkEditor(index, "buttons", section.buttons)}
           </article>`).join("")}
@@ -216,7 +220,13 @@
       const file = input.files?.[0];
       const index = Number(input.dataset.index);
       if (!file || !state.draft.sections[index]) return;
-      state.notice = file.size > MAX_UPLOAD_BYTES ? "Otimizando imagem para a pré-visualização…" : "Carregando imagem…";
+      if (file.size > MAX_SOURCE_UPLOAD_BYTES) {
+        state.notice = "A imagem deve ter até 5 MB.";
+        state.noticeType = "error";
+        renderPage();
+        return;
+      }
+      state.notice = file.size > MAX_STORED_IMAGE_BYTES ? "Otimizando imagem para a pré-visualização…" : "Carregando imagem…";
       state.noticeType = "";
       renderPage();
       try {
