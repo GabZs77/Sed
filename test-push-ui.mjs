@@ -13,6 +13,8 @@ assert.ok(ui.includes("Notification.requestPermission()"), 'A permissão deve se
 assert.ok(ui.includes("'/push/subscribe'"), 'A inscrição deve ser sincronizada com o Worker.');
 assert.ok(ui.includes("'/push/unsubscribe'"), 'A desativação deve remover o endpoint no Worker.');
 assert.ok(ui.includes("'/service-worker.js'"), 'A inscrição deve registrar o service worker.');
+assert.ok(ui.includes('Receba avisos publicados e lembretes de aula.'), 'A interface deve descrever somente avisos e lembretes de aula.');
+assert.ok(!ui.includes('X-Task-User'), 'A inscrição push não deve enviar metadados de tarefas.');
 assert.ok(worker.includes("self.addEventListener('push'"), 'O service worker deve exibir notificações recebidas.');
 assert.ok(worker.includes("self.addEventListener('notificationclick'"), 'O clique deve abrir a página relacionada.');
 assert.ok(styles.includes(':focus-visible'), 'O botão deve ter estado de foco acessível.');

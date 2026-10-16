@@ -86,7 +86,6 @@
     if (current?.token2) headers.set('X-Token2', current.token2);
     if (current?.token) headers.set('X-Token', current.token);
     if (current?.cdUsuarioCurto || current?.codigoAluno || current?.cdAluno) headers.set('X-Cd-Usuario', current.cdUsuarioCurto || current.codigoAluno || current.cdAluno);
-    if (current?.apelido) headers.set('X-Task-User', current.apelido);
     if (current?.usuario) headers.set('X-Usuario', current.usuario);
     return headers;
   }
@@ -158,7 +157,7 @@
       status.textContent = 'Permissão bloqueada. Altere as configurações de notificações do navegador.';
     } else {
       button.disabled = false;
-      status.textContent = 'Receba avisos publicados, novas tarefas e lembretes de aula.';
+      status.textContent = 'Receba avisos publicados e lembretes de aula.';
     }
   }
 

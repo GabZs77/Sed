@@ -70,7 +70,6 @@ CREATE TABLE IF NOT EXISTS push_users (
   user_ra TEXT PRIMARY KEY,
   session_ciphertext TEXT NOT NULL,
   session_iv TEXT NOT NULL,
-  task_ids_json TEXT,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );

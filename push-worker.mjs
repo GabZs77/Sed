@@ -1,8 +1,6 @@
 const encoder = new TextEncoder();
 const DEFAULT_TIME_ZONE = 'America/Sao_Paulo';
-const TASK_POLL_MS = 5 * 60 * 1000;
 const MAX_USERS_PER_TICK = 5;
-const MAX_SEEN_TASKS = 500;
 
 function asBytes(value) {
   return value instanceof Uint8Array ? value : new Uint8Array(value);
@@ -138,15 +136,6 @@ async function decryptSession(row, env) {
 
 function normalizeUserRa(value) {
   return String(value || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 32);
-}
-
-function normalizeTaskId(task) {
-  const value = task?.id ?? task?.task_id ?? task?.taskId ?? task?.uuid;
-  return value === null || value === undefined ? '' : String(value).trim();
-}
-
-function normalizeTaskTitle(task) {
-  return String(task?.title || task?.titulo || task?.name || task?.nome || 'Nova tarefa').trim().slice(0, 110);
 }
 
 function validPushEndpoint(endpoint) {
@@ -311,7 +300,7 @@ async function handleSubscribe(request, env, deps) {
   try { body = await request.json(); } catch { return jsonResponse(deps, { ok: false, erro: 'Solicitação inválida.' }, 400); }
   const subscription = body?.subscription;
   if (!validSubscription(subscription)) return jsonResponse(deps, { ok: false, erro: 'Assinatura push inválida ou não suportada.' }, 400);
-  const old = await db.prepare('SELECT task_ids_json,session_ciphertext,session_iv FROM push_users WHERE user_ra=?')
+  const old = await db.prepare('SELECT session_ciphertext,session_iv FROM push_users WHERE user_ra=?')
     .bind(userRa).first();
   const oldEndpoint = await db.prepare('SELECT user_ra FROM push_subscriptions WHERE endpoint=?')
     .bind(subscription.endpoint).first();
@@ -322,29 +311,19 @@ async function handleSubscribe(request, env, deps) {
   const timeZone = validTimeZone(body?.timeZone || body?.timezone);
   const session = {
     token,
-    token2,
     cdUsuario,
-    username: String(request.headers.get('X-Task-User') || '').trim().slice(0, 120),
     timeZone,
-    lastTaskCheck: Number(previous.lastTaskCheck) || 0,
     lastAgendaAttempt: Number(previous.lastAgendaAttempt) || 0,
     scheduleCache: previous.scheduleCache || null,
   };
-  let taskIdsJson = old?.task_ids_json ?? null;
-  if (taskIdsJson === null && typeof deps?.fetchTasks === 'function') {
-    try {
-      const baseline = await deps.fetchTasks(token2, [], session.username);
-      if (baseline?.ok) taskIdsJson = JSON.stringify((baseline.tasks || []).map(normalizeTaskId).filter(Boolean).slice(-MAX_SEEN_TASKS));
-    } catch {}
-  }
   let encrypted;
   try { encrypted = await encryptSession(session, env); }
   catch { return jsonResponse(deps, { ok: false, erro: 'A configuração segura das notificações está incompleta.' }, 503); }
   const now = new Date().toISOString();
-  await db.prepare(`INSERT INTO push_users (user_ra,session_ciphertext,session_iv,task_ids_json,created_at,updated_at)
-    VALUES (?,?,?,?,?,?) ON CONFLICT(user_ra) DO UPDATE SET session_ciphertext=excluded.session_ciphertext,
-    session_iv=excluded.session_iv,task_ids_json=COALESCE(push_users.task_ids_json,excluded.task_ids_json),updated_at=excluded.updated_at`)
-    .bind(userRa, encrypted.ciphertext, encrypted.iv, taskIdsJson, now, now).run();
+  await db.prepare(`INSERT INTO push_users (user_ra,session_ciphertext,session_iv,created_at,updated_at)
+    VALUES (?,?,?,?,?) ON CONFLICT(user_ra) DO UPDATE SET session_ciphertext=excluded.session_ciphertext,
+    session_iv=excluded.session_iv,updated_at=excluded.updated_at`)
+    .bind(userRa, encrypted.ciphertext, encrypted.iv, now, now).run();
   await db.prepare(`INSERT INTO push_subscriptions (endpoint,user_ra,subscription_json,created_at) VALUES (?,?,?,?)
     ON CONFLICT(endpoint) DO UPDATE SET user_ra=excluded.user_ra,subscription_json=excluded.subscription_json`)
     .bind(subscription.endpoint, userRa, JSON.stringify(subscription), now).run();
@@ -389,15 +368,6 @@ export async function handlePushRoute(request, env, url, deps = {}) {
   return null;
 }
 
-function parseTaskIds(value) {
-  try {
-    const ids = JSON.parse(value || '[]');
-    return new Set(Array.isArray(ids) ? ids.map(String) : []);
-  } catch {
-    return new Set();
-  }
-}
-
 function reminderPayload(firstClass) {
   const subject = String(firstClass?.nomeDisciplina || firstClass?.disciplina || 'aula').trim().slice(0, 100);
   const time = String(firstClass?.horaInicio || '').slice(0, 5);
@@ -418,19 +388,10 @@ function noticePayload(notice) {
   };
 }
 
-function taskPayload(task, id) {
-  return {
-    title: `Nova tarefa: ${normalizeTaskTitle(task)}`,
-    body: 'Uma nova tarefa foi disponibilizada. Toque para conferir no SedX.',
-    tag: `task-${String(id).slice(0, 100)}`,
-    data: { url: '/', type: 'task', taskId: String(id) },
-  };
-}
-
-async function persistSession(db, userRa, session, taskIdsJson, env) {
+async function persistSession(db, userRa, session, env) {
   const encrypted = await encryptSession(session, env);
-  await db.prepare(`UPDATE push_users SET session_ciphertext=?,session_iv=?,task_ids_json=?,updated_at=? WHERE user_ra=?`)
-    .bind(encrypted.ciphertext, encrypted.iv, taskIdsJson, new Date().toISOString(), userRa).run();
+  await db.prepare(`UPDATE push_users SET session_ciphertext=?,session_iv=?,updated_at=? WHERE user_ra=?`)
+    .bind(encrypted.ciphertext, encrypted.iv, new Date().toISOString(), userRa).run();
 }
 
 async function sendClassReminder(db, env, userRa, rows, localDate, firstClass) {
@@ -449,7 +410,7 @@ async function sendClassReminder(db, env, userRa, rows, localDate, firstClass) {
 export async function runPushScheduled(controller, env, deps = {}) {
   const db = env?.SEDX_ADMIN;
   if (!db || !getVapidPublicKey(env) || !env.PUSH_SESSION_ENCRYPTION_KEY) return { processed: 0 };
-  const query = await db.prepare(`SELECT u.user_ra,u.session_ciphertext,u.session_iv,u.task_ids_json,u.created_at,u.updated_at,
+  const query = await db.prepare(`SELECT u.user_ra,u.session_ciphertext,u.session_iv,u.created_at,u.updated_at,
       s.endpoint,s.subscription_json
     FROM push_users u JOIN push_subscriptions s ON s.user_ra=u.user_ra
     ORDER BY u.updated_at ASC LIMIT 100`).all();
@@ -466,7 +427,6 @@ export async function runPushScheduled(controller, env, deps = {}) {
       const now = new Date();
       const timeZone = validTimeZone(session.timeZone);
       const local = localParts(now, timeZone);
-      let taskIdsJson = user.task_ids_json ?? null;
       let schedule = session.scheduleCache || null;
 
       if (local.weekday !== 'Sat' && local.weekday !== 'Sun' && schedule?.date !== local.date) {
@@ -507,29 +467,7 @@ export async function runPushScheduled(controller, env, deps = {}) {
         }
       }
 
-      const lastTaskCheck = Number(session.lastTaskCheck) || 0;
-      if (Date.now() - lastTaskCheck >= TASK_POLL_MS && typeof deps.fetchTasks === 'function' && session.token2) {
-        session.lastTaskCheck = Date.now();
-        try {
-          const result = await deps.fetchTasks(session.token2, [], session.username || '');
-          if (result?.ok) {
-            const tasks = Array.isArray(result.tasks) ? result.tasks : [];
-            const known = parseTaskIds(taskIdsJson);
-            const idsNow = tasks.map((task) => ({ task, id: normalizeTaskId(task) })).filter(({ id }) => id);
-            if (taskIdsJson === null) {
-              for (const { id } of idsNow) known.add(id);
-            } else {
-              for (const { task, id } of idsNow) {
-                if (known.has(id)) continue;
-                const sent = await sendToRows(env, db, subscriptions, taskPayload(task, id));
-                if (sent > 0) known.add(id);
-              }
-            }
-            taskIdsJson = JSON.stringify([...known].slice(-MAX_SEEN_TASKS));
-          }
-        } catch {}
-      }
-      await persistSession(db, user.user_ra, session, taskIdsJson, env);
+      await persistSession(db, user.user_ra, session, env);
       processed += 1;
     } catch {
       // Uma sessão inválida não deve impedir o processamento de outras pessoas.
@@ -543,12 +481,10 @@ export const pushInternals = Object.freeze({
   base64UrlEncode,
   base64UrlDecode,
   normalizeUserRa,
-  normalizeTaskId,
   validPushEndpoint,
   validSubscription,
   encryptWebPushPayload,
   createVapidJwt,
   localParts,
-  taskPayload,
   reminderPayload,
 });
