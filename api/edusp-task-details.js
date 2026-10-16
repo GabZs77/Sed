@@ -1,6 +1,6 @@
 // Proxy restrito para abrir o enunciado de uma atividade.
-// As chamadas de atividade vindas do Cloudflare Workers podem ser bloqueadas pelo ip.tv;
-// esta função é executada na região gru1 definida em vercel.json.
+// O CAPTCHA e o apply da atividade são executados na mesma região gru1 da Vercel;
+// isso preserva o contexto temporário caso o upstream associe o token à sessão/IP.
 // A chave do aluno e o contexto temporário do CAPTCHA são usados apenas em memória.
 const EDUSP_BASE = "https://edusp-api.ip.tv";
 const ALLOWED_ORIGINS = new Set(["https://sed-gg.vercel.app"]);

@@ -12,6 +12,8 @@ Versão estática do painel acadêmico SED Aluno, com agenda, presença, boletim
 - `seasonal-themes.css`: paletas e efeitos visuais de Halloween, Natal e Dia das crianças.
 - `tools-tab.js`, `tools-tab.css` e `mobile-navigation.css`: navegação pelo menu lateral, publicação administrativa e remoção da barra de abas inferior em dispositivos móveis.
 - `sedx-admin-schema.sql`: schema versionado do banco D1 administrativo.
+- `api/edusp-captcha.js`: proxy regional da Vercel para desafio e validação do CAPTCHA da EduSP.
+- `api/edusp-task-details.js`: proxy regional da Vercel para a abertura do enunciado da atividade.
 - Worker Cloudflare `sdf`: proxy da aplicação e API administrativa; o código ativo é gerenciado no Cloudflare.
 - `EF/` e `EM/`: apostilas PDF mantidas no repositório.
 
@@ -22,6 +24,10 @@ As chaves de upstream e do provedor de IA não são incluídas neste repositóri
 ## Correção da obtenção da sala do aluno
 
 A rota `GET /student-rooms` e a carga do dashboard usam o endpoint oficial `ListarTurmasPorAluno`. Esse endpoint exige simultaneamente o `codigoAluno` curto e o cabeçalho `Authorization: Bearer <token>` da sessão SED. O Worker envia o token da sessão, inclui `x-product-name: SalaDoFuturo` e normaliza o `CD_USUARIO` para o código usado pelas APIs de turma e aluno.
+
+## Fluxo do CAPTCHA e abertura de tarefas
+
+O desafio, a validação e a abertura da tarefa (`apply`) usam os proxies Vercel na região `gru1`. Assim, a mesma `sessionKey`, o cookie temporário e o egress são preservados entre `POST /api/edusp-captcha` e `GET /api/edusp-task-details`, evitando que a EduSP recuse o token por troca entre o Worker Cloudflare e a Vercel. O `X-Api-Key` da sessão é exigido pelos dois proxies e nenhum CAPTCHA é armazenado em banco ou log.
 
 ## Administração SedX
 

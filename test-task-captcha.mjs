@@ -3,45 +3,61 @@ import fs from "node:fs";
 import vm from "node:vm";
 
 const bundle = fs.readFileSync(new URL("./script.js", import.meta.url), "utf8");
-const start = bundle.indexOf("async function fetchCaptchaChallenge(){");
+const start = bundle.indexOf("async function requestCaptchaFromVercel(body){");
 const end = bundle.indexOf("async function sendAssistantMessage(", start);
 assert.ok(start >= 0 && end > start, "helpers do CAPTCHA devem continuar disponíveis no bundle");
 
 const calls = [];
+const captchaCalls = [];
 const detailsCalls = [];
 const context = {
   URLSearchParams,
   Headers,
   readSession: () => ({ token2: "student-api-key-test" }),
   fetch: async (path, options = {}) => {
-    detailsCalls.push({ path, options });
-    return { ok: true, status: 200, text: async () => JSON.stringify({ questions: [] }) };
-  },
-  request: async (path, options = {}) => {
-    calls.push({ path, options });
-    if (path === "/captcha/challenge") return {
-      challengeId: "challenge-1", image: "data:image/png;base64,AA==", sessionKey: "session-1",
-      captchaCookie: "captcha_sid=one; captcha_aux=two",
-    };
-    if (path === "/captcha/verify") {
+    if (path === "/api/edusp-captcha") {
+      captchaCalls.push({ path, options });
       const body = JSON.parse(options.body);
+      if (body.action === "challenge") return {
+        ok: true, status: 200, headers: new Headers(),
+        text: async () => JSON.stringify({
+          challengeId: "challenge-1", image: "data:image/png;base64,AA==", sessionKey: "session-1",
+          captchaCookie: "captcha_sid=one; captcha_aux=two",
+        }),
+      };
+      assert.equal(body.action, "verify");
       assert.equal(body.sessionKey, "session-1");
       assert.equal(body.captchaCookie, "captcha_sid=one; captcha_aux=two");
       assert.equal(body.payload.answer, "Jrwnu");
-      return { token: "captcha-token", sessionKey: body.sessionKey, captchaCookie: body.captchaCookie };
+      return {
+        ok: true, status: 200, headers: new Headers(),
+        text: async () => JSON.stringify({ valid: true, token: "captcha-token", sessionKey: "session-1", captchaCookie: body.captchaCookie }),
+      };
     }
+    detailsCalls.push({ path, options });
+    return { ok: true, status: 200, headers: new Headers(), text: async () => JSON.stringify({ questions: [] }) };
+  },
+  request: async (path, options = {}) => {
+    calls.push({ path, options });
     if (path === "/answer-task") return { ok: true };
     throw new Error(`rota inesperada: ${path}`);
   },
 };
-vm.runInNewContext(`${bundle.slice(start, end)}\nthis.fetchCaptchaChallenge=fetchCaptchaChallenge; this.verifyCaptcha=verifyCaptcha; this.fetchTaskDetails=fetchTaskDetails; this.submitTaskAnswers=submitTaskAnswers;`, context);
+vm.runInNewContext(`${bundle.slice(start, end)}\nthis.requestCaptchaFromVercel=requestCaptchaFromVercel; this.fetchCaptchaChallenge=fetchCaptchaChallenge; this.verifyCaptcha=verifyCaptcha; this.fetchTaskDetails=fetchTaskDetails; this.submitTaskAnswers=submitTaskAnswers;`, context);
 
 const challenge = await context.fetchCaptchaChallenge();
 assert.equal(challenge.captchaCookie, "captcha_sid=one; captcha_aux=two", "cookie do desafio deve ser preservado");
+assert.equal(captchaCalls[0].path, "/api/edusp-captcha");
+assert.equal(captchaCalls[0].options.headers["X-Api-Key"], "student-api-key-test");
+assert.equal(JSON.parse(captchaCalls[0].options.body).action, "challenge");
+
 const verified = await context.verifyCaptcha(challenge, " Jrwnu ");
 assert.equal(verified.token, "captcha-token");
 assert.equal(verified.sessionKey, "session-1");
 assert.equal(verified.captchaCookie, challenge.captchaCookie);
+assert.equal(captchaCalls.length, 2, "desafio e validação devem sair pelo mesmo proxy Vercel");
+assert.equal(JSON.parse(captchaCalls[1].options.body).action, "verify");
+assert.equal(captchaCalls[1].options.headers["X-Api-Key"], "student-api-key-test");
 
 await context.fetchTaskDetails("task-1", "2ª B - EMP LOGÍSTICA", verified.token, "task-code", verified.sessionKey, verified.captchaCookie);
 assert.equal(detailsCalls.length, 1, "o token temporário do CAPTCHA deve ser usado em uma única consulta");
@@ -63,7 +79,9 @@ assert.equal(answerCall.options.headers["X-Captcha-Cookie"], "captcha_sid=one; c
 const answerBody = JSON.parse(answerCall.options.body);
 assert.equal(answerBody.captcha_cookie, "captcha_sid=one; captcha_aux=two");
 
+assert.equal(calls.some(({ path }) => path === "/captcha/challenge" || path === "/captcha/verify"), false, "o Worker não deve participar do fluxo CAPTCHA");
 assert.ok(bundle.includes("fetchTaskDetails(J,st,T.token,at,T.sessionKey||yt,T.captchaCookie||ct)"));
+assert.ok(bundle.includes("/api/edusp-captcha"));
 assert.ok(bundle.includes("/api/edusp-task-details?"));
 assert.ok(bundle.includes("submitTaskAnswers(J,st,R,u,yt,ct)"));
-console.log("test-task-captcha: sessão e cookies do CAPTCHA são preservados na consulta e no envio.");
+console.log("test-task-captcha: CAPTCHA e abertura da tarefa usam o mesmo proxy Vercel, com sessão e cookies preservados.");
