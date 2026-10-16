@@ -8,8 +8,15 @@ const end = bundle.indexOf("async function sendAssistantMessage(", start);
 assert.ok(start >= 0 && end > start, "helpers do CAPTCHA devem continuar disponíveis no bundle");
 
 const calls = [];
+const detailsCalls = [];
 const context = {
   URLSearchParams,
+  Headers,
+  readSession: () => ({ token2: "student-api-key-test" }),
+  fetch: async (path, options = {}) => {
+    detailsCalls.push({ path, options });
+    return { ok: true, status: 200, text: async () => JSON.stringify({ questions: [] }) };
+  },
   request: async (path, options = {}) => {
     calls.push({ path, options });
     if (path === "/captcha/challenge") return {
@@ -23,7 +30,6 @@ const context = {
       assert.equal(body.payload.answer, "Jrwnu");
       return { token: "captcha-token", sessionKey: body.sessionKey, captchaCookie: body.captchaCookie };
     }
-    if (path.startsWith("/task-details?")) return { questions: [] };
     if (path === "/answer-task") return { ok: true };
     throw new Error(`rota inesperada: ${path}`);
   },
@@ -38,11 +44,17 @@ assert.equal(verified.sessionKey, "session-1");
 assert.equal(verified.captchaCookie, challenge.captchaCookie);
 
 await context.fetchTaskDetails("task-1", "2ª B - EMP LOGÍSTICA", verified.token, "task-code", verified.sessionKey, verified.captchaCookie);
-const detailsCall = calls.find(({ path }) => path.startsWith("/task-details?"));
-assert.ok(detailsCall, "detalhes da atividade devem ser consultados");
-assert.equal(detailsCall.options.headers["X-Captcha-Token"], "captcha-token");
-assert.equal(detailsCall.options.headers["X-Captcha-Session"], "session-1");
-assert.equal(detailsCall.options.headers["X-Captcha-Cookie"], "captcha_sid=one; captcha_aux=two");
+assert.equal(detailsCalls.length, 1, "o token temporário do CAPTCHA deve ser usado em uma única consulta");
+const detailsCall = detailsCalls[0];
+assert.ok(detailsCall.path.startsWith("/api/edusp-task-details?"), "a consulta deve sair pelo proxy Vercel same-origin");
+assert.match(detailsCall.path, /task_id=task-1/);
+assert.match(detailsCall.path, /room_name=2%C2%AA\+B\+-\+EMP\+LOG%C3%8DSTICA/);
+assert.doesNotMatch(detailsCall.path, /captcha_session|captcha_sid/);
+assert.equal(detailsCall.options.headers.get("X-Api-Key"), "student-api-key-test");
+assert.equal(detailsCall.options.headers.get("X-Captcha-Token"), "captcha-token");
+assert.equal(detailsCall.options.headers.get("X-Captcha-Session"), "session-1");
+assert.equal(detailsCall.options.headers.get("X-Captcha-Cookie"), "captcha_sid=one; captcha_aux=two");
+assert.equal(detailsCall.options.cache, "no-store");
 
 await context.submitTaskAnswers("task-1", "2ª B - EMP LOGÍSTICA", { q1: "a" }, verified.token, verified.sessionKey, verified.captchaCookie);
 const answerCall = calls.find(({ path }) => path === "/answer-task");
@@ -52,5 +64,6 @@ const answerBody = JSON.parse(answerCall.options.body);
 assert.equal(answerBody.captcha_cookie, "captcha_sid=one; captcha_aux=two");
 
 assert.ok(bundle.includes("fetchTaskDetails(J,st,T.token,at,T.sessionKey||yt,T.captchaCookie||ct)"));
+assert.ok(bundle.includes("/api/edusp-task-details?"));
 assert.ok(bundle.includes("submitTaskAnswers(J,st,R,u,yt,ct)"));
 console.log("test-task-captcha: sessão e cookies do CAPTCHA são preservados na consulta e no envio.");

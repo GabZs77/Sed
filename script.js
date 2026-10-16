@@ -226,27 +226,33 @@ async function verifyCaptcha(challenge,answer){
   if(!token)throw new Error("O CAPTCHA foi aceito, mas o Worker não retornou um token.");
   return{token:String(token),sessionKey:String(response.sessionKey??challenge.sessionKey??""),captchaCookie:String(response.captchaCookie??challenge.captchaCookie??"")};
 }
+async function requestTaskDetailsFromVercel(path,headers){
+  const session=readSession();
+  if(!session?.token2)throw new Error("Sessão EduSP ausente. Faça login novamente.");
+  const requestHeaders=new Headers(headers);
+  requestHeaders.set("X-Api-Key",String(session.token2));
+  const response=await fetch(path,{method:"GET",headers:requestHeaders,cache:"no-store"});
+  const text=await response.text();
+  let data=null;
+  try{data=text?JSON.parse(text):null}catch{data=text}
+  if(!response.ok){
+    const error=new Error(getErrorMessage(data,`Falha ao consultar a atividade (HTTP ${response.status}).`));
+    throw Object.assign(error,{status:response.status});
+  }
+  return data;
+}
 async function fetchTaskDetails(taskId,roomName,captchaToken,taskCode="",captchaSessionKey="",captchaCookie=""){
-  const taskIds=Array.from(new Set([taskId,taskCode].map(value=>String(value||"").trim()).filter(Boolean)));
+  // O token do CAPTCHA é de uso temporário: use o id oficial e faça apenas um apply.
+  const id=String(taskId||taskCode||"").trim();
   const room=String(roomName||"").trim();
+  if(!id)throw new Error("Identificador da atividade não informado.");
   if(!room)throw new Error("Sala do aluno não identificada; a consulta da atividade foi bloqueada.");
-  let lastError=null;
-  for(const id of taskIds){
-    const params=new URLSearchParams({task_id:id});
-    params.set("room_name",room);
-    if(captchaSessionKey)params.set("captcha_session",captchaSessionKey);
-    const headers={"X-Captcha-Token":captchaToken};
-    if(captchaSessionKey)headers["X-Captcha-Session"]=captchaSessionKey;
-    if(captchaCookie)headers["X-Captcha-Cookie"]=captchaCookie;
-    try{return await request(`/task-details?${params.toString()}`,{headers});}
-    catch(error){lastError=error;}
-  }
-  if(lastError instanceof Error){
-    const status=Number(lastError.status||0),build=String(lastError.workerBuild||"");
-    if(status===401){const activeBuild=build?` Worker ativo: ${build}.`:"";throw new Error(`A sessão não foi autorizada para consultar esta atividade (HTTP 401). Atualize o Worker e faça login novamente.${activeBuild}`);}
-    throw lastError;
-  }
-  throw new Error("Não foi possível consultar o enunciado da atividade.");
+  if(!captchaToken)throw new Error("Valide um CAPTCHA novo antes de consultar a atividade.");
+  const params=new URLSearchParams({task_id:id,room_name:room});
+  const headers={"X-Captcha-Token":String(captchaToken)};
+  if(captchaSessionKey)headers["X-Captcha-Session"]=String(captchaSessionKey);
+  if(captchaCookie)headers["X-Captcha-Cookie"]=String(captchaCookie);
+  return requestTaskDetailsFromVercel(`/api/edusp-task-details?${params.toString()}`,headers);
 }
 async function submitTaskAnswers(taskId,roomName,answers,captchaToken,captchaSessionKey="",captchaCookie=""){
   const executedOn=new Date().toISOString().replace(/\.\d+Z$/,"Z");
