@@ -33,7 +33,7 @@
     }).join("");
   }
 
-  function renderContent(content) {
+  function renderContent(content, { eagerImages = false } = {}) {
     if (!content) return "";
     const sections = Array.isArray(content.sections) ? content.sections : [];
     return `<div class="about-public-content">
@@ -42,12 +42,58 @@
         const image = /^data:image\/(?:webp|png|jpeg);base64,[A-Za-z0-9+/=]+$/.test(section?.image || "") ? section.image : "";
         return `<article class="about-card" style="--about-delay:${Math.min(index, 8) * 45}ms">
           <div class="about-card-icon" aria-hidden="true">${escapeHtml(section.icon || "✦")}</div>
-          ${image ? `<img class="about-card-image" src="${escapeHtml(image)}" alt="${escapeHtml(section.title || "Imagem da seção")}" loading="lazy">` : ""}
+          ${image ? `<img class="about-card-image" src="${escapeHtml(image)}" alt="${escapeHtml(section.title || "Imagem da seção")}" loading="${eagerImages ? "eager" : "lazy"}">` : ""}
           <h3>${escapeHtml(section.title || "")}</h3><p>${escapeHtml(section.text || "")}</p>
           <div class="about-card-links">${renderLinks(section.links, "about-text-link")}${renderLinks(section.buttons, "about-link-button")}</div>
         </article>`;
       }).join("")}</div>
     </div>`;
+  }
+
+  function readImageDataUrl(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result || ""));
+      reader.onerror = () => reject(new Error("Não foi possível ler essa imagem."));
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  async function prepareUploadImage(file) {
+    if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+      throw new Error("Escolha uma imagem PNG, JPEG ou WebP.");
+    }
+    if (file.size <= MAX_UPLOAD_BYTES) return readImageDataUrl(file);
+    if (typeof createImageBitmap !== "function") {
+      throw new Error("Esta imagem é grande demais para este navegador. Escolha uma imagem de até 450 KB.");
+    }
+
+    const bitmap = await createImageBitmap(file);
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    if (!context) {
+      bitmap.close?.();
+      throw new Error("Não foi possível preparar a imagem para a pré-visualização.");
+    }
+    let scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height));
+    try {
+      for (let pass = 0; pass < 7; pass += 1) {
+        canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+        canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        for (const quality of [0.86, 0.76, 0.66, 0.56, 0.46]) {
+          const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/webp", quality));
+          if (blob && blob.size <= MAX_UPLOAD_BYTES) return await readImageDataUrl(blob);
+        }
+        scale *= 0.78;
+      }
+    } finally {
+      bitmap.close?.();
+      canvas.width = 0;
+      canvas.height = 0;
+    }
+    throw new Error("Não foi possível reduzir a imagem. Tente uma imagem menor.");
   }
 
   function renderLinkEditor(sectionIndex, kind, items) {
@@ -80,13 +126,13 @@
             <label class="about-field"><span>Título da seção</span><input data-field="section" data-index="${index}" data-key="title" value="${escapeHtml(section.title || "")}" maxlength="120"></label>
             <label class="about-field"><span>Texto</span><textarea data-field="section" data-index="${index}" data-key="text" rows="4" maxlength="3000">${escapeHtml(section.text || "")}</textarea></label>
             <label class="about-field"><span>Ícone ou emoji</span><input data-field="section" data-index="${index}" data-key="icon" value="${escapeHtml(section.icon || "")}" maxlength="32" placeholder="Ex.: ✦, 📚, ♡"></label>
-            <label class="about-field"><span>Imagem (PNG, JPEG ou WebP; até 450 KB)</span><input type="file" accept="image/png,image/jpeg,image/webp" data-action="upload-image" data-index="${index}"></label>
+            <label class="about-field"><span>Imagem (PNG, JPEG ou WebP; imagens maiores serão otimizadas automaticamente)</span><input type="file" accept="image/png,image/jpeg,image/webp" data-action="upload-image" data-index="${index}"></label>
             ${section.image ? `<div class="about-upload-preview"><img src="${escapeHtml(section.image)}" alt="Prévia da imagem"><button type="button" class="about-quiet-button" data-action="remove-image" data-index="${index}">Remover imagem</button></div>` : ""}
             ${renderLinkEditor(index, "links", section.links)}${renderLinkEditor(index, "buttons", section.buttons)}
           </article>`).join("")}
         </div>
         <aside class="about-preview-panel"><div class="about-preview-toolbar"><strong>Pré-visualização</strong><div class="about-preview-switch"><button type="button" class="${state.previewMode === "mobile" ? "is-active" : ""}" data-action="preview-mode" data-mode="mobile">Celular</button><button type="button" class="${state.previewMode === "desktop" ? "is-active" : ""}" data-action="preview-mode" data-mode="desktop">Computador</button></div></div>
-          <div class="about-preview-frame ${state.previewMode === "mobile" ? "is-mobile" : "is-desktop"}" data-preview-content>${renderContent(draft)}</div>
+          <div class="about-preview-frame ${state.previewMode === "mobile" ? "is-mobile" : "is-desktop"}" data-preview-content>${renderContent(draft, { eagerImages: true })}</div>
         </aside>
       </div>
       <div class="about-editor-footer"><div class="about-version-tools"><label><span>Versões publicadas</span><select data-role="version-select"><option value="">Escolha uma versão</option>${(state.versions || []).map((version) => `<option value="${escapeHtml(version.id)}" ${state.selectedVersion === version.id ? "selected" : ""}>${escapeHtml(version.title)} — ${escapeHtml(new Date(version.publishedAt).toLocaleString("pt-BR"))}</option>`).join("")}</select></label><button type="button" class="about-secondary-button" data-action="restore-version" ${state.busy ? "disabled" : ""}>Restaurar para rascunho</button></div>
@@ -115,7 +161,7 @@
 
     function updatePreview() {
       const preview = root.querySelector("[data-preview-content]");
-      if (preview) preview.innerHTML = renderContent(state.draft);
+      if (preview) preview.innerHTML = renderContent(state.draft, { eagerImages: true });
     }
 
     async function refreshPublic() {
@@ -163,20 +209,28 @@
       updatePreview();
     }
 
-    function onChange(event) {
+    async function onChange(event) {
       const input = event.target;
       if (input?.dataset?.role === "version-select") { state.selectedVersion = input.value; return; }
       if (input?.dataset?.action !== "upload-image") return;
       const file = input.files?.[0];
       const index = Number(input.dataset.index);
       if (!file || !state.draft.sections[index]) return;
-      if (!["image/png", "image/jpeg", "image/webp"].includes(file.type) || file.size > MAX_UPLOAD_BYTES) {
-        state.notice = "Use uma imagem PNG, JPEG ou WebP de até 450 KB."; state.noticeType = "error"; renderPage(); return;
+      state.notice = file.size > MAX_UPLOAD_BYTES ? "Otimizando imagem para a pré-visualização…" : "Carregando imagem…";
+      state.noticeType = "";
+      renderPage();
+      try {
+        const image = await prepareUploadImage(file);
+        if (disposed || !state.draft.sections[index]) return;
+        state.draft.sections[index].image = image;
+        state.notice = "Imagem adicionada ao rascunho e à pré-visualização.";
+        state.noticeType = "";
+      } catch (error) {
+        if (disposed) return;
+        state.notice = error?.message || "Não foi possível carregar essa imagem.";
+        state.noticeType = "error";
       }
-      const reader = new FileReader();
-      reader.onload = () => { state.draft.sections[index].image = String(reader.result || ""); state.notice = "Imagem adicionada ao rascunho."; state.noticeType = ""; renderPage(); };
-      reader.onerror = () => { state.notice = "Não foi possível ler essa imagem."; state.noticeType = "error"; renderPage(); };
-      reader.readAsDataURL(file);
+      renderPage();
     }
 
     async function onClick(event) {
