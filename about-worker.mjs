@@ -1,5 +1,4 @@
 const SITE_ORIGIN = "https://sed-gg.vercel.app";
-const SED_BASE = "https://sedintegracoes.educacao.sp.gov.br";
 const ABOUT_KEYS = {
   draft: "about:draft",
   published: "about:published",
@@ -142,93 +141,18 @@ function cleanId(value) {
   return String(value || "").replace(/\D/g, "").slice(0, 24);
 }
 
-function identityValues(data) {
-  const matches = [];
-  const visited = new Set();
-  const identityKeys = new Set([
-    "ra", "numerora", "cdusuario", "cdusuariocurto", "cdusuariocompleto",
-    "codigoaluno", "codigousuario", "cdaluno", "identificadoraluno",
-    "raaluno", "radigito", "raestudante", "numeroraaluno", "codigoalunora",
-  ]);
-  const walk = (node, depth = 0) => {
-    if (!node || typeof node !== "object" || depth > 8 || visited.has(node)) return;
-    visited.add(node);
-    if (Array.isArray(node)) {
-      node.forEach((child) => walk(child, depth + 1));
-      return;
-    }
-    for (const [key, value] of Object.entries(node)) {
-      const normalizedKey = key.toLowerCase().replace(/[^a-z0-9]/g, "");
-      if (identityKeys.has(normalizedKey) && (typeof value === "string" || typeof value === "number")) {
-        const digits = cleanId(value);
-        if (digits) matches.push(digits);
-      }
-      if (value && typeof value === "object") walk(value, depth + 1);
-    }
-  };
-  walk(data);
-  return matches;
-}
-
-async function verifyAdmin(request, env, subscriptionKey) {
-  const claimed = cleanId(request.headers.get("X-Admin-User") || request.headers.get("X-Usuario"));
+async function verifyAdmin(request, env) {
+  const claimed = cleanId(request.headers.get("X-Admin-RA") || request.headers.get("X-Admin-User") || request.headers.get("X-Usuario"));
   const sessionRa = cleanId(request.headers.get("X-Usuario"));
-  const shortCode = cleanId(request.headers.get("X-Cd-Usuario"));
-  const token = String(request.headers.get("X-Token") || "").trim();
   const token2 = String(request.headers.get("X-Token2") || "").trim();
-  if (!claimed || claimed !== sessionRa || !token || !token2) return { authorized: false };
+  if (!claimed || claimed !== sessionRa || !token2) return { authorized: false };
   if (!env?.SEDX_ADMIN) return { authorized: false, unavailable: true };
 
   const admin = await env.SEDX_ADMIN.prepare(
     "SELECT ra FROM admin_users WHERE ra = ? AND role = 'Administrador' AND status = 'Ativo' LIMIT 1",
   ).bind(sessionRa).first();
   if (!admin) return { authorized: false };
-
-  const codeCandidates = [...new Set([shortCode, sessionRa].filter(Boolean))];
-  const candidates = codeCandidates.flatMap((code) => {
-    const query = `api/Aluno/ObterAlunoPorCodigo?codigoAluno=${encodeURIComponent(code)}`;
-    return [`${SED_BASE}/${query}`, `${SED_BASE}/saladofuturobffapi/${query}`];
-  });
-  let profileLoaded = false;
-  let upstreamUnavailable = false;
-  const acceptedIds = new Set([sessionRa]);
-  // A tela de aluno pode identificar o RA pelo código curto sem o dígito verificador.
-  if (shortCode && sessionRa.length === shortCode.length + 1 && sessionRa.startsWith(shortCode)) {
-    acceptedIds.add(shortCode);
-  }
-  for (const endpoint of candidates) {
-    let upstream;
-    try {
-      upstream = await fetch(endpoint, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Ocp-Apim-Subscription-Key": subscriptionKey,
-          "x-product-name": "SalaDoFuturo",
-          Authorization: `Bearer ${token}`,
-        },
-        cache: "no-store",
-      });
-    } catch {
-      upstreamUnavailable = true;
-      continue;
-    }
-    if (!upstream.ok) {
-      if (upstream.status >= 500) upstreamUnavailable = true;
-      continue;
-    }
-    try {
-      const profile = await upstream.json();
-      profileLoaded = true;
-      if (identityValues(profile).some((id) => acceptedIds.has(id))) {
-        return { authorized: true, actor: sessionRa };
-      }
-    }
-    catch { continue; }
-  }
-  if (!profileLoaded) return { authorized: false, unavailable: upstreamUnavailable };
-  return { authorized: false, actor: sessionRa };
+  return { authorized: true, actor: sessionRa };
 }
 
 function parseSetting(row) {
@@ -293,7 +217,7 @@ export async function handleAboutRequest(request, env, url, subscriptionKey) {
     return jsonResponse(request, { ok: true, published: true, ...published });
   }
 
-  const authorization = await verifyAdmin(request, env, subscriptionKey);
+  const authorization = await verifyAdmin(request, env);
   if (!authorization.authorized) {
     return jsonResponse(request, {
       erro: authorization.unavailable ? "Não foi possível validar sua sessão administrativa agora." : "Acesso administrativo não autorizado.",
