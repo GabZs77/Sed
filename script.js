@@ -209,50 +209,22 @@ Error generating stack: `+i.message+`
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Zap=createLucideIcon("Zap",[["path",{d:"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z",key:"1xq2db"}]]);class ErrorBoundary extends reactExports.Component{constructor(s){super(s),this.state={hasError:!1,error:null}}static getDerivedStateFromError(s){return{hasError:!0,error:s}}render(){return this.state.hasError?jsxRuntimeExports.jsx("div",{className:"flex items-center justify-center min-h-screen p-8 bg-background",children:jsxRuntimeExports.jsxs("div",{className:"flex flex-col items-center w-full max-w-2xl p-8",children:[jsxRuntimeExports.jsx(TriangleAlert,{size:48,className:"text-destructive mb-6 flex-shrink-0"}),jsxRuntimeExports.jsx("h2",{className:"text-xl mb-4",children:"An unexpected error occurred."}),jsxRuntimeExports.jsx("div",{className:"p-4 w-full rounded bg-muted overflow-auto mb-6",children:jsxRuntimeExports.jsx("pre",{className:"text-sm text-muted-foreground whitespace-break-spaces",children:this.state.error?.stack})}),jsxRuntimeExports.jsxs("button",{onClick:()=>window.location.reload(),className:cn("flex items-center gap-2 px-4 py-2 rounded-lg","bg-primary text-primary-foreground","hover:opacity-90 cursor-pointer"),children:[jsxRuntimeExports.jsx(RotateCcw,{size:16}),"Reload Page"]})]})}):this.props.children}}const ThemeContext=reactExports.createContext(void 0);function ThemeProvider({children:a,defaultTheme:s="light",switchable:c=!1}){const[o,f]=reactExports.useState(()=>c&&localStorage.getItem("theme")||s);reactExports.useEffect(()=>{const b=document.documentElement;o==="dark"?b.classList.add("dark"):b.classList.remove("dark"),c&&localStorage.setItem("theme",o)},[o,c]);const g=c?()=>{f(b=>b==="light"?"dark":"light")}:void 0;return jsxRuntimeExports.jsx(ThemeContext.Provider,{value:{theme:o,toggleTheme:g,switchable:c},children:a})}const WORKER_URL="https://sdf.gabrielreplit56.workers.dev",SESSION_KEY="sed_sessao";function readSession(){try{const a=localStorage.getItem(SESSION_KEY);return a?JSON.parse(a):null}catch{return null}}function saveSession(a){localStorage.setItem(SESSION_KEY,JSON.stringify(a))}function clearSession(){localStorage.removeItem(SESSION_KEY)}function getErrorMessage(a,s){if(a&&typeof a=="object"){const c=a;if(typeof c.erro=="string")return c.erro;if(typeof c.error=="string")return c.error;if(typeof c.message=="string")return c.message}return s}async function request(a,s={}){const c=readSession(),o=new Headers(s.headers);o.set("Accept","application/json"),c?.token2&&!o.has("X-Token2")&&o.set("X-Token2",c.token2),c?.token&&!o.has("X-Token")&&o.set("X-Token",c.token),c?.cdUsuarioCurto&&!o.has("X-Cd-Usuario")&&o.set("X-Cd-Usuario",c.cdUsuarioCurto),c?.apelido&&!o.has("X-Task-User")&&o.set("X-Task-User",c.apelido),c?.usuario&&!o.has("X-Usuario")&&o.set("X-Usuario",c.usuario);const f=await fetch(`${WORKER_URL}${a}`,{...s,headers:o}),g=await f.text();let b=null;try{b=g?JSON.parse(g):null}catch{b=g}if(!f.ok){const w=new Error(getErrorMessage(b,`Não foi possível consultar os dados (HTTP ${f.status}).`));throw Object.assign(w,{status:f.status,workerBuild:f.headers.get("x-worker-build")||""}),w}return b}async function signIn(a,s){const o={...await request("/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({usuario:a,senha:s})}),usuario:a};return saveSession(o),o}async function fetchDashboard(){return request("/dashboard")}async function fetchStudentRooms(a){const s=readSession(),c=String(s?.cdUsuarioCurto||s?.codigoAluno||s?.cdAluno||s?.ra||s?.cdUsuario||"").trim(),o=c?`?codigoAluno=${encodeURIComponent(c)}`:"";return await request(`/student-rooms${o}`)}async function fetchOptional(a){try{return await request(a)}catch{return null}}function firstName(a){return(a||"Aluno").trim().split(/\s+/)[0]||"Aluno"}function initials(a){return((a||"Aluno").trim().split(/\s+/).filter(Boolean).slice(0,2).map(c=>c[0]).join("")||"A").toUpperCase()}async function requestCaptchaFromVercel(body){
-  const session=readSession();
-  if(!session?.token2)throw new Error("Sessão EduSP ausente. Faça login novamente.");
-  const response=await fetch("/api/edusp-captcha",{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json","X-Api-Key":String(session.token2)},body:JSON.stringify(body),cache:"no-store"});
-  const text=await response.text();
-  let data=null;
-  try{data=text?JSON.parse(text):null}catch{data=text}
-  if(!response.ok){
-    const error=new Error(getErrorMessage(data,`Falha ao consultar o CAPTCHA (HTTP ${response.status}).`));
-    throw Object.assign(error,{status:response.status});
-  }
-  return data;
-}
-async function fetchCaptchaChallenge(){
-  const response=await requestCaptchaFromVercel({action:"challenge",type:"image"});
+ */const Zap=createLucideIcon("Zap",[["path",{d:"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z",key:"1xq2db"}]]);class ErrorBoundary extends reactExports.Component{constructor(s){super(s),this.state={hasError:!1,error:null}}static getDerivedStateFromError(s){return{hasError:!0,error:s}}render(){return this.state.hasError?jsxRuntimeExports.jsx("div",{className:"flex items-center justify-center min-h-screen p-8 bg-background",children:jsxRuntimeExports.jsxs("div",{className:"flex flex-col items-center w-full max-w-2xl p-8",children:[jsxRuntimeExports.jsx(TriangleAlert,{size:48,className:"text-destructive mb-6 flex-shrink-0"}),jsxRuntimeExports.jsx("h2",{className:"text-xl mb-4",children:"An unexpected error occurred."}),jsxRuntimeExports.jsx("div",{className:"p-4 w-full rounded bg-muted overflow-auto mb-6",children:jsxRuntimeExports.jsx("pre",{className:"text-sm text-muted-foreground whitespace-break-spaces",children:this.state.error?.stack})}),jsxRuntimeExports.jsxs("button",{onClick:()=>window.location.reload(),className:cn("flex items-center gap-2 px-4 py-2 rounded-lg","bg-primary text-primary-foreground","hover:opacity-90 cursor-pointer"),children:[jsxRuntimeExports.jsx(RotateCcw,{size:16}),"Reload Page"]})]})}):this.props.children}}const ThemeContext=reactExports.createContext(void 0);function ThemeProvider({children:a,defaultTheme:s="light",switchable:c=!1}){const[o,f]=reactExports.useState(()=>c&&localStorage.getItem("theme")||s);reactExports.useEffect(()=>{const b=document.documentElement;o==="dark"?b.classList.add("dark"):b.classList.remove("dark"),c&&localStorage.setItem("theme",o)},[o,c]);const g=c?()=>{f(b=>b==="light"?"dark":"light")}:void 0;return jsxRuntimeExports.jsx(ThemeContext.Provider,{value:{theme:o,toggleTheme:g,switchable:c},children:a})}const WORKER_URL="https://sdf.gabrielreplit56.workers.dev",SESSION_KEY="sed_sessao";function readSession(){try{const a=localStorage.getItem(SESSION_KEY);return a?JSON.parse(a):null}catch{return null}}function saveSession(a){localStorage.setItem(SESSION_KEY,JSON.stringify(a))}function clearSession(){localStorage.removeItem(SESSION_KEY)}function getErrorMessage(a,s){if(a&&typeof a=="object"){const c=a;if(typeof c.erro=="string")return c.erro;if(typeof c.error=="string")return c.error;if(typeof c.message=="string")return c.message}return s}async function request(a,s={}){const c=readSession(),o=new Headers(s.headers);o.set("Accept","application/json"),c?.token2&&!o.has("X-Token2")&&o.set("X-Token2",c.token2),c?.token&&!o.has("X-Token")&&o.set("X-Token",c.token),c?.cdUsuarioCurto&&!o.has("X-Cd-Usuario")&&o.set("X-Cd-Usuario",c.cdUsuarioCurto),c?.apelido&&!o.has("X-Task-User")&&o.set("X-Task-User",c.apelido),c?.usuario&&!o.has("X-Usuario")&&o.set("X-Usuario",c.usuario);const f=await fetch(`${WORKER_URL}${a}`,{...s,headers:o}),g=await f.text();let b=null;try{b=g?JSON.parse(g):null}catch{b=g}if(!f.ok){const w=new Error(getErrorMessage(b,`Não foi possível consultar os dados (HTTP ${f.status}).`));throw Object.assign(w,{status:f.status,workerBuild:f.headers.get("x-worker-build")||""}),w}return b}async function signIn(a,s){const o={...await request("/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({usuario:a,senha:s})}),usuario:a};return saveSession(o),o}async function fetchDashboard(){return request("/dashboard")}async function fetchStudentRooms(a){const s=readSession(),c=String(s?.cdUsuarioCurto||s?.codigoAluno||s?.cdAluno||s?.ra||s?.cdUsuario||"").trim(),o=c?`?codigoAluno=${encodeURIComponent(c)}`:"";return await request(`/student-rooms${o}`)}async function fetchOptional(a){try{return await request(a)}catch{return null}}function firstName(a){return(a||"Aluno").trim().split(/\s+/)[0]||"Aluno"}function initials(a){return((a||"Aluno").trim().split(/\s+/).filter(Boolean).slice(0,2).map(c=>c[0]).join("")||"A").toUpperCase()}async function fetchCaptchaChallenge(){
+  const response=await request("/captcha/challenge",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({realm:"edusp",type:"image"})});
   const nested=response.challenge&&typeof response.challenge==="object"?response.challenge:{};
   const challengeId=String(response.challengeId??response.challenge_id??response.id??nested.challengeId??nested.challenge_id??"");
   const image=String(response.image??nested.image??"");
   const sessionKey=String(response.sessionKey??response.session_key??nested.sessionKey??"");
   const captchaCookie=String(response.captchaCookie??response.captcha_cookie??response.data?.captchaCookie??response.data?.cookie??"");
-  if(!challengeId||!image)throw new Error("A Vercel não retornou uma imagem de CAPTCHA válida.");
+  if(!challengeId||!image)throw new Error("O Worker não retornou uma imagem de CAPTCHA válida.");
   return{challengeId,image,sessionKey,captchaCookie};
 }
 async function verifyCaptcha(challenge,answer){
-  const response=await requestCaptchaFromVercel({action:"verify",type:"image",sessionKey:challenge.sessionKey,captchaCookie:challenge.captchaCookie||"",payload:{challengeId:challenge.challengeId,answer:answer.trim()}});
+  const response=await request("/captcha/verify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"image",realm:"edusp",sessionKey:challenge.sessionKey,captchaCookie:challenge.captchaCookie||"",payload:{challengeId:challenge.challengeId,answer:answer.trim()}})});
   const nested=response.data&&typeof response.data==="object"?response.data.token:null;
   const token=response.token??response.captchaToken??response.captcha_token??nested;
-  if(!token)throw new Error("O CAPTCHA foi aceito, mas a Vercel não retornou um token.");
+  if(!token)throw new Error("O CAPTCHA foi aceito, mas o Worker não retornou um token.");
   return{token:String(token),sessionKey:String(response.sessionKey??challenge.sessionKey??""),captchaCookie:String(response.captchaCookie??challenge.captchaCookie??"")};
-}
-async function requestTaskDetailsFromVercel(path,headers){
-  const session=readSession();
-  if(!session?.token2)throw new Error("Sessão EduSP ausente. Faça login novamente.");
-  const requestHeaders=new Headers(headers);
-  requestHeaders.set("X-Api-Key",String(session.token2));
-  const response=await fetch(path,{method:"GET",headers:requestHeaders,cache:"no-store"});
-  const text=await response.text();
-  let data=null;
-  try{data=text?JSON.parse(text):null}catch{data=text}
-  if(!response.ok){
-    const error=new Error(getErrorMessage(data,`Falha ao consultar a atividade (HTTP ${response.status}).`));
-    throw Object.assign(error,{status:response.status});
-  }
-  return data;
 }
 async function fetchTaskDetails(taskId,roomName,captchaToken,taskCode="",captchaSessionKey="",captchaCookie=""){
   // O token do CAPTCHA é de uso temporário: use o id oficial e faça apenas um apply.
@@ -265,7 +237,7 @@ async function fetchTaskDetails(taskId,roomName,captchaToken,taskCode="",captcha
   const headers={"X-Captcha-Token":String(captchaToken)};
   if(captchaSessionKey)headers["X-Captcha-Session"]=String(captchaSessionKey);
   if(captchaCookie)headers["X-Captcha-Cookie"]=String(captchaCookie);
-  return requestTaskDetailsFromVercel(`/api/edusp-task-details?${params.toString()}`,headers);
+  return request(`/task-details?${params.toString()}`,{method:"GET",headers,cache:"no-store"});
 }
 async function submitTaskAnswers(taskId,roomName,answers,captchaToken,captchaSessionKey="",captchaCookie=""){
   const executedOn=new Date().toISOString().replace(/\.\d+Z$/,"Z");

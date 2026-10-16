@@ -12,8 +12,6 @@ Versão estática do painel acadêmico SED Aluno, com agenda, presença, boletim
 - `seasonal-themes.css`: paletas e efeitos visuais de Halloween, Natal e Dia das crianças.
 - `tools-tab.js`, `tools-tab.css` e `mobile-navigation.css`: navegação pelo menu lateral, publicação administrativa e remoção da barra de abas inferior em dispositivos móveis.
 - `sedx-admin-schema.sql`: schema versionado do banco D1 administrativo.
-- `api/edusp-captcha.js`: proxy regional da Vercel para desafio e validação do CAPTCHA da EduSP.
-- `api/edusp-task-details.js`: proxy regional da Vercel para a abertura do enunciado da atividade.
 - Worker Cloudflare `sdf`: proxy da aplicação e API administrativa; o código ativo é gerenciado no Cloudflare.
 - `EF/` e `EM/`: apostilas PDF mantidas no repositório.
 
@@ -27,7 +25,7 @@ A rota `GET /student-rooms` e a carga do dashboard usam o endpoint oficial `List
 
 ## Fluxo do CAPTCHA e abertura de tarefas
 
-O desafio, a validação e a abertura da tarefa (`apply`) usam os proxies Vercel na região `gru1`. Assim, a mesma `sessionKey`, o cookie temporário e o egress são preservados entre `POST /api/edusp-captcha` e `GET /api/edusp-task-details`, evitando que a EduSP recuse o token por troca entre o Worker Cloudflare e a Vercel. O `X-Api-Key` da sessão é exigido pelos dois proxies e nenhum CAPTCHA é armazenado em banco ou log.
+O desafio (`POST /captcha/challenge`), a validação (`POST /captcha/verify`) e a abertura da tarefa (`GET /task-details`) passam pelo Worker Cloudflare `sdf`. O mesmo `sessionKey` e cookie temporário acompanham o token do CAPTCHA entre a validação, a consulta do enunciado e o envio das respostas; nenhuma etapa desse fluxo é desviada por uma função Vercel.
 
 ## Administração SedX
 
