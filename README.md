@@ -13,7 +13,6 @@ Versão estática do painel acadêmico SED Aluno, com agenda, presença, boletim
 - `tools-tab.js`, `tools-tab.css` e `mobile-navigation.css`: navegação pelo menu lateral, publicação administrativa e remoção da barra de abas inferior em dispositivos móveis.
 - `sedx-admin-schema.sql`: schema versionado do banco D1 administrativo.
 - Worker Cloudflare `sdf`: proxy da aplicação e API administrativa; o código ativo é gerenciado no Cloudflare.
-- `task-captcha-worker.mjs`: fonte do Worker Cloudflare dedicado ao desafio, validação e consulta das tarefas.
 - `EF/` e `EM/`: apostilas PDF mantidas no repositório.
 
 ## Configuração do Worker
@@ -26,7 +25,7 @@ A rota `GET /student-rooms` e a carga do dashboard usam o endpoint oficial `List
 
 ## Fluxo do CAPTCHA e abertura de tarefas
 
-O desafio (`POST /captcha/challenge`), a validação (`POST /captcha/verify`) e a abertura da tarefa (`GET /task-details`) passam juntos pelo Worker Cloudflare `sed-task-captcha`, implementado em `task-captcha-worker.mjs`. A abertura faz um único `apply` por token, preservando `sessionKey` e cookies; nenhuma dessas etapas é desviada pela Vercel. O Worker `sdf` permanece responsável pelo restante da aplicação.
+O desafio (`POST /captcha/challenge`), a validação (`POST /captcha/verify`) e a abertura da tarefa (`GET /task-details`) passam pelo Worker Cloudflare `sdf`. O mesmo `sessionKey` e cookie temporário acompanham o token do CAPTCHA entre a validação, a consulta do enunciado e o envio das respostas; nenhuma etapa desse fluxo é desviada por uma função Vercel.
 
 ## Administração SedX
 
