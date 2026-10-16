@@ -95,7 +95,7 @@
     if (location.pathname !== '/' || document.querySelector('[data-sedx-notification-button]')) return;
     const topbar = document.querySelector('.topbar'); if (!topbar) return;
     const button = document.createElement('button'); button.type = 'button'; button.dataset.sedxNotificationButton = 'true'; button.className = 'sedx-notification-button'; button.title = 'Notificações'; button.setAttribute('aria-label', 'Abrir notificações');
-    button.innerHTML = '<span class="sedx-bell">♢</span><b></b>'; button.addEventListener('click', () => openNotifications().catch(console.error));
+    button.innerHTML = '<span class="sedx-bell" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span><b></b>'; button.addEventListener('click', () => openNotifications().catch(console.error));
     const spacer = topbar.querySelector('.topbar-spacer'); spacer ? spacer.after(button) : topbar.prepend(button);
     request('/site-state').then((state) => { const count = Array.isArray(state.notifications) ? state.notifications.length : 0; button.querySelector('b').textContent = count > 9 ? '9+' : count || ''; button.classList.toggle('has-notifications', count > 0); }).catch(() => {});
   }
