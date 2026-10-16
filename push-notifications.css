@@ -1,0 +1,73 @@
+.sedx-push-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 14px 18px 8px;
+  padding: 14px 16px;
+  border: 1px solid rgba(190, 161, 255, 0.25);
+  border-radius: 14px;
+  background: rgba(94, 66, 145, 0.13);
+}
+
+.sedx-push-controls > div {
+  min-width: 0;
+}
+
+.sedx-push-controls strong,
+.sedx-push-controls [data-sedx-push-status] {
+  display: block;
+}
+
+.sedx-push-controls strong {
+  color: #f3efff;
+  font-size: 0.95rem;
+}
+
+.sedx-push-controls [data-sedx-push-status] {
+  margin-top: 4px;
+  color: #bcb4cb;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.sedx-push-controls [data-sedx-push-toggle] {
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 9px 14px;
+  border: 1px solid rgba(194, 171, 255, 0.48);
+  border-radius: 11px;
+  background: #34264f;
+  color: #fff;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sedx-push-controls [data-sedx-push-toggle]:hover:not(:disabled) {
+  background: #49366c;
+}
+
+.sedx-push-controls [data-sedx-push-toggle]:focus-visible {
+  outline: 3px solid #c7a8ff;
+  outline-offset: 3px;
+}
+
+.sedx-push-controls [data-sedx-push-toggle]:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (max-width: 520px) {
+  .sedx-push-controls {
+    align-items: stretch;
+    flex-direction: column;
+    margin-inline: 10px;
+    padding: 13px;
+  }
+
+  .sedx-push-controls [data-sedx-push-toggle] {
+    width: 100%;
+  }
+}
