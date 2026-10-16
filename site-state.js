@@ -80,14 +80,150 @@
     document.body.appendChild(overlay);
   }
 
+  function pushHeaders() {
+    const current = session();
+    const headers = new Headers({ Accept: 'application/json' });
+    if (current?.token2) headers.set('X-Token2', current.token2);
+    if (current?.token) headers.set('X-Token', current.token);
+    if (current?.cdUsuarioCurto || current?.codigoAluno || current?.cdAluno) headers.set('X-Cd-Usuario', current.cdUsuarioCurto || current.codigoAluno || current.cdAluno);
+    if (current?.apelido) headers.set('X-Task-User', current.apelido);
+    if (current?.usuario) headers.set('X-Usuario', current.usuario);
+    return headers;
+  }
+
+  function pushSessionReady() {
+    const current = session();
+    return Boolean(current?.token && current?.token2 && (current?.cdUsuarioCurto || current?.codigoAluno || current?.cdAluno) && current?.usuario);
+  }
+
+  async function pushRequest(path, options = {}) {
+    const headers = pushHeaders();
+    const requestOptions = { method: options.method || 'GET', headers, cache: 'no-store' };
+    if (options.body !== undefined) {
+      headers.set('Content-Type', 'application/json');
+      requestOptions.body = JSON.stringify(options.body);
+    }
+    const response = await fetch(`${WORKER_URL}${path}`, requestOptions);
+    let data = null;
+    try { data = await response.json(); } catch {}
+    if (!response.ok) throw new Error(data?.erro || data?.error || 'Não foi possível atualizar as notificações.');
+    return data || {};
+  }
+
+  function applicationServerKeyBytes(value) {
+    const padding = '='.repeat((4 - (value.length % 4)) % 4);
+    const binary = atob(value.replace(/-/g, '+').replace(/_/g, '/') + padding);
+    return Uint8Array.from(binary, (character) => character.charCodeAt(0));
+  }
+
+  async function syncPushControls(modal) {
+    const button = modal.querySelector('[data-sedx-push-toggle]');
+    const status = modal.querySelector('[data-sedx-push-status]');
+    if (!button || !status) return;
+    const supported = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+    if (!supported) {
+      button.disabled = true;
+      status.textContent = 'Este navegador não oferece suporte a notificações push.';
+      return;
+    }
+    let subscription = null;
+    try {
+      const registration = await navigator.serviceWorker.getRegistration('/');
+      subscription = await registration?.pushManager.getSubscription() || null;
+    } catch {}
+    if (subscription) {
+      button.disabled = false;
+      button.dataset.active = 'true';
+      button.textContent = 'Desativar neste dispositivo';
+      status.textContent = 'Ativas neste dispositivo.';
+      if (pushSessionReady()) {
+        try {
+          await pushRequest('/push/subscribe', {
+            method: 'POST',
+            body: { subscription: subscription.toJSON(), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Sao_Paulo' },
+          });
+        } catch {
+          status.textContent = 'Ativas no navegador; a sincronização será tentada novamente.';
+        }
+      }
+      return;
+    }
+    button.dataset.active = 'false';
+    button.textContent = 'Ativar notificações';
+    if (!pushSessionReady()) {
+      button.disabled = true;
+      status.textContent = 'Entre na sua conta para ativar as notificações.';
+    } else if (Notification.permission === 'denied') {
+      button.disabled = true;
+      status.textContent = 'Permissão bloqueada. Altere as configurações de notificações do navegador.';
+    } else {
+      button.disabled = false;
+      status.textContent = 'Receba avisos publicados, novas tarefas e lembretes de aula.';
+    }
+  }
+
+  async function togglePush(modal) {
+    const button = modal.querySelector('[data-sedx-push-toggle]');
+    const status = modal.querySelector('[data-sedx-push-status]');
+    if (!button || !status) return;
+    button.disabled = true;
+    status.textContent = 'Atualizando…';
+    try {
+      if (button.dataset.active !== 'true') {
+        if (!pushSessionReady()) throw new Error('Faça login para ativar as notificações.');
+        let permission = Notification.permission;
+        if (permission === 'default') permission = await Notification.requestPermission();
+        if (permission !== 'granted') throw new Error('A permissão de notificações não foi concedida.');
+      }
+      const registration = await navigator.serviceWorker.getRegistration('/');
+      const currentSubscription = await registration?.pushManager.getSubscription();
+      if (currentSubscription) {
+        await pushRequest('/push/unsubscribe', { method: 'POST', body: { endpoint: currentSubscription.endpoint } });
+        await currentSubscription.unsubscribe();
+        button.dataset.active = 'false';
+        button.textContent = 'Ativar notificações';
+        status.textContent = 'Notificações desativadas neste dispositivo.';
+        button.disabled = !pushSessionReady();
+        return;
+      }
+      if (!pushSessionReady()) throw new Error('Faça login para ativar as notificações.');
+      const activeRegistration = await navigator.serviceWorker.register('/service-worker.js', { scope: '/' });
+      await navigator.serviceWorker.ready;
+      const config = await pushRequest('/push/config');
+      if (!config.publicKey) throw new Error('A configuração push não está disponível.');
+      const subscription = await activeRegistration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: applicationServerKeyBytes(config.publicKey),
+      });
+      try {
+        await pushRequest('/push/subscribe', {
+          method: 'POST',
+          body: { subscription: subscription.toJSON(), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Sao_Paulo' },
+        });
+      } catch (error) {
+        await subscription.unsubscribe();
+        throw error;
+      }
+      button.dataset.active = 'true';
+      button.textContent = 'Desativar neste dispositivo';
+      status.textContent = 'Notificações ativadas neste dispositivo.';
+      button.disabled = false;
+    } catch (error) {
+      status.textContent = error.message || 'Não foi possível atualizar as notificações.';
+      button.disabled = false;
+    }
+  }
+
   async function openNotifications() {
     const state = await request('/site-state');
     const notices = Array.isArray(state.notifications) ? state.notifications : [];
     document.querySelector('[data-sedx-notice-modal]')?.remove();
     const modal = document.createElement('div');
     modal.dataset.sedxNoticeModal = 'true'; modal.className = 'sedx-notice-backdrop';
-    modal.innerHTML = `<section class="sedx-notice-modal" role="dialog" aria-modal="true" aria-labelledby="sedx-notice-title"><header><div><span class="admin-kicker">Central de comunicação</span><h2 id="sedx-notice-title">Notificações</h2></div><button data-close-notices aria-label="Fechar">×</button></header><div class="sedx-notice-list">${notices.length ? notices.map((notice) => `<article><time>${new Date(notice.publishedAt).toLocaleDateString('pt-BR')}</time><div>${notice.image ? `<img class="sedx-notice-image" src="${esc(notice.image)}" alt="">` : ''}<h3>${esc(notice.title)}</h3><p>${esc(notice.description)}</p><small>${esc(notice.audience || 'Todos os alunos')}</small></div></article>`).join('') : '<div class="admin-empty">Você está em dia. Nenhuma notificação nova.</div>'}</div></section>`;
+    modal.innerHTML = `<section class="sedx-notice-modal" role="dialog" aria-modal="true" aria-labelledby="sedx-notice-title"><header><div><span class="admin-kicker">Central de comunicação</span><h2 id="sedx-notice-title">Notificações</h2></div><button data-close-notices aria-label="Fechar">×</button></header><div class="sedx-push-controls"><div><strong>Notificações no navegador</strong><span data-sedx-push-status role="status">Verificando este dispositivo…</span></div><button type="button" data-sedx-push-toggle>Ativar notificações</button></div><div class="sedx-notice-list">${notices.length ? notices.map((notice) => `<article><time>${new Date(notice.publishedAt).toLocaleDateString('pt-BR')}</time><div>${notice.image ? `<img class="sedx-notice-image" src="${esc(notice.image)}" alt="">` : ''}<h3>${esc(notice.title)}</h3><p>${esc(notice.description)}</p><small>${esc(notice.audience || 'Todos os alunos')}</small></div></article>`).join('') : '<div class="admin-empty">Você está em dia. Nenhuma notificação nova.</div>'}</div></section>`;
     document.body.appendChild(modal);
+    modal.querySelector('[data-sedx-push-toggle]')?.addEventListener('click', () => togglePush(modal));
+    void syncPushControls(modal);
     modal.addEventListener('click', (event) => { if (event.target === modal || event.target.closest('[data-close-notices]')) modal.remove(); });
   }
 
