@@ -86,9 +86,106 @@
     document.querySelector('[data-sedx-notice-modal]')?.remove();
     const modal = document.createElement('div');
     modal.dataset.sedxNoticeModal = 'true'; modal.className = 'sedx-notice-backdrop';
-    modal.innerHTML = `<section class="sedx-notice-modal" role="dialog" aria-modal="true" aria-labelledby="sedx-notice-title"><header><div><span class="admin-kicker">Central de comunicação</span><h2 id="sedx-notice-title">Notificações</h2></div><button data-close-notices aria-label="Fechar">×</button></header><div class="sedx-notice-list">${notices.length ? notices.map((notice) => `<article><time>${new Date(notice.publishedAt).toLocaleDateString('pt-BR')}</time><div>${notice.image ? `<img class="sedx-notice-image" src="${esc(notice.image)}" alt="">` : ''}<h3>${esc(notice.title)}</h3><p>${esc(notice.description)}</p><small>${esc(notice.audience || 'Todos os alunos')}</small></div></article>`).join('') : '<div class="admin-empty">Você está em dia. Nenhuma notificação nova.</div>'}</div></section>`;
+    modal.innerHTML = `<section class="sedx-notice-modal" role="dialog" aria-modal="true" aria-labelledby="sedx-notice-title"><header><div><span class="admin-kicker">Central de comunicação</span><h2 id="sedx-notice-title">Notificações</h2></div><button data-close-notices aria-label="Fechar">×</button></header><div class="sedx-push-panel"><div><strong>Receba avisos do SEDX</strong><p data-push-status>Ative para receber publicações, novas tarefas e o lembrete de aula.</p></div><div class="sedx-push-actions"><button type="button" data-push-enable>Ativar notificações</button><button type="button" data-push-disable hidden>Desativar</button></div></div><div class="sedx-notice-list">${notices.length ? notices.map((notice) => `<article><time>${new Date(notice.publishedAt).toLocaleDateString('pt-BR')}</time><div>${notice.image ? `<img class="sedx-notice-image" src="${esc(notice.image)}" alt="">` : ''}<h3>${esc(notice.title)}</h3><p>${esc(notice.description)}</p><small>${esc(notice.audience || 'Todos os alunos')}</small></div></article>`).join('') : '<div class="admin-empty">Você está em dia. Nenhuma notificação nova.</div>'}</div></section>`;
     document.body.appendChild(modal);
-    modal.addEventListener('click', (event) => { if (event.target === modal || event.target.closest('[data-close-notices]')) modal.remove(); });
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal || event.target.closest('[data-close-notices]')) { modal.remove(); return; }
+      if (event.target.closest('[data-push-enable]')) { void enablePush(modal); return; }
+      if (event.target.closest('[data-push-disable]')) void disablePush(modal);
+    });
+    void refreshPushStatus(modal);
+  }
+
+  function pushHeaders() {
+    const current = session() || {};
+    const headers = new Headers({ Accept: 'application/json', 'Content-Type': 'application/json' });
+    if (current.token2) headers.set('X-Token2', current.token2);
+    if (current.token) headers.set('X-Token', current.token);
+    if (current.usuario) headers.set('X-Usuario', current.usuario);
+    const cdUsuario = current.cdUsuarioCurto || current.codigoAluno || current.cdAluno || current.ra || current.cdUsuario || '';
+    if (cdUsuario) headers.set('X-Cd-Usuario', cdUsuario);
+    if (current.apelido) headers.set('X-Task-User', current.apelido);
+    return headers;
+  }
+  async function pushRequest(path, { method = 'GET', body } = {}) {
+    const response = await fetch(`${WORKER_URL}${path}`, {
+      method, cache: 'no-store', headers: body === undefined && method === 'GET' ? { Accept: 'application/json' } : pushHeaders(),
+      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.erro || `Falha ao configurar notificações (${response.status}).`);
+    return data;
+  }
+  function pushPanelText(modal, message) {
+    const element = modal.querySelector('[data-push-status]');
+    if (element) element.textContent = message;
+  }
+  async function refreshPushStatus(modal) {
+    const enable = modal.querySelector('[data-push-enable]');
+    const disable = modal.querySelector('[data-push-disable]');
+    if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
+      pushPanelText(modal, 'Este navegador não oferece suporte a notificações push.');
+      if (enable) enable.disabled = true;
+      return;
+    }
+    if (Notification.permission === 'denied') {
+      pushPanelText(modal, 'As notificações foram bloqueadas nas configurações do navegador. Libere a permissão para ativá-las.');
+      if (enable) enable.disabled = true;
+      return;
+    }
+    try {
+      const registration = await navigator.serviceWorker.getRegistration('/');
+      const subscription = await registration?.pushManager.getSubscription();
+      if (subscription) {
+        pushPanelText(modal, 'Notificações ativadas neste dispositivo: publicações, novas tarefas e lembrete da primeira aula em dias úteis.');
+        if (enable) enable.hidden = true;
+        if (disable) disable.hidden = false;
+      }
+    } catch { /* O botão de ativação tentará registrar novamente. */ }
+  }
+  function applicationServerKey(value) {
+    const base64 = String(value).replace(/-/g, '+').replace(/_/g, '/');
+    const binary = atob(base64.padEnd(Math.ceil(base64.length / 4) * 4, '='));
+    return Uint8Array.from(binary, (character) => character.charCodeAt(0));
+  }
+  async function enablePush(modal) {
+    const button = modal.querySelector('[data-push-enable]');
+    const current = session();
+    if (!current?.token2 || !current?.token || !current?.usuario) {
+      pushPanelText(modal, 'Entre novamente na sua conta do SEDX para ativar as notificações.');
+      return;
+    }
+    if (button) { button.disabled = true; button.textContent = 'Ativando…'; }
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') throw new Error('Permita as notificações do navegador para continuar.');
+      const registration = await navigator.serviceWorker.register('/push-sw.js', { scope: '/' });
+      const config = await pushRequest('/push/config');
+      const subscription = await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: applicationServerKey(config.publicKey) });
+      const response = await pushRequest('/push/subscribe', { method: 'POST', body: { subscription: subscription.toJSON() } });
+      pushPanelText(modal, response.message || 'Notificações ativadas neste dispositivo.');
+      await refreshPushStatus(modal);
+    } catch (error) {
+      pushPanelText(modal, error.message || 'Não foi possível ativar as notificações. Tente novamente.');
+      if (button) { button.hidden = false; button.textContent = 'Tentar novamente'; }
+    } finally { if (button && !button.hidden) button.disabled = false; }
+  }
+  async function disablePush(modal) {
+    const button = modal.querySelector('[data-push-disable]');
+    if (button) button.disabled = true;
+    try {
+      const registration = await navigator.serviceWorker.getRegistration('/');
+      const subscription = await registration?.pushManager.getSubscription();
+      if (subscription) {
+        await pushRequest('/push/unsubscribe', { method: 'POST', body: { endpoint: subscription.endpoint } });
+        await subscription.unsubscribe();
+      }
+      if (button) button.hidden = true;
+      const enable = modal.querySelector('[data-push-enable]');
+      if (enable) { enable.hidden = false; enable.textContent = 'Ativar notificações'; }
+      pushPanelText(modal, 'Notificações desativadas neste dispositivo.');
+    } catch (error) { pushPanelText(modal, error.message || 'Não foi possível desativar neste momento.'); }
+    finally { if (button) button.disabled = false; }
   }
 
   function injectNotificationButton() {
