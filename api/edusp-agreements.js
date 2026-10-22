@@ -97,9 +97,12 @@ async function upstreamRequest(path, key, method = "GET", body) {
   const headers = {
     Accept: "application/json",
     "Accept-Language": "pt-BR,pt;q=0.9",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
     Origin: "https://saladofuturo.educacao.sp.gov.br",
     Referer: "https://saladofuturo.educacao.sp.gov.br/",
     "Content-Type": "application/json",
+    "x-api-platform": "webclient",
+    "x-api-realm": "edusp",
     "X-Api-Key": key,
   };
   const response = await fetch(`${UPSTREAM}${path}`, {

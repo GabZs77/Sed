@@ -65,6 +65,8 @@ assert.equal(response.payload.total, 1);
 assert.deepEqual(response.payload.corrections[0], { taskId: "200", questionId: "300", answerId: "100", title: "", revisedAt: "" });
 assert.equal(JSON.stringify(response.payload).includes("private answer"), false, "The API must not return a student's answer text");
 assert.equal(calls[0].headers["X-Api-Key"], apiKey);
+assert.equal(calls[0].headers["x-api-platform"], "webclient");
+assert.equal(calls[0].headers["x-api-realm"], "edusp");
 
 calls = [];
 response = await invoke("PUT", { agreed: true, corrections: [{ taskId: "200", questionId: "300", answerId: "100" }] });
