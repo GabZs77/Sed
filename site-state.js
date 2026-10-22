@@ -9,6 +9,10 @@
   const session = () => { try { return JSON.parse(localStorage.getItem('sed_sessao') || 'null'); } catch { return null; } };
   const isAdmin = () => ADMIN_RAS.has(String(session()?.usuario || '').replace(/\D/g, ''));
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#039;' }[c]));
+  const notificationReadKey = () => `sedx_read_notifications_${String(session()?.usuario || 'guest').replace(/[^a-zA-Z0-9_-]/g, '_')}`;
+  const readNotificationIds = () => { try { const value = JSON.parse(localStorage.getItem(notificationReadKey()) || '[]'); return new Set(Array.isArray(value) ? value.map(String) : []); } catch { return new Set(); } };
+  const markNotificationsRead = (notices) => { try { localStorage.setItem(notificationReadKey(), JSON.stringify(notices.map((notice, index) => String(notice.id || notice.publishedAt || index)))); } catch {} };
+  const notificationId = (notice, index) => String(notice.id || notice.publishedAt || index);
   const request = async (path) => { const response = await fetch(`${WORKER_URL}${path}`, { cache: 'no-store' }); return response.json(); };
 
   function makeParticles(theme) {
@@ -83,13 +87,15 @@
   async function openNotifications() {
     const state = await request('/site-state');
     const notices = Array.isArray(state.notifications) ? state.notifications : [];
+    const readIds = readNotificationIds();
     document.querySelector('[data-sedx-notice-modal]')?.remove();
     const modal = document.createElement('div');
     modal.dataset.sedxNoticeModal = 'true'; modal.className = 'sedx-notice-backdrop';
-    modal.innerHTML = `<section class="sedx-notice-modal" role="dialog" aria-modal="true" aria-labelledby="sedx-notice-title"><header><div><span class="admin-kicker">Central de comunicação</span><h2 id="sedx-notice-title">Notificações</h2></div><button data-close-notices aria-label="Fechar">×</button></header><div class="sedx-push-panel"><div><strong>Receba avisos do SEDX</strong><p data-push-status>Ative para receber publicações, novas tarefas e o lembrete de aula.</p></div><div class="sedx-push-actions"><button type="button" data-push-enable>Ativar notificações</button><button type="button" data-push-disable hidden>Desativar</button></div></div><div class="sedx-notice-list">${notices.length ? notices.map((notice) => `<article><time>${new Date(notice.publishedAt).toLocaleDateString('pt-BR')}</time><div>${notice.image ? `<img class="sedx-notice-image" src="${esc(notice.image)}" alt="">` : ''}<h3>${esc(notice.title)}</h3><p>${esc(notice.description)}</p><small>${esc(notice.audience || 'Todos os alunos')}</small></div></article>`).join('') : '<div class="admin-empty">Você está em dia. Nenhuma notificação nova.</div>'}</div></section>`;
+    modal.innerHTML = `<section class="sedx-notice-modal" role="dialog" aria-modal="true" aria-labelledby="sedx-notice-title"><header><div><span class="admin-kicker">Central de comunicação</span><h2 id="sedx-notice-title">Notificações</h2></div><div class="sedx-notice-header-actions"><button type="button" data-mark-notifications-read>Marcar como lidas</button><button data-close-notices aria-label="Fechar">×</button></div></header><div class="sedx-push-panel"><div><strong>Receba avisos do SEDX</strong><p data-push-status>Ative para receber publicações, novas tarefas e o lembrete de aula.</p></div><div class="sedx-push-actions"><button type="button" data-push-enable>Ativar notificações</button><button type="button" data-push-disable hidden>Desativar</button></div></div><div class="sedx-notice-list">${notices.length ? notices.map((notice, index) => `<article class="${readIds.has(notificationId(notice, index)) ? 'is-read' : 'is-unread'}"><time>${new Date(notice.publishedAt).toLocaleDateString('pt-BR')}</time><div>${notice.image ? `<img class="sedx-notice-image" src="${esc(notice.image)}" alt="">` : ''}<h3>${esc(notice.title)}</h3><p>${esc(notice.description)}</p><small>${esc(notice.audience || 'Todos os alunos')}</small></div></article>`).join('') : '<div class="admin-empty">Você está em dia. Nenhuma notificação nova.</div>'}</div></section>`;
     document.body.appendChild(modal);
     modal.addEventListener('click', (event) => {
       if (event.target === modal || event.target.closest('[data-close-notices]')) { modal.remove(); return; }
+      if (event.target.closest('[data-mark-notifications-read]')) { markNotificationsRead(notices); const button = modal.querySelector('[data-mark-notifications-read]'); if (button) { button.textContent = 'Todas marcadas como lidas'; button.disabled = true; } modal.querySelectorAll('article').forEach((article) => { article.classList.remove('is-unread'); article.classList.add('is-read'); }); updateNotificationBadge(notices); return; }
       if (event.target.closest('[data-push-enable]')) { void enablePush(modal); return; }
       if (event.target.closest('[data-push-disable]')) void disablePush(modal);
     });
@@ -188,13 +194,14 @@
     finally { if (button) button.disabled = false; }
   }
 
+  function updateNotificationBadge(notices, button = document.querySelector('[data-sedx-notification-button]')) { if (!button) return; const read = readNotificationIds(); const unread = notices.filter((notice, index) => !read.has(notificationId(notice, index))).length; button.querySelector('b').textContent = unread > 9 ? '9+' : unread || ''; button.classList.toggle('has-notifications', unread > 0); }
   function injectNotificationButton() {
     if (location.pathname !== '/' || document.querySelector('[data-sedx-notification-button]')) return;
     const topbar = document.querySelector('.topbar'); if (!topbar) return;
     const button = document.createElement('button'); button.type = 'button'; button.dataset.sedxNotificationButton = 'true'; button.className = 'sedx-notification-button'; button.title = 'Notificações'; button.setAttribute('aria-label', 'Abrir notificações');
     button.innerHTML = '<span class="sedx-bell" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span><b></b>'; button.addEventListener('click', () => openNotifications().catch(console.error));
     const spacer = topbar.querySelector('.topbar-spacer'); spacer ? spacer.after(button) : topbar.prepend(button);
-    request('/site-state').then((state) => { const count = Array.isArray(state.notifications) ? state.notifications.length : 0; button.querySelector('b').textContent = count > 9 ? '9+' : count || ''; button.classList.toggle('has-notifications', count > 0); }).catch(() => {});
+    request('/site-state').then((state) => updateNotificationBadge(Array.isArray(state.notifications) ? state.notifications : [], button)).catch(() => {});
   }
 
   function adminRoute() {
