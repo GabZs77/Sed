@@ -27,6 +27,10 @@ A rota `GET /student-rooms` e a carga do dashboard usam o endpoint oficial `List
 
 O desafio (`POST /captcha/challenge`), a validação (`POST /captcha/verify`) e a abertura da tarefa (`GET /task-details`) passam pelo Worker Cloudflare `sdf`. O mesmo `sessionKey` e cookie temporário acompanham o token do CAPTCHA entre a validação, a consulta do enunciado e o envio das respostas; nenhuma etapa desse fluxo é desviada por uma função Vercel.
 
+## Confirmação de correções de tarefas
+
+A aba **Tarefas** substitui o resumo **Expiradas** por **Correção Atividade**. A rota Vercel `GET /api/edusp-agreements` consulta respostas com `pending_agreement` e retorna somente os IDs necessários, sem enviar conteúdo das respostas ao navegador. `PUT /api/edusp-agreements` revalida a lista pendente e encaminha `{"agreed":true}` ao endpoint oficial por questão. A interface mostra a quantidade e pede confirmação explícita antes de qualquer alteração. A chave de sessão é encaminhada somente ao upstream e não é armazenada nem registrada.
+
 ## Administração SedX
 
 A aba **Administração** aparece somente para os RAs administrativos configurados. Também é possível acessar diretamente `/admin-tab`: a tela de login padrão é exibida e, depois de um login válido, o painel administrativo é aberto sem aplicar a tela de manutenção aos administradores.
