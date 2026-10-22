@@ -52,13 +52,13 @@ function pendingCorrections(records) {
   const result = [];
   const seen = new Set();
   for (const record of records) {
-    if (!record || typeof record !== "object" || !isTrue(record.pending_agreement)) continue;
+    if (!record || typeof record !== "object" || String(record.status || "").toLowerCase() !== "finished" || !isTrue(record.pending_agreement)) continue;
     const answers = record.answers;
     const entries = Array.isArray(answers) ? answers.map((item, index) => [String(item?.question_id ?? index), item]) : answers && typeof answers === "object" ? Object.entries(answers) : [];
     for (const [key, item] of entries) {
       if (!item || typeof item !== "object") continue;
       const validation = item.ia_validation || item.IAValidation;
-      const needsAgreement = isTrue(item.answer_pending_agreement) || isTrue(item.pending_agreement) || Boolean(validation && (validation.revision_status || validation.status));
+      const needsAgreement = Boolean(validation && String(validation.revision_status || validation.status || "").toLowerCase() === "finished" && typeof validation.validation === "string" && validation.validation.trim());
       if (!needsAgreement) continue;
       const taskId = String(record.task_id ?? record.taskId ?? "");
       const answerId = String(record.id ?? record.answer_id ?? record.answerId ?? "");
@@ -106,8 +106,11 @@ async function studentTargets(session) {
   const rooms = Array.isArray(response.data?.rooms) ? response.data.rooms : Array.isArray(response.data?.data?.rooms) ? response.data.data.rooms : [];
   const targets = new Set();
   for (const room of rooms) {
-    const name = String(room?.name ?? "").trim();
-    if (name) targets.add(name);
+    const roomId = String(room?.id ?? room?.room_id ?? room?.roomId ?? "").trim();
+    if (roomId) {
+      targets.add(roomId);
+      targets.add(`${roomId}:${session.nick}`);
+    }
     const groups = Array.isArray(room?.group_categories) ? room.group_categories : Array.isArray(room?.groups) ? room.groups : [];
     for (const group of groups) {
       const id = String(typeof group === "string" ? group : group?.id ?? "").trim();
@@ -122,7 +125,7 @@ async function listPending(session) {
   if (targetResult.error) return { error: true, status: targetResult.status };
   const collected = [];
   for (let page = 0; page < MAX_PAGES; page += 1) {
-    const params = new URLSearchParams({ nick: session.nick, limit: String(PAGE_SIZE), offset: String(page * PAGE_SIZE) });
+    const params = new URLSearchParams({ nick: session.nick, limit: String(PAGE_SIZE), offset: String(page * PAGE_SIZE), task_is_exam: "false", task_is_essay: "false" });
     for (const target of targetResult.targets) params.append("publication_target", target);
     const response = await upstreamRequest(`/tms/answer?${params.toString()}`, session.key);
     if (!response.ok) return { error: true, status: response.status };

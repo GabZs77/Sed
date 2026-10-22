@@ -8,9 +8,10 @@ const apiKey = `header.${tokenPayload}.signature`;
 const pendingAnswer = {
   id: 100,
   task_id: 200,
+  status: "finished",
   pending_agreement: true,
   answers: {
-    300: { question_id: 300, answer: "private answer", ia_validation: { revision_status: "finished" } },
+    300: { question_id: 300, answer: "private answer", ia_validation: { revision_status: "finished", validation: "Comentário simulado do assistente." } },
     301: { question_id: 301, answer: "not pending", answer_pending_agreement: false },
   },
 };
@@ -22,12 +23,14 @@ globalThis.fetch = async (input, options = {}) => {
   const url = new URL(String(input));
   calls.push({ url, method: options.method || "GET", headers: options.headers || {}, body: options.body });
   if (url.pathname === "/room/user") {
-    return new Response(JSON.stringify({ rooms: [{ name: "target-A", group_categories: [{ id: "group-1" }] }] }), { status: 200, headers: { "content-type": "application/json" } });
+    return new Response(JSON.stringify({ rooms: [{ id: "room-A", group_categories: [{ id: "group-1" }] }] }), { status: 200, headers: { "content-type": "application/json" } });
   }
   if (url.pathname === "/tms/answer") {
     assert.equal(url.searchParams.get("nick"), "student-test");
     assert.equal(url.searchParams.get("limit"), "20");
-    assert.deepEqual(url.searchParams.getAll("publication_target"), ["target-A", "group-1"]);
+    assert.equal(url.searchParams.get("task_is_exam"), "false");
+    assert.equal(url.searchParams.get("task_is_essay"), "false");
+    assert.deepEqual(url.searchParams.getAll("publication_target"), ["room-A", "room-A:student-test", "group-1"]);
     return new Response(JSON.stringify([pendingAnswer, notPendingAnswer]), { status: 200, headers: { "content-type": "application/json" } });
   }
   if (url.pathname === "/tms/task/200/question/300/answer/100/agreement") {
