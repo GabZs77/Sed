@@ -193,13 +193,58 @@
     if (location.pathname === '/admin-tab') history.pushState({}, '', '/');
   }
 
+  const MAX_NOTICE_IMAGE_BYTES = 250_000;
+  function readNoticeImage(file) {
+    return new Promise((resolve, reject) => {
+      if (!file) return resolve('');
+      if (!file.type.startsWith('image/')) return reject(new Error('Escolha um arquivo de imagem válido.'));
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error('Não foi possível ler a imagem selecionada.'));
+      reader.onload = () => {
+        const image = new Image();
+        image.onerror = () => reject(new Error('Não foi possível processar essa imagem.'));
+        image.onload = () => {
+          const scale = Math.min(1, 1400 / image.width, 1400 / image.height);
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.max(1, Math.round(image.width * scale));
+          canvas.height = Math.max(1, Math.round(image.height * scale));
+          canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+          let quality = 0.86;
+          let data = canvas.toDataURL('image/jpeg', quality);
+          while (data.length * 0.75 > MAX_NOTICE_IMAGE_BYTES && quality > 0.42) {
+            quality -= 0.08;
+            data = canvas.toDataURL('image/jpeg', quality);
+          }
+          if (data.length * 0.75 > MAX_NOTICE_IMAGE_BYTES) return reject(new Error('A imagem ficou maior que 250 KB. Escolha uma imagem menor.'));
+          resolve(data);
+        };
+        image.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  function closeNoticeModal() { document.querySelector('[data-notice-modal]')?.remove(); }
   function noticeForm(existing = {}) {
-    const title = prompt('Título do aviso:', existing.title || ''); if (title === null) return;
-    const description = prompt('Descrição do aviso:', existing.description || ''); if (description === null) return;
-    const audience = prompt('Área de publicação (ex.: Todos os alunos, Dashboard, Tarefas):', existing.audience || 'Todos os alunos'); if (audience === null) return;
-    const image = prompt('URL da imagem do aviso (opcional):', existing.image || ''); if (image === null) return;
-    const action = existing.id ? 'Aviso editado' : 'Aviso publicado';
-    apiRequest('/admin/notification', { method: existing.id ? 'PUT' : 'POST', body: JSON.stringify({ id: existing.id, title, description, audience, image, publishedAt: existing.publishedAt }) }).then(() => syncAdminData()).then(() => { log(action, title); showTab('notices'); }).catch((error) => alert(`Não foi possível salvar o aviso no servidor: ${error.message}`));
+    closeNoticeModal();
+    const modal = document.createElement('div');
+    modal.className = 'sedx-notice-editor-backdrop';
+    modal.dataset.noticeModal = 'true';
+    modal.innerHTML = `<section class="sedx-notice-editor" role="dialog" aria-modal="true" aria-labelledby="notice-editor-title">
+      <header class="notice-editor-header"><div><span class="admin-kicker">Central de comunicação</span><h2 id="notice-editor-title">${existing.id ? 'Editar aviso' : 'Novo aviso'}</h2><p>Crie uma comunicação clara para os alunos.</p></div><button type="button" class="notice-editor-close" data-notice-close aria-label="Fechar">×</button></header>
+      <form class="notice-editor-form"><label>Título do aviso<input name="title" maxlength="120" required value="${escapeHtml(existing.title || '')}" placeholder="Ex.: Atividade disponível"></label>
+      <label>Descrição<textarea name="description" maxlength="1000" rows="5" required placeholder="Escreva os detalhes do aviso...">${escapeHtml(existing.description || '')}</textarea></label>
+      <label>Área de publicação<input name="audience" maxlength="80" required value="${escapeHtml(existing.audience || 'Todos os alunos')}" placeholder="Todos os alunos"></label>
+      <label>Imagem do aviso <span class="notice-field-hint">opcional · PNG, JPEG ou WebP</span><input name="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif"><small>A imagem será otimizada automaticamente e limitada a 250 KB.</small></label>
+      <div class="notice-upload-preview" data-notice-preview ${existing.image ? '' : 'hidden'}>${existing.image ? `<img src="${escapeHtml(existing.image)}" alt="Prévia do aviso"><button type="button" data-notice-remove-image>Remover imagem</button>` : ''}</div>
+      <p class="notice-editor-error" data-notice-error role="alert" hidden></p><div class="notice-editor-actions"><button type="button" class="admin-secondary-btn" data-notice-close>Cancelar</button><button type="submit" class="admin-primary-btn">${existing.id ? 'Salvar alterações' : 'Publicar aviso'}</button></div></form></section>`;
+    document.body.appendChild(modal);
+    const form = modal.querySelector('form'); const fileInput = form.imageFile; const preview = modal.querySelector('[data-notice-preview]'); const error = modal.querySelector('[data-notice-error]'); let image = existing.image || '';
+    const showError = (message) => { error.textContent = message; error.hidden = !message; };
+    const renderPreview = (value) => { preview.innerHTML = value ? `<img src="${escapeHtml(value)}" alt="Prévia do aviso"><button type="button" data-notice-remove-image>Remover imagem</button>` : ''; preview.hidden = !value; };
+    fileInput.addEventListener('change', async () => { showError(''); try { image = await readNoticeImage(fileInput.files?.[0]); renderPreview(image); } catch (e) { image = existing.image || ''; fileInput.value = ''; renderPreview(image); showError(e.message); } });
+    modal.addEventListener('click', (event) => { if (event.target === modal || event.target.closest('[data-notice-close]')) closeNoticeModal(); if (event.target.closest('[data-notice-remove-image]')) { image = ''; fileInput.value = ''; renderPreview(''); } });
+    form.addEventListener('submit', async (event) => { event.preventDefault(); showError(''); const submit = form.querySelector('[type="submit"]'); submit.disabled = true; submit.textContent = 'Salvando...'; const data = Object.fromEntries(new FormData(form).entries()); delete data.imageFile; data.image = image; try { const action = existing.id ? 'Aviso editado' : 'Aviso publicado'; await apiRequest('/admin/notification', { method: existing.id ? 'PUT' : 'POST', body: JSON.stringify({ id: existing.id, title: data.title.trim(), description: data.description.trim(), audience: data.audience.trim(), image, publishedAt: existing.publishedAt }) }); await syncAdminData(); closeNoticeModal(); log(action, data.title); showTab('notices'); } catch (e) { showError(`Não foi possível salvar o aviso: ${e.message}`); submit.disabled = false; submit.textContent = existing.id ? 'Salvar alterações' : 'Publicar aviso'; } });
+    form.title.focus();
   }
 
   async function saveTheme(theme) {
