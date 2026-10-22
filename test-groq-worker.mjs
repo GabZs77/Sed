@@ -27,6 +27,9 @@ try {
   assert.equal(calls[0].request.model, "openai/gpt-oss-120b");
   assert.deepEqual(calls[0].request.response_format, { type: "json_object" });
   assert.equal(calls[0].request.messages[0].role, "system");
+  assert.match(calls[0].request.messages[0].content, /respostas abertas\/dissertativas/);
+  assert.match(calls[0].request.messages[0].content, /causa e consequência/);
+  assert.match(calls[0].request.messages[0].content, /não invente fatos/);
   assert.equal(calls[0].headers.Authorization, "Bearer test-only-key");
 
   const chat = await handleGroqChat(new Request("https://worker.test/groq-chat", {
