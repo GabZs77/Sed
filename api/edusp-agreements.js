@@ -48,17 +48,31 @@ function isTrue(value) {
   return value === true || value === 1 || value === "1" || String(value).toLowerCase() === "true";
 }
 
+function isFinished(value) {
+  return ["finished", "completed", "complete", "concluded", "concluida", "concluído", "done"].includes(String(value ?? "").trim().toLowerCase());
+}
+
+function isPendingAgreement(record, answer) {
+  const answerAgreement = answer?.agreement ?? answer?.agreed;
+  if (answerAgreement !== undefined && answerAgreement !== null) return !isTrue(answerAgreement);
+  const answerPending = [answer?.pending_agreement, answer?.pendingAgreement, answer?.answer_pending_agreement];
+  if (answerPending.some(value => value !== undefined && value !== null)) return answerPending.some(isTrue);
+  const recordAgreement = record?.agreement ?? record?.agreed;
+  if (recordAgreement !== undefined && recordAgreement !== null) return !isTrue(recordAgreement);
+  return [record?.pending_agreement, record?.pendingAgreement].some(isTrue);
+}
+
 function pendingCorrections(records) {
   const result = [];
   const seen = new Set();
   for (const record of records) {
-    if (!record || typeof record !== "object" || String(record.status || "").toLowerCase() !== "finished" || !isTrue(record.pending_agreement)) continue;
+    if (!record || typeof record !== "object" || !isFinished(record.status ?? record.task_status ?? record.answer_status ?? record.task?.status)) continue;
     const answers = record.answers;
     const entries = Array.isArray(answers) ? answers.map((item, index) => [String(item?.question_id ?? index), item]) : answers && typeof answers === "object" ? Object.entries(answers) : [];
     for (const [key, item] of entries) {
       if (!item || typeof item !== "object") continue;
       const validation = item.ia_validation || item.IAValidation;
-      const needsAgreement = Boolean(validation && String(validation.revision_status || validation.status || "").toLowerCase() === "finished" && typeof validation.validation === "string" && validation.validation.trim());
+      const needsAgreement = isPendingAgreement(record, item) && Boolean(validation && isFinished(validation.revision_status || validation.status) && typeof validation.validation === "string" && validation.validation.trim());
       if (!needsAgreement) continue;
       const taskId = String(record.task_id ?? record.taskId ?? "");
       const answerId = String(record.id ?? record.answer_id ?? record.answerId ?? "");
@@ -107,10 +121,12 @@ async function studentTargets(session) {
   const targets = new Set();
   for (const room of rooms) {
     const roomId = String(room?.id ?? room?.room_id ?? room?.roomId ?? "").trim();
+    const roomName = String(room?.name ?? room?.room_name ?? room?.roomName ?? "").trim();
     if (roomId) {
       targets.add(roomId);
       targets.add(`${roomId}:${session.nick}`);
     }
+    if (roomName) targets.add(roomName);
     const groups = Array.isArray(room?.group_categories) ? room.group_categories : Array.isArray(room?.groups) ? room.groups : [];
     for (const group of groups) {
       const id = String(typeof group === "string" ? group : group?.id ?? "").trim();
@@ -127,7 +143,12 @@ async function listPending(session) {
   for (let page = 0; page < MAX_PAGES; page += 1) {
     const params = new URLSearchParams({ nick: session.nick, limit: String(PAGE_SIZE), offset: String(page * PAGE_SIZE), task_is_exam: "false", task_is_essay: "false" });
     for (const target of targetResult.targets) params.append("publication_target", target);
-    const response = await upstreamRequest(`/tms/answer?${params.toString()}`, session.key);
+    let response = await upstreamRequest(`/tms/answer?${params.toString()}`, session.key);
+    if (!response.ok && page === 0) {
+      const fallback = new URLSearchParams({ nick: session.nick, limit: String(PAGE_SIZE), offset: "0" });
+      for (const target of targetResult.targets) fallback.append("publication_target", target);
+      response = await upstreamRequest(`/tms/answer?${fallback.toString()}`, session.key);
+    }
     if (!response.ok) return { error: true, status: response.status };
     const rows = rowsFrom(response.data);
     collected.push(...rows);

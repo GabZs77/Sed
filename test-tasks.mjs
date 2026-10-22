@@ -167,8 +167,8 @@ assert.ok(assistSource.includes('request("/groq-chat"'), "A seleção deve consu
 assert.ok(!assistSource.includes("sendAssistantMessage"), "A seleção não deve passar pelo filtro textual do tutor");
 assert.ok(bundle.includes('children:"Correção Atividade"'), "O resumo Expiradas deve ser substituído pelo botão Correção Atividade");
 assert.ok(bundle.includes('fetch("/api/edusp-agreements"'), "A aba deve consultar o proxy seguro de correções da Vercel");
-assert.ok(bundle.includes('children:"Confirmar todas as correções?"'), "A confirmação em lote deve apresentar uma etapa explícita de revisão");
-assert.ok(bundle.includes('Sim, confirmar todas'), "A chamada PUT só pode ocorrer após a confirmação explícita");
+assert.ok(bundle.includes('children:"Confirmar todas as atividades?"'), "A confirmação em lote deve apresentar uma etapa explícita de revisão");
+assert.ok(bundle.includes('Confirmar todas as atividades'), "A chamada PUT só pode ocorrer após a confirmação explícita");
 assert.ok(css.includes(".task-summary>button.task-correction-toggle"), "O novo botão deve manter o estilo dos cards de resumo");
 assert.ok(bundle.includes('i.map(l=>jsxRuntimeExports.jsx("option"'), "Palavras inferidas pela IA devem aparecer como opção selecionada no controle da lacuna");
 assert.equal((bundle.match(/QuestionAssist,\{question:a,onChange:o\}/g) || []).length, 4, "Todas as questões respondíveis devem receber o atualizador de resposta");
