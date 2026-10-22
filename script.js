@@ -244,7 +244,10 @@ async function submitTaskAnswers(taskId,roomName,answers,captchaToken,captchaSes
   const headers={"Content-Type":"application/json","X-Captcha-Token":captchaToken};
   if(captchaSessionKey)headers["X-Captcha-Session"]=captchaSessionKey;
   if(captchaCookie)headers["X-Captcha-Cookie"]=captchaCookie;
-  return request("/answer-task",{method:"POST",headers,body:JSON.stringify({task_id:taskId,room_name:roomName,answers,captcha_token:captchaToken,captcha_session:captchaSessionKey,captcha_cookie:captchaCookie,duration:Math.max(0,Math.floor(Number(durationSeconds)||0)),accessed_on:"room",executed_on:executedOn})});
+  const session=typeof readSession==="function"?(readSession()||{}):{};
+  const studentId=session.cdUsuarioCurto||session.codigoAluno||session.cdAluno||session.ra||session.cdUsuario||"";
+  const studentNick=session.apelido||session.nick||session.usuario||"";
+  return request("/answer-task",{method:"POST",headers,body:JSON.stringify({task_id:taskId,room_name:roomName,answers,captcha_token:captchaToken,captcha_session:captchaSessionKey,captcha_cookie:captchaCookie,id:studentId,nick:studentNick,duration:Math.max(0,Math.floor(Number(durationSeconds)||0)),accessed_on:"room",executed_on:executedOn})});
 }
 async function submitTaskAnswersWithCaptcha(taskId,roomName,answers,challenge,answerText,durationSeconds=0){
   const verified=await verifyCaptcha(challenge,answerText);
