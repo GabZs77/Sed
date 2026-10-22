@@ -193,7 +193,7 @@
     if (location.pathname === '/admin-tab') history.pushState({}, '', '/');
   }
 
-  const MAX_NOTICE_IMAGE_BYTES = 250_000;
+  const MAX_NOTICE_IMAGE_BYTES = 5 * 1024 * 1024;
   function readNoticeImage(file) {
     return new Promise((resolve, reject) => {
       if (!file) return resolve('');
@@ -211,11 +211,11 @@
           canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
           let quality = 0.86;
           let data = canvas.toDataURL('image/jpeg', quality);
-          while (data.length * 0.75 > MAX_NOTICE_IMAGE_BYTES && quality > 0.42) {
+          while (data.length * 0.75 > MAX_NOTICE_IMAGE_BYTES && quality > 0.32) {
             quality -= 0.08;
             data = canvas.toDataURL('image/jpeg', quality);
           }
-          if (data.length * 0.75 > MAX_NOTICE_IMAGE_BYTES) return reject(new Error('A imagem ficou maior que 250 KB. Escolha uma imagem menor.'));
+          if (data.length * 0.75 > MAX_NOTICE_IMAGE_BYTES) return reject(new Error('A imagem ficou maior que 5 MB. Escolha uma imagem menor.'));
           resolve(data);
         };
         image.src = reader.result;
@@ -234,7 +234,7 @@
       <form class="notice-editor-form"><label>Título do aviso<input name="title" maxlength="120" required value="${escapeHtml(existing.title || '')}" placeholder="Ex.: Atividade disponível"></label>
       <label>Descrição<textarea name="description" maxlength="1000" rows="5" required placeholder="Escreva os detalhes do aviso...">${escapeHtml(existing.description || '')}</textarea></label>
       <label>Área de publicação<input name="audience" maxlength="80" required value="${escapeHtml(existing.audience || 'Todos os alunos')}" placeholder="Todos os alunos"></label>
-      <label>Imagem do aviso <span class="notice-field-hint">opcional · PNG, JPEG ou WebP</span><input name="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif"><small>A imagem será otimizada automaticamente e limitada a 250 KB.</small></label>
+      <label>Imagem do aviso <span class="notice-field-hint">opcional · PNG, JPEG ou WebP · até 5 MB</span><input name="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif"><small>A imagem será otimizada automaticamente e limitada a 5 MB.</small></label>
       <div class="notice-upload-preview" data-notice-preview ${existing.image ? '' : 'hidden'}>${existing.image ? `<img src="${escapeHtml(existing.image)}" alt="Prévia do aviso"><button type="button" data-notice-remove-image>Remover imagem</button>` : ''}</div>
       <p class="notice-editor-error" data-notice-error role="alert" hidden></p><div class="notice-editor-actions"><button type="button" class="admin-secondary-btn" data-notice-close>Cancelar</button><button type="submit" class="admin-primary-btn">${existing.id ? 'Salvar alterações' : 'Publicar aviso'}</button></div></form></section>`;
     document.body.appendChild(modal);
