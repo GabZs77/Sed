@@ -10,11 +10,15 @@ const client = read('site-state.js');
 const sw = read('push-sw.js');
 const worker = read('push-worker.mjs');
 const schema = read('sedx-admin-schema.sql');
+const styles = read('style.css');
 
-assert.match(html, /site-state\.js\?v=web-push-1/);
+assert.match(html, /site-state\.js\?v=web-push-2/);
 assert.match(client, /Notification\.requestPermission\(\)/, 'A permissão deve ser solicitada após a ação do usuário.');
 assert.match(client, /navigator\.serviceWorker\.register\('\/push-sw\.js'/);
 assert.match(client, /pushManager\.subscribe/);
+assert.match(client, /await navigator\.serviceWorker\.ready/);
+assert.match(client, /pushManager\.getSubscription\(\)/);
+assert.match(client, /salvando a inscrição no SEDX/);
 assert.match(client, /\/push\/subscribe/);
 assert.match(client, /\/push\/unsubscribe/);
 assert.match(client, /X-Token2/);
@@ -37,6 +41,7 @@ assert.match(schema, /CREATE TABLE IF NOT EXISTS push_users/);
 assert.match(schema, /CREATE TABLE IF NOT EXISTS push_subscriptions/);
 assert.match(schema, /CREATE TABLE IF NOT EXISTS push_daily_log/);
 assert.match(schema, /CREATE TABLE IF NOT EXISTS push_notice_deliveries/);
+assert.match(styles, /\.sedx-notice-header-actions \[data-mark-notifications-read\]\{white-space:nowrap/);
 
 const helper = await import('./push-worker.mjs');
 assert.equal(typeof helper.encryptPushPayload, 'function');

@@ -162,17 +162,33 @@
       return;
     }
     if (button) { button.disabled = true; button.textContent = 'Ativando…'; }
+    let step = 'solicitando permissão do navegador';
     try {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
+        throw new Error('Este navegador não oferece suporte a notificações push.');
+      }
       const permission = await Notification.requestPermission();
-      if (permission !== 'granted') throw new Error('Permita as notificações do navegador para continuar.');
-      const registration = await navigator.serviceWorker.register('/push-sw.js', { scope: '/' });
+      if (permission !== 'granted') throw new Error('Permita as notificações do navegador nas configurações para continuar.');
+      step = 'registrando o service worker';
+      await navigator.serviceWorker.register('/push-sw.js', { scope: '/' });
+      step = 'aguardando o service worker ficar pronto';
+      const registration = await navigator.serviceWorker.ready;
+      step = 'carregando a chave de inscrição push';
       const config = await pushRequest('/push/config');
-      const subscription = await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: applicationServerKey(config.publicKey) });
+      if (!config.publicKey) throw new Error('O servidor não forneceu a chave pública de notificações.');
+      step = 'criando a inscrição deste dispositivo';
+      let subscription = await registration.pushManager.getSubscription();
+      if (!subscription) {
+        subscription = await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: applicationServerKey(config.publicKey) });
+      }
+      step = 'salvando a inscrição no SEDX';
       const response = await pushRequest('/push/subscribe', { method: 'POST', body: { subscription: subscription.toJSON() } });
       pushPanelText(modal, response.message || 'Notificações ativadas neste dispositivo.');
       await refreshPushStatus(modal);
     } catch (error) {
-      pushPanelText(modal, error.message || 'Não foi possível ativar as notificações. Tente novamente.');
+      const message = error instanceof Error && error.message.trim() ? error.message : 'O navegador não retornou detalhes do erro.';
+      console.error('[SEDX push] falha ao ativar notificações', step, error);
+      pushPanelText(modal, `Não foi possível ativar as notificações ao ${step}: ${message}`);
       if (button) { button.hidden = false; button.textContent = 'Tentar novamente'; }
     } finally { if (button && !button.hidden) button.disabled = false; }
   }
