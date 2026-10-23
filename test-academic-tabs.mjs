@@ -7,7 +7,7 @@ const helperStart = bundle.indexOf("function asObject(");
 const helperEnd = bundle.indexOf("function formatTaskDeadline(", helperStart);
 assert.ok(helperStart >= 0 && helperEnd > helperStart, "normalizadores acadêmicos devem existir no bundle");
 const helperContext = {};
-vm.runInNewContext(`${bundle.slice(helperStart, helperEnd)}\nthis.normalizeGrades=normalizeGrades;this.filterGradesByPeriod=filterGradesByPeriod;this.normalizeAttendance=normalizeAttendance;`, helperContext);
+vm.runInNewContext(`${bundle.slice(helperStart, helperEnd)}\nthis.normalizeGrades=normalizeGrades;this.filterGradesByPeriod=filterGradesByPeriod;this.normalizeAttendance=normalizeAttendance;this.normalizeAgenda=normalizeAgenda;`, helperContext);
 
 const documentedGrade = helperContext.normalizeGrades({ data: [{
   componenteCurricularId: 42,
@@ -55,6 +55,18 @@ assert.equal(attendance.periods[0].label, "1º Bimestre");
 const summaryFrequency = helperContext.normalizeAttendance({ data: [{ faltasBimestreAtual: 4, porcentagemPresencaBimestreAtual: 81.5 }] });
 assert.equal(summaryFrequency.frequency, 81.5);
 assert.equal(summaryFrequency.absences, 4);
+
+const officialSummary = helperContext.normalizeAttendance({ data: [{ totalFaltasBimestre: 13, totalAulasRealizadas: 72, porcentagemFrequencia: 82 }] });
+assert.equal(officialSummary.frequency, 82, "a frequência oficial deve usar porcentagemFrequencia");
+assert.equal(officialSummary.absences, 13, "o resumo oficial deve usar totalFaltasBimestre");
+assert.equal(officialSummary.classes, 72, "o resumo oficial deve usar totalAulasRealizadas");
+
+const officialAgenda = helperContext.normalizeAgenda({ data: { agendaAluno: [{ disciplinaId: 2400, nomeDisciplina: "BIOLOGIA", dataInicio: "2026-10-23T00:00:00", horaInicioAula: "16:10:00", horaFimAula: "17:00:00", descricaoTurma: "4050 - ADMINISTRAÇÃO" }] } });
+assert.equal(officialAgenda.length, 1, "a agenda deve ler data.agendaAluno");
+assert.equal(officialAgenda[0].subject, "BIOLOGIA");
+assert.equal(officialAgenda[0].start, "16:10");
+assert.equal(officialAgenda[0].end, "17:00");
+assert.equal(officialAgenda[0].room, "4050 - ADMINISTRAÇÃO");
 
 const saturday = new Date(2026, 9, 17, 9);
 const monday = new Date(2026, 9, 19, 12);
