@@ -8,11 +8,19 @@ const end = bundle.indexOf("async function sendAssistantMessage(", start);
 assert.ok(start >= 0 && end > start, "helpers de CAPTCHA devem continuar disponíveis no bundle");
 
 const calls = [];
+const agreementCalls = [];
+const submissionOrder = [];
 let challengeCount = 0;
 const context = {
   URLSearchParams,
   Headers,
   Date,
+  readSession: () => ({ token2: "test-session-key", apelido: "student-test" }),
+  fetch: async (url, options = {}) => {
+    submissionOrder.push("agreement");
+    agreementCalls.push({ url, options });
+    return { ok: true, status: 200, json: async () => ({ ok: true, total: 1, confirmed: 1, failed: 0 }) };
+  },
   request: async (path, options = {}) => {
     calls.push({ path, options });
     if (path === "/captcha/challenge") {
@@ -40,7 +48,7 @@ const context = {
       };
     }
     if (path.startsWith("/task-details?")) return { questions: [{ id: "q1" }] };
-    if (path === "/answer-task") return { ok: true };
+    if (path === "/answer-task") { submissionOrder.push("activity"); return { ok: true }; }
     throw new Error(`rota inesperada: ${path}`);
   },
 };
@@ -51,6 +59,7 @@ vm.runInNewContext(
     "this.verifyCaptcha=verifyCaptcha; " +
     "this.fetchTaskDetails=fetchTaskDetails; " +
     "this.submitTaskAnswers=submitTaskAnswers; " +
+    "this.submitTaskAgreement=submitTaskAgreement; " +
     "this.submitTaskAnswersWithCaptcha=submitTaskAnswersWithCaptcha;",
   context,
 );
@@ -95,8 +104,15 @@ const submitted = await context.submitTaskAnswersWithCaptcha(
   60,
 );
 assert.equal(submitted.token, "captcha-token-2");
+assert.equal(submitted.agreement.confirmed, 1);
 assert.equal(calls[4].path, "/captcha/verify");
 assert.equal(calls[5].path, "/answer-task");
+assert.equal(agreementCalls.length, 1);
+assert.equal(agreementCalls[0].url, "/api/edusp-agreements");
+assert.equal(agreementCalls[0].options.method, "POST");
+assert.equal(agreementCalls[0].options.headers["X-Api-Key"], "test-session-key");
+assert.deepEqual(JSON.parse(agreementCalls[0].options.body), { taskId: "task-1", agreed: true });
+assert.deepEqual(submissionOrder, ["activity", "agreement"]);
 const answerHeaders = new Headers(calls[5].options.headers);
 assert.equal(answerHeaders.get("X-Captcha-Token"), "captcha-token-2");
 assert.equal(answerHeaders.get("X-Captcha-Session"), "session-2");
@@ -117,8 +133,9 @@ assert.ok(!bundle.includes("/api/edusp-task-details"));
 assert.ok(bundle.includes("submitTaskAnswersWithCaptcha(J,st,pendingAnswers,c,_,durationSeconds)"));
 assert.ok(bundle.includes("setPendingDurationSeconds(getTaskDurationMinutes()*60),setPendingAnswers(R),setSubmitMode(true)"), "o duration selecionado deve ser congelado no clique em Enviar");
 assert.ok(bundle.includes("const durationSeconds=pendingDurationSeconds;"), "o valor congelado deve ser enviado após validar o CAPTCHA");
+assert.ok(bundle.includes("await submitTaskAgreement(taskId)"), "a confirmação automática deve acontecer depois do envio da atividade");
 assert.ok(bundle.includes("void At(true)"), "o botão Enviar deve gerar um segundo desafio");
 assert.ok(bundle.includes("Resolva um novo CAPTCHA antes de enviar suas respostas à Sala do Futuro."));
 assert.ok(!bundle.includes("submitTaskAnswers(J,st,R,u,yt,ct)"), "não enviar usando o CAPTCHA da leitura");
 
-console.log("test-task-captcha: leitura e envio exigem desafios distintos; o POST só ocorre após validar o novo CAPTCHA.");
+console.log("test-task-captcha: CAPTCHA novo validado; atividade enviada antes do acordo automático.");
