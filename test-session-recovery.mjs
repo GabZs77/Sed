@@ -58,4 +58,29 @@ assert.equal(grades.ok, true);
 assert.deepEqual(optionalCalls.map(call => call.path), ["/boletim", "/resume", "/boletim"]);
 assert.equal(new Headers(optionalCalls.at(-1).init.headers).get("X-Token2"), "new-api");
 
+const concurrentCalls = [];
+let resumed = false;
+let resumeCount = 0;
+const concurrentClient = createClient(async (url, init = {}) => {
+  const path = new URL(url).pathname;
+  concurrentCalls.push({ path, init });
+  if (path === "/resume") {
+    resumeCount += 1;
+    await new Promise(resolve => setTimeout(resolve, 5));
+    resumed = true;
+    return jsonResponse({ token: "concurrent-sed", token2: "concurrent-api", cdUsuarioCurto: "123" });
+  }
+  if ((path === "/agenda" || path === "/boletim") && !resumed) return jsonResponse({ erro: "sessão expirada" }, 403);
+  if (path === "/agenda") return jsonResponse({ data: { agendaAluno: [] } });
+  if (path === "/boletim") return jsonResponse({ data: [] });
+  throw new Error(`Unexpected path ${path}`);
+});
+const [agenda, boletim] = await Promise.all([
+  concurrentClient.context.fetchOptional("/agenda"),
+  concurrentClient.context.fetchOptional("/boletim"),
+]);
+assert.equal(agenda.data.agendaAluno.length, 0);
+assert.equal(boletim.data.length, 0);
+assert.equal(resumeCount, 1, "Agenda e Boletim simultâneos devem compartilhar a renovação");
+
 console.log("OK: consultas do painel e boletim renovam sessão expirada e repetem a chamada uma única vez.");
