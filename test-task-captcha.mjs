@@ -115,7 +115,8 @@ assert.deepEqual(
 assert.ok(!bundle.includes("/api/edusp-captcha"));
 assert.ok(!bundle.includes("/api/edusp-task-details"));
 assert.ok(bundle.includes("submitTaskAnswersWithCaptcha(J,st,pendingAnswers,c,_,durationSeconds)"));
-assert.ok(bundle.includes("setPendingAnswers(R),setSubmitMode(true)"));
+assert.ok(bundle.includes("setPendingDurationSeconds(getTaskDurationMinutes()*60),setPendingAnswers(R),setSubmitMode(true)"), "o duration selecionado deve ser congelado no clique em Enviar");
+assert.ok(bundle.includes("const durationSeconds=pendingDurationSeconds;"), "o valor congelado deve ser enviado após validar o CAPTCHA");
 assert.ok(bundle.includes("void At(true)"), "o botão Enviar deve gerar um segundo desafio");
 assert.ok(bundle.includes("Resolva um novo CAPTCHA antes de enviar suas respostas à Sala do Futuro."));
 assert.ok(!bundle.includes("submitTaskAnswers(J,st,R,u,yt,ct)"), "não enviar usando o CAPTCHA da leitura");
