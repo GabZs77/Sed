@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const script = fs.readFileSync(new URL('./script.js', import.meta.url), 'utf8');
+const styles = fs.readFileSync(new URL('./style.css', import.meta.url), 'utf8');
+assert.match(script, /Minutos para as tarefas/);
+assert.match(script, /min:1,max:12,step:1/);
+assert.match(script, /localStorage\.setItem\("sed_task_duration_minutes"/);
+assert.match(script, /Tempo da tarefa concluído/);
+assert.match(script, /new Notification\("Tempo da tarefa concluído"/);
+assert.match(script, /Math\.min\(taskDurationSeconds/);
+assert.match(script, /elapsedSeconds<getTaskDurationMinutes\(\)\*60/);
+assert.match(script, /sed_active_task_timer/);
+assert.match(script, /sed_notified_task_timer/);
+assert.match(styles, /\.task-timer-settings/);
+console.log('OK: tempo configurável de 1–12 min, limite rígido, persistência e avisos do timer.');
