@@ -6,7 +6,7 @@ const bundle = fs.readFileSync(new URL("./script.js", import.meta.url), "utf8");
 const reference = fs.readFileSync(new URL("./atividade-lacunas-completo.js", import.meta.url), "utf8");
 const html = fs.readFileSync(new URL("./index.html", import.meta.url), "utf8");
 const css = fs.readFileSync(new URL("./style.css", import.meta.url), "utf8");
-assert.ok(html.indexOf("atividade-lacunas-completo.js") < html.indexOf('type="module" src="./script.js"'), "O helper de lacunas deve carregar antes do app");
+assert.ok(html.indexOf("atividade-lacunas-completo.js") < html.indexOf('type="module" src="./script.js'), "O helper de lacunas deve carregar antes do app");
 assert.ok(bundle.includes('className:"mobile-close",onClick:h'), "O botão X deve acionar o fechamento do menu lateral");
 assert.ok(css.includes(".side-rail.is-open{transform:translate(0)}"), "O estado aberto do menu móvel deve continuar controlado por transform");
 assert.ok(!css.includes(".card,.side-rail,.task-reader-modal"), "A animação de entrada não deve sobrescrever o transform usado para fechar o menu");
