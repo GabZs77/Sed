@@ -97,3 +97,35 @@ CREATE INDEX IF NOT EXISTS idx_audit_created ON audit_logs(created_at);
 CREATE INDEX IF NOT EXISTS idx_published_tools_published ON published_tools(published_at);
 CREATE INDEX IF NOT EXISTS idx_published_partnerships_status ON published_partnerships(is_published, updated_at DESC);
 CREATE INDEX IF NOT EXISTS idx_push_subscriptions_user ON push_subscriptions(user_ra);
+
+-- Chat público dos alunos. O Worker valida a sessão SED em cada rota.
+CREATE TABLE IF NOT EXISTS chat_messages (
+  id TEXT PRIMARY KEY,
+  author_ra TEXT NOT NULL,
+  author_name TEXT NOT NULL,
+  author_avatar_url TEXT DEFAULT '',
+  content TEXT NOT NULL DEFAULT '',
+  attachment_url TEXT DEFAULT '',
+  attachment_name TEXT DEFAULT '',
+  attachment_type TEXT DEFAULT '',
+  audio_url TEXT DEFAULT '',
+  deleted INTEGER NOT NULL DEFAULT 0 CHECK (deleted IN (0, 1)),
+  edited_at TEXT DEFAULT '',
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS chat_mutes (
+  user_ra TEXT PRIMARY KEY,
+  muted_until TEXT DEFAULT NULL,
+  created_by TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS chat_bans (
+  user_ra TEXT PRIMARY KEY,
+  reason TEXT DEFAULT '',
+  created_by TEXT NOT NULL,
+  created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_chat_messages_created ON chat_messages(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_chat_messages_author ON chat_messages(author_ra, created_at DESC);
